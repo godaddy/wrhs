@@ -1,0 +1,32 @@
+{
+  "name": "wrhs",
+  "version": "0.0.0",
+  "description": "Flawless CLI management of build pipelines & asset deployments for your front-end apps powered by Warehouse.ai.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Coming soon! Visit https://github.com/godaddy/warehouse.ai\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/warehouseai/wrhs.git"
+  },
+  "keywords": [
+    "warehouse.ai",
+    "wrhs",
+    "warehouse",
+    "webpack",
+    "browserify",
+    "s3",
+    "cloud",
+    "npm",
+    "build",
+    "serverless",
+    "babel"
+  ],
+  "homepage": "https://github.com/warehouseai/wrhs#readme",
+  "author": "GoDaddy.com Operating Company, LLC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/warehouseai/wrhs/issues"
+  }
+}
