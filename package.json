@@ -1,6 +1,6 @@
 {
   "name": "wrhs",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Flawless CLI management of build pipelines & asset deployments for your front-end apps powered by Warehouse.ai.",
   "main": "src/index.js",
   "bin": {
@@ -21,7 +21,7 @@
     "/src"
   ],
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">= 8.0.0"
   },
   "homepage": "https://github.com/warehouseai/wrhs#readme",
   "author": "GoDaddy.com Operating Company, LLC",
