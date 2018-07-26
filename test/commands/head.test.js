@@ -48,10 +48,10 @@ describe('head', () => {
   // Fetch a build head
   test
     .nock('https://warehouse.ai', generateMockWarehouseRoute({
-      query: { name: 'package', env: 'dev' }
+      query: { name: '@scope/package', env: 'dev' }
     }))
     .stdout()
-    .command(['get:head', 'package', 'dev'])
+    .command(['get:head', '@scope/package', 'dev'])
     .it('can fetch the head build', validate);
 
   // Fetch a build head for specific locale
