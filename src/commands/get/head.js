@@ -43,8 +43,7 @@ Accepts an optional locale.
 HeadCommand.args = [{
   name: 'package',
   required: true,
-  description: 'The package to get the head build for',
-  parse: encodeURIComponent
+  description: 'The package to get the head build for'
 }, {
   name: 'env',
   required: true,
