@@ -72,9 +72,11 @@ class WrhsCommand extends Command {
    * @param {string[]} headings The additional column headings
    */
   renderResponse(data, headings = ['value']) {
+    const termWidth = process.stdout.columns || 150;
+
     const dataCol = {
       align: 'left',
-      width: Math.floor((process.stdout.columns - 30) / headings.length),
+      width: Math.floor((termWidth - 30) / headings.length),
       formatter: function (value) {
         // There is a bug in tty-table where new lines are not treated as whitespace.
         // This requires the `\t` for proper formatting, and can produce extra line breaks.
