@@ -1,6 +1,6 @@
 {
   "name": "wrhs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Flawless CLI management of build pipelines & asset deployments for your front-end apps powered by Warehouse.ai.",
   "main": "src/index.js",
   "bin": {
