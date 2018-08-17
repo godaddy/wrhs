@@ -1,7 +1,7 @@
 const { flags: flagUtils, Command } = require('@oclif/command');
 const request = require('request-promise');
 const debug = require('debug')('wrhs');
-const table = require('tty-table');
+const columns = require('cli-columns');
 const chalk = require('chalk');
 const path = require('path');
 const os = require('os');
@@ -47,59 +47,35 @@ class WrhsCommand extends Command {
   }
 
   /**
-   * Takes the response from warehouse and formats it to be output as a table
+   * Renders build information
    *
-   * @param {(Object|Object[])} response The json response from wrhs
-   * @returns {Array[]} An array of arrays. The columns and rows to output
+   * @param {Object} build - The build information returned from warehouse
    */
-  parseResponse(response) {
-    if (Array.isArray(response)) {
-      const rows = Object.keys(response[0]).map(key => [key]);
-      rows.forEach(row => {
-        response.forEach(obj => row.push(obj[row[0]]));
-      });
+  renderBuild(build) {
+    const groups = ['Fingerprints', 'Artifacts', 'Recommended', 'Files'];
 
-      return rows;
-    }
+    console.log('');
+    console.log(`${chalk.green.bold(build.name)} | ${chalk.green(build.env)} | ${build.version} | ${build.locale}`);
+    console.log('CDN: ', chalk.cyan(build.cdnUrl));
+    console.log('');
+    console.log('Build ID:           ', build.buildId);
+    console.log('Previous build ID:  ', build.previousBuildId);
+    console.log('Rollback build IDs: ', build.rollbackBuildIds);
+    console.log('');
+    console.log('Created: ', build.createDate);
+    console.log('Updated: ', build.udpateDate);
+    console.log('');
 
-    return Object.entries(response);
-  }
-
-  /**
-   * Takes rows and headings and outputs them as a table
-   *
-   * @param {*[]} data The rows and columns of data to output
-   * @param {string[]} headings The additional column headings
-   */
-  renderResponse(data, headings = ['value']) {
-    const termWidth = process.stdout.columns || 150;
-
-    const dataCol = {
-      align: 'left',
-      width: Math.floor((termWidth - 30) / headings.length),
-      formatter: function (value) {
-        // There is a bug in tty-table where new lines are not treated as whitespace.
-        // This requires the `\t` for proper formatting, and can produce extra line breaks.
-        if (Array.isArray(value)) {
-          return value.join('\t\n');
-        }
-
-        if (typeof value === 'object') {
-          return JSON.stringify(value);
-        }
-
-        return value;
+    groups.forEach(group => {
+      const groupKey = group.toLowerCase();
+      if (build[groupKey]) {
+        console.log(`${group}: `);
+        console.log(columns(build[groupKey].map(item => chalk.yellow(item)), {
+          width: group === 'Fingerprints' ? 75 : 100
+        }));
+        console.log('');
       }
-    };
-    const header = [{
-      value: 'key',
-      align: 'left',
-      width: 20
-    }];
-
-    headings.forEach(heading => header.push({ value: heading, ...dataCol }));
-
-    console.log(table(header, data).render());
+    });
   }
 
   /**

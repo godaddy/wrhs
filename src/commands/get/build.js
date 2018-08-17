@@ -30,7 +30,8 @@ class BuildsCommand extends Command {
           return resolve(JSON.stringify(build));
         }
 
-        this.renderResponse(this.parseResponse(build));
+        this.renderBuild(build);
+
         resolve(build);
       });
     });

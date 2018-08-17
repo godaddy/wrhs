@@ -1,7 +1,5 @@
 const { test } = require('@oclif/test');
 const { status: statusFixture, statusEvent: statusEventFixture } = require('../fixtures/status');
-const { status: statusExpectation, statusEvent: statusEventExpectation } = require('../expectations/status');
-const { getRows, validateRow } = require('../utils');
 const fs = require('fs');
 const sinon = require('sinon');
 const assume = require('assume');
@@ -31,8 +29,23 @@ const generateMockWarehouseRoute = (options = {}) => {
   };
 };
 
-const validateStatus = ctx => validateRow(getRows(ctx.stdout), statusExpectation);
-const validateStatusEvent = ctx => validateRow(getRows(ctx.stdout), statusEventExpectation);
+const validateStatus = ({ stdout }) => {
+  assume(stdout).contains(`@wrhs/warehouse@0.7.1-3 | dev | COMPLETE | total: 42`);
+  assume(stdout).contains(`Previous version:  0.7.1-2`);
+  assume(stdout).contains(`Created:  2018-07-11T00:32:53.865Z`);
+  assume(stdout).contains(`Updated:  2018-07-11T00:32:54.049Z`);
+};
+const validateStatusEvent = ({ stdout }) => {
+  assume(stdout).contains(`@wrhs/warehouse@0.7.1-3 | dev | en-US | total: 42`);
+  assume(stdout).contains(`Message:  built a thing`);
+  assume(stdout).contains(`a thing was built`);
+  assume(stdout).contains(`Created:  2018-07-11T00:32:53.865Z`);
+
+  assume(stdout).contains(`@wrhs/warehouse@0.7.1-3 | dev | en-US | total: 42`);
+  assume(stdout).contains(`Message:  built some other thing`);
+  assume(stdout).contains(`another thing was built`);
+  assume(stdout).contains(`Created:  2018-07-11T00:32:00.865Z`);
+};
 
 describe('status', () => {
   before(function () {
