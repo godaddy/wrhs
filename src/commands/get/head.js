@@ -32,7 +32,7 @@ class HeadCommand extends Command {
 
         response.forEach(build => {
           const titleText = ` ${chalk.green.bold(build.name)} | ${chalk.green(build.env)} | ${build.version} | ${build.locale} `;
-          const width = (process.stdout.columns || 20) - titleText.length;
+          const width = (process.stdout.columns || 150) - titleText.length;
           const titleBar = chalk.bgWhite(new Array(Math.floor(width / 2)).fill(' ').join(''));
 
           console.log(titleBar + titleText + titleBar);
