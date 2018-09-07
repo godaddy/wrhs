@@ -3,6 +3,19 @@
 
 Flawless CLI management of build pipelines & asset deployments for your front-end apps powered by [Warehouse.ai].
 
+# Configuration
+`wrhs` configuration can be passed in via CLI flags (more information on this below), or by creating a configuration file at `~/.wrhs`.
+### Example `.wrhs` file:
+```
+{
+  "host": "warehouse.ai",
+  "auth": {
+    "user": "username",
+    "pass": "password"
+  }
+}
+```
+
 
 [![License](https://img.shields.io/npm/l/wrhs.svg)](https://github.com/warehouseai/wrhs/blob/master/package.json)
 
