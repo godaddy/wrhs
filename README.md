@@ -20,6 +20,7 @@ Flawless CLI management of build pipelines & asset deployments for your front-en
 [![License](https://img.shields.io/npm/l/wrhs.svg)](https://github.com/warehouseai/wrhs/blob/master/package.json)
 
 <!-- toc -->
+* [Configuration](#configuration)
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
@@ -30,7 +31,7 @@ $ npm install -g wrhs
 $ wrhs COMMAND
 running command...
 $ wrhs (-v|--version|version)
-wrhs/0.0.2 darwin-x64 node-v8.9.4
+wrhs/0.1.0 darwin-x64 node-v8.9.4
 $ wrhs --help [COMMAND]
 USAGE
   $ wrhs COMMAND
@@ -67,7 +68,7 @@ DESCRIPTION
   If no version is specified, the head version will be returned.
 ```
 
-_See code: [src/commands/get/build.js](https://github.com/warehouseai/wrhs/blob/v0.0.2/src/commands/get/build.js)_
+_See code: [src/commands/get/build.js](https://github.com/warehouseai/wrhs/blob/v0.1.0/src/commands/get/build.js)_
 
 ## `wrhs get:head PACKAGE ENV`
 
@@ -91,7 +92,7 @@ DESCRIPTION
   Accepts an optional locale.
 ```
 
-_See code: [src/commands/get/head.js](https://github.com/warehouseai/wrhs/blob/v0.0.2/src/commands/get/head.js)_
+_See code: [src/commands/get/head.js](https://github.com/warehouseai/wrhs/blob/v0.1.0/src/commands/get/head.js)_
 
 ## `wrhs get:status PACKAGE ENV`
 
@@ -116,7 +117,7 @@ DESCRIPTION
   -e can be used to get the more granular status events.
 ```
 
-_See code: [src/commands/get/status.js](https://github.com/warehouseai/wrhs/blob/v0.0.2/src/commands/get/status.js)_
+_See code: [src/commands/get/status.js](https://github.com/warehouseai/wrhs/blob/v0.1.0/src/commands/get/status.js)_
 
 ## `wrhs help [COMMAND]`
 
@@ -133,7 +134,7 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.0.5/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.1.0/src/commands/help.ts)_
 <!-- commandsstop -->
 
 
