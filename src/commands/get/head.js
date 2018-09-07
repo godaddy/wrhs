@@ -1,5 +1,6 @@
 const Command = require('../../base');
 const Warehouse = require('warehouse.ai-api-client');
+const chalk = require('chalk');
 
 class HeadCommand extends Command {
 
@@ -29,7 +30,16 @@ class HeadCommand extends Command {
           return resolve(JSON.stringify(response));
         }
 
-        this.renderResponse(this.parseResponse(response), response.map(locale => locale.locale));
+        response.forEach(build => {
+          const titleText = ` ${chalk.green.bold(build.name)} | ${chalk.green(build.env)} | ${build.version} | ${build.locale} `;
+          const width = Math.max((process.stdout.columns || 150) - titleText.length, 10);
+          const titleBar = chalk.bgWhite(new Array(Math.floor(width / 2)).fill(' ').join(''));
+
+          console.log(titleBar + titleText + titleBar);
+
+          this.renderBuild(build);
+        });
+
         resolve(response);
       });
     });

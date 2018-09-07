@@ -52,11 +52,11 @@
     "@oclif/config": "^1.6.33",
     "@oclif/plugin-help": "^2.0.5",
     "chalk": "^2.4.1",
+    "cli-columns": "^3.1.2",
     "debug": "^3.1.0",
     "qs": "^6.5.2",
     "request": "^2.87.0",
     "request-promise": "^4.2.2",
-    "tty-table": "^2.6.8",
     "warehouse.ai-api-client": "^3.0.1"
   },
   "devDependencies": {

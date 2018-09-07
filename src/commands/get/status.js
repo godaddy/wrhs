@@ -1,7 +1,40 @@
 const { flags: flagUtils } = require('@oclif/command');
 const Command = require('../../base');
+const chalk = require('chalk');
+const columns = require('cli-columns');
 
 class StatusCommand extends Command {
+
+  /**
+   * Takes a status or status event object and renders it
+   *
+   * @param {Object} status - Status or status event object
+   */
+  render(status) {
+    const pkgVer = chalk.green.bold(status.pkg + '@' + status.version);
+    const locale = status.locale ? `| ${status.locale} ` : '';
+    const complete = status.complete ? `| ${chalk.green.bold('COMPLETE')} ` : '';
+    const error = status.error ? `| ${chalk.red.bold('ERROR')} ` : '';
+
+    console.log('');
+    console.log(`${pkgVer} | ${chalk.green(status.env)} ${locale}${complete}${error}| total: ${status.total}`);
+    console.log('');
+
+    if (status.message) {
+      console.log('Message: ', status.message);
+      status.details && console.log(columns([' ', status.details]));
+      console.log('');
+    }
+
+    if (status.previousVersion) {
+      console.log('Previous version: ', status.previousVersion);
+      console.log('');
+    }
+
+    console.log('Created: ', status.createDate);
+    status.updateDate && console.log('Updated: ', status.updateDate);
+    console.log('');
+  }
 
   /**
    * Runs the get:status command
@@ -18,17 +51,16 @@ class StatusCommand extends Command {
 
     try {
       const response = await this.getWrhs(`/${route}/${encodeURIComponent(pkg)}/${args.env}/${version ? version : ''}`);
-      let headings;
 
       if (flags.json) {
         return console.log(JSON.stringify(response));
       }
 
       if (flags.events || response.length) {
-        headings = response.map((event, index) => index + 1);
+        return response.forEach(this.render);
       }
 
-      this.renderResponse(this.parseResponse(response), headings);
+      this.render(response);
     } catch (e) {
       this.renderError(route, args.package, e);
     }
