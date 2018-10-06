@@ -120,4 +120,22 @@ describe('head', () => {
     .it('can display raw head information', (ctx) => {
       assume(ctx.stdout).eqls(JSON.stringify(responseFixture) + '\n');
     });
+
+  // No host
+  test
+    .do(function () {
+      fs.readFileSync // eslint-disable-line no-sync
+        .withArgs(sinon.match('.wrhs'), 'utf8')
+        .returns(JSON.stringify({
+          auth: {
+            user: 'user',
+            pass: 'pass'
+          }
+        }));
+    })
+    .stdout()
+    .command(['get:build', 'package', 'env'])
+    .it('Outputs an error if there is no wrhs host', (ctx) => {
+      assume(ctx.stdout).eqls('Missing warehouse host. Please configure `~/.wrhs` config file, or use the `--host` option.\n');
+    });
 });

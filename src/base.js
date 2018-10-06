@@ -1,35 +1,13 @@
 const { flags: flagUtils, Command } = require('@oclif/command');
-const request = require('request-promise');
-const debug = require('debug')('wrhs');
 const columns = require('cli-columns');
 const chalk = require('chalk');
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
-const qs = require('qs');
 
 const defaultConfigLocation = path.join(os.homedir(), '.wrhs');
 
 class WrhsCommand extends Command {
-
-  /**
-   * Makes a request to warehouse
-   *
-   * @param {string} apiPath The warehouse api path
-   * @param {Object} query Object to be query string-ified
-   */
-  async getWrhs(apiPath, query) {
-    query = qs.stringify(query, { encode: false });
-    query = query ? '?' + query : '';
-
-    debug('Calling %s', `${this.config.host}${apiPath}${query}`);
-    debug('with config %o', this.config);
-
-    return await request(`${this.config.host}${apiPath}${query}`, {
-      auth: this.config.auth,
-      transform: JSON.parse
-    });
-  }
 
   /**
    * Seperate the package name and version from `@scope/packageName@version`
@@ -99,10 +77,11 @@ class WrhsCommand extends Command {
    * @returns {Object} The merged configuration object
    */
   mergeConfig(flags) {
-    const { host, ...auth } = flags;
+    const { 'status-host': statusHost, host, ...auth } = flags;
 
     return {
-      host: host || this.config.host,
+      wrhsHost: host || this.config.hosts && this.config.hosts.wrhs || this.config.host,
+      statusHost: statusHost || this.config.hosts && this.config.hosts.status,
       auth: {
         ...this.config.auth,
         ...auth
@@ -126,22 +105,27 @@ class WrhsCommand extends Command {
 }
 
 WrhsCommand.flags = {
-  host: flagUtils.string({
+  'host': flagUtils.string({
     char: 'h',
     description: 'The base url for the warehouse API',
     env: 'WRHS_HOST'
   }),
-  user: flagUtils.string({
+  'status-host': flagUtils.string({
+    char: 's',
+    description: 'The base url for the warehouse status API',
+    env: 'WRHS_STATUS_HOST'
+  }),
+  'user': flagUtils.string({
     char: 'u',
     description: 'Username',
     env: 'WRHS_USER'
   }),
-  pass: flagUtils.string({
+  'pass': flagUtils.string({
     char: 'p',
     description: 'Password',
     env: 'WRHS_PASS'
   }),
-  json: flagUtils.boolean({
+  'json': flagUtils.boolean({
     char: 'j',
     description: 'Output response data as JSON'
   })

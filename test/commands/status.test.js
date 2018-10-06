@@ -5,7 +5,10 @@ const sinon = require('sinon');
 const assume = require('assume');
 
 const mockConfig = {
-  host: 'warehouse.ai',
+  hosts: {
+    wrhs: 'warehouse.ai',
+    status: 'warehouse.ai'
+  },
   auth: {
     user: 'user',
     pass: 'pass'
@@ -107,5 +110,23 @@ describe('status', () => {
     .command(['get:status', 'package', 'env', '-j'])
     .it('can fetch raw status information', (ctx) => {
       assume(ctx.stdout).eqls(JSON.stringify(statusFixture) + '\n');
+    });
+
+  // No status host
+  test
+    .do(function () {
+      fs.readFileSync // eslint-disable-line no-sync
+        .withArgs(sinon.match('.wrhs'), 'utf8')
+        .returns(JSON.stringify({
+          auth: {
+            user: 'user',
+            pass: 'pass'
+          }
+        }));
+    })
+    .stdout()
+    .command(['get:status', 'package', 'env'])
+    .it('Outputs an error if there is no status host', (ctx) => {
+      assume(ctx.stdout).eqls('Missing warehouse status host. Please configure `~/.wrhs` config file, or use the `--status-host` option.\n');
     });
 });

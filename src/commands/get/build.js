@@ -13,7 +13,11 @@ class BuildsCommand extends Command {
     const { flags, args } = this.parse(BuildsCommand);
     const { env, locale } = args; // package is reserved so we don't try to destructure it
     const { pkg, version } = this.parsePackage(args.package);
-    const { host, auth } = this.mergeConfig(flags);
+    const { wrhsHost: host, auth } = this.mergeConfig(flags);
+
+    if (!host) {
+      return console.log('Missing warehouse host. Please configure `~/.wrhs` config file, or use the `--host` option.');
+    }
 
     const wrhs = new Warehouse(`https://${auth.user}:${auth.pass}@${host}`);
 
