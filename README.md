@@ -34,7 +34,7 @@ $ npm install -g wrhs
 $ wrhs COMMAND
 running command...
 $ wrhs (-v|--version|version)
-wrhs/0.1.0 darwin-x64 node-v8.9.4
+wrhs/0.2.0 darwin-x64 node-v8.9.4
 $ wrhs --help [COMMAND]
 USAGE
   $ wrhs COMMAND
@@ -62,16 +62,17 @@ ARGUMENTS
   LOCALE   The specific locale to fetch. Defaults to en-US
 
 OPTIONS
-  -h, --host=host  The base url for the warehouse API
-  -j, --json       Output response data as JSON
-  -p, --pass=pass  Password
-  -u, --user=user  Username
+  -h, --host=host                The base url for the warehouse API
+  -j, --json                     Output response data as JSON
+  -p, --pass=pass                Password
+  -s, --status-host=status-host  The base url for the warehouse status API
+  -u, --user=user                Username
 
 DESCRIPTION
   If no version is specified, the head version will be returned.
 ```
 
-_See code: [src/commands/get/build.js](https://github.com/warehouseai/wrhs/blob/v0.1.0/src/commands/get/build.js)_
+_See code: [src/commands/get/build.js](https://github.com/warehouseai/wrhs/blob/v0.2.0/src/commands/get/build.js)_
 
 ## `wrhs get:head PACKAGE ENV`
 
@@ -86,16 +87,17 @@ ARGUMENTS
   ENV      The environment to get the head build for
 
 OPTIONS
-  -h, --host=host  The base url for the warehouse API
-  -j, --json       Output response data as JSON
-  -p, --pass=pass  Password
-  -u, --user=user  Username
+  -h, --host=host                The base url for the warehouse API
+  -j, --json                     Output response data as JSON
+  -p, --pass=pass                Password
+  -s, --status-host=status-host  The base url for the warehouse status API
+  -u, --user=user                Username
 
 DESCRIPTION
   Accepts an optional locale.
 ```
 
-_See code: [src/commands/get/head.js](https://github.com/warehouseai/wrhs/blob/v0.1.0/src/commands/get/head.js)_
+_See code: [src/commands/get/head.js](https://github.com/warehouseai/wrhs/blob/v0.2.0/src/commands/get/head.js)_
 
 ## `wrhs get:status PACKAGE ENV`
 
@@ -110,17 +112,18 @@ ARGUMENTS
   ENV      The environment to get status information for
 
 OPTIONS
-  -e, --events     Should status events be fetched. Defaults to false
-  -h, --host=host  The base url for the warehouse API
-  -j, --json       Output response data as JSON
-  -p, --pass=pass  Password
-  -u, --user=user  Username
+  -e, --events                   Should status events be fetched. Defaults to false
+  -h, --host=host                The base url for the warehouse API
+  -j, --json                     Output response data as JSON
+  -p, --pass=pass                Password
+  -s, --status-host=status-host  The base url for the warehouse status API
+  -u, --user=user                Username
 
 DESCRIPTION
   -e can be used to get the more granular status events.
 ```
 
-_See code: [src/commands/get/status.js](https://github.com/warehouseai/wrhs/blob/v0.1.0/src/commands/get/status.js)_
+_See code: [src/commands/get/status.js](https://github.com/warehouseai/wrhs/blob/v0.2.0/src/commands/get/status.js)_
 
 ## `wrhs help [COMMAND]`
 
@@ -137,7 +140,7 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.1.0/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.1.2/src/commands/help.ts)_
 <!-- commandsstop -->
 
 
