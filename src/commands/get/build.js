@@ -16,7 +16,7 @@ class BuildsCommand extends Command {
     const { wrhsHost: host, auth } = this.mergeConfig(flags);
 
     if (!host) {
-      return console.log('Missing warehouse host. Please configure `~/.wrhs` config file, or use the `--host` option.');
+      this.error(this.missingHostError());
     }
 
     const wrhs = new Warehouse(`https://${auth.user}:${auth.pass}@${host}`);
@@ -30,7 +30,7 @@ class BuildsCommand extends Command {
         }
 
         if (flags.json) {
-          console.log(JSON.stringify(build));
+          this.log(JSON.stringify(build));
           return resolve(JSON.stringify(build));
         }
 

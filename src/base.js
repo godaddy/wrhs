@@ -1,11 +1,14 @@
 const { flags: flagUtils, Command } = require('@oclif/command');
 const columns = require('cli-columns');
+const link = require('terminal-link');
 const chalk = require('chalk');
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
 
 const defaultConfigLocation = path.join(os.homedir(), '.wrhs');
+const configDocUrl = 'https://github.com/warehouseai/wrhs/blob/master/README.md#configuration';
+const seeTheDocsMessage = `Please see ${link('the documentation', configDocUrl)} for more information.`;
 
 class WrhsCommand extends Command {
 
@@ -32,28 +35,38 @@ class WrhsCommand extends Command {
   renderBuild(build) {
     const groups = ['Fingerprints', 'Artifacts', 'Recommended', 'Files'];
 
-    console.log('');
-    console.log(`${chalk.green.bold(build.name)} | ${chalk.green(build.env)} | ${build.version} | ${build.locale}`);
-    console.log('CDN: ', chalk.cyan(build.cdnUrl));
-    console.log('');
-    console.log('Build ID:           ', build.buildId);
-    console.log('Previous build ID:  ', build.previousBuildId);
-    console.log('Rollback build IDs: ', build.rollbackBuildIds);
-    console.log('');
-    console.log('Created: ', build.createDate);
-    console.log('Updated: ', build.udpateDate);
-    console.log('');
+    this.log('');
+    this.log(`${chalk.green.bold(build.name)} | ${chalk.green(build.env)} | ${build.version} | ${build.locale}`);
+    this.log('CDN: ', chalk.cyan(build.cdnUrl));
+    this.log('');
+    this.log('Build ID:           ', build.buildId);
+    this.log('Previous build ID:  ', build.previousBuildId);
+    this.log('Rollback build IDs: ', build.rollbackBuildIds);
+    this.log('');
+    this.log('Created: ', build.createDate);
+    this.log('Updated: ', build.udpateDate);
+    this.log('');
 
     groups.forEach(group => {
       const groupKey = group.toLowerCase();
       if (build[groupKey]) {
-        console.log(`${group}: `);
-        console.log(columns(build[groupKey].map(item => chalk.yellow(item)), {
+        this.log(`${group}: `);
+        this.log(columns(build[groupKey].map(item => chalk.yellow(item)), {
           width: group === 'Fingerprints' ? 75 : 100
         }));
-        console.log('');
+        this.log('');
       }
     });
+  }
+
+  /**
+   * Builds a missing host error message for the correct host
+   *
+   * @param {bool} isStatus - Does this use the status host?
+   * @returns {string} The missing host error message
+   */
+  missingHostError(isStatus) {
+    return `Missing warehouse ${isStatus ? 'status ' : ''}host. Please configure a \`~/.wrhs\` config file or use the \`--${isStatus ? 'status-' : ''}host\` option.\n ${seeTheDocsMessage}`;
   }
 
   /**
@@ -63,8 +76,8 @@ class WrhsCommand extends Command {
    * @param {Error} error The error
    */
   renderError(command, pkg, error) {
-    console.log(`${chalk.bgRed('ERROR:')} Unable to get ${command} information for ${pkg}.`);
-    console.log(error);
+    this.log(`${chalk.bgRed('ERROR:')} Unable to get ${command} information for ${pkg}.`);
+    this.log(error);
   }
 
   /**
@@ -97,7 +110,12 @@ class WrhsCommand extends Command {
     try {
       userConfig = JSON.parse(fs.readFileSync(defaultConfigLocation, 'utf8')); // eslint-disable-line no-sync
     } catch (e) {
-      console.log(chalk.red(`Unable to load wrhs config from ${defaultConfigLocation}`), e);
+      this.debug(e);
+      this.log(chalk.red(`Unable to load wrhs config from ${defaultConfigLocation}`));
+
+      if (e.code === 'ENOENT') {
+        this.log(seeTheDocsMessage);
+      }
     }
 
     this.config = userConfig;

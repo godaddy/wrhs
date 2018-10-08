@@ -73,14 +73,14 @@ class StatusCommand extends Command {
     const { statusHost: host } = this.config;
 
     if (!host) {
-      return console.log('Missing warehouse status host. Please configure `~/.wrhs` config file, or use the `--status-host` option.');
+      this.error(this.missingHostError('status'));
     }
 
     try {
       const response = await this.getWrhs(host, `/${route}/${encodeURIComponent(pkg)}/${args.env}/${version ? version : ''}`);
 
       if (flags.json) {
-        return console.log(JSON.stringify(response));
+        return this.log(JSON.stringify(response));
       }
 
       if (flags.events || response.length) {

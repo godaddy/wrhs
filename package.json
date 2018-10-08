@@ -57,6 +57,7 @@
     "qs": "^6.5.2",
     "request": "^2.87.0",
     "request-promise": "^4.2.2",
+    "terminal-link": "^1.1.0",
     "warehouse.ai-api-client": "^3.0.1"
   },
   "devDependencies": {

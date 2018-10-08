@@ -121,6 +121,26 @@ describe('head', () => {
       assume(ctx.stdout).eqls(JSON.stringify(responseFixture) + '\n');
     });
 
+  // Host fallback
+  test
+    .do(function () {
+      fs.readFileSync // eslint-disable-line no-sync
+        .withArgs(sinon.match('.wrhs'), 'utf8')
+        .returns(JSON.stringify({
+          host: 'wrhs-host.ai',
+          auth: {
+            user: 'user',
+            pass: 'pass'
+          }
+        }));
+    })
+    .nock('https://wrhs-host.ai', generateMockWarehouseRoute({
+      query: { name: '@scope/package', env: 'dev' }
+    }))
+    .stdout()
+    .command(['get:head', '@scope/package', 'dev'])
+    .it('fallsback to the `host` config', validate);
+
   // No host
   test
     .do(function () {
@@ -135,7 +155,9 @@ describe('head', () => {
     })
     .stdout()
     .command(['get:build', 'package', 'env'])
-    .it('Outputs an error if there is no wrhs host', (ctx) => {
-      assume(ctx.stdout).eqls('Missing warehouse host. Please configure `~/.wrhs` config file, or use the `--host` option.\n');
-    });
+    .catch(err => {
+      assume(err.oclif.exit).equals(2);
+      assume(err.message).contains('Missing warehouse host. Please configure a `~/.wrhs` config file or use the `--host` option.');
+    })
+    .it('Outputs an error if there is no wrhs host');
 });

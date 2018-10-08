@@ -78,7 +78,6 @@ describe('build', function () {
     .command(['get:build', 'package', 'dev'])
     .it('can fetch a build', validate);
 
-
   // -u and -p flags
   test
     .nock('https://warehouse.ai', generateMockWarehouseRoute({
@@ -88,14 +87,12 @@ describe('build', function () {
     .command(['get:build', 'package', 'dev', '-u', 'userFlag', '-p', 'passFlag'])
     .it('can fetch a build with passed in auth', validate);
 
-
   // -h flag
   test
     .nock('https://wrhs.test', generateMockWarehouseRoute())
     .stdout()
     .command(['get:build', 'package', 'dev', '-h', 'wrhs.test'])
     .it('can fetch a build from a passed in host', validate);
-
 
   // specific version
   test
@@ -124,6 +121,24 @@ describe('build', function () {
       assume(ctx.stdout).eqls(JSON.stringify(buildFixture) + '\n');
     });
 
+  // Host fallback
+  test
+    .do(function () {
+      fs.readFileSync // eslint-disable-line no-sync
+        .withArgs(sinon.match('.wrhs'), 'utf8')
+        .returns(JSON.stringify({
+          host: 'wrhs-host.ai',
+          auth: {
+            user: 'user',
+            pass: 'pass'
+          }
+        }));
+    })
+    .nock('https://wrhs-host.ai', generateMockWarehouseRoute())
+    .stdout()
+    .command(['get:build', 'package', 'dev'])
+    .it('fallsback to the `host` config', validate);
+
   // No host
   test
     .do(function () {
@@ -138,7 +153,9 @@ describe('build', function () {
     })
     .stdout()
     .command(['get:build', 'package', 'env'])
-    .it('Outputs an error if there is no wrhs host', (ctx) => {
-      assume(ctx.stdout).eqls('Missing warehouse host. Please configure `~/.wrhs` config file, or use the `--host` option.\n');
-    });
+    .catch(err => {
+      assume(err.oclif.exit).equals(2);
+      assume(err.message).contains('Missing warehouse host. Please configure a `~/.wrhs` config file or use the `--host` option.');
+    })
+    .it('Outputs an error if there is no wrhs host');
 });
