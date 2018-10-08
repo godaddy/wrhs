@@ -13,7 +13,11 @@ class HeadCommand extends Command {
   async run() {
     const { flags, args } = this.parse(HeadCommand);
     const { env /* , locale*/ } = args; // package is reserved so we don't try to destructure it
-    const { host, auth } = this.mergeConfig(flags);
+    const { wrhsHost: host, auth } = this.mergeConfig(flags);
+
+    if (!host) {
+      this.error(this.missingHostError());
+    }
 
     const wrhs = new Warehouse(`https://${auth.user}:${auth.pass}@${host}`);
 
@@ -26,7 +30,7 @@ class HeadCommand extends Command {
         }
 
         if (flags.json) {
-          console.log(JSON.stringify(response));
+          this.log(JSON.stringify(response));
           return resolve(JSON.stringify(response));
         }
 
@@ -35,7 +39,7 @@ class HeadCommand extends Command {
           const width = Math.max((process.stdout.columns || 150) - titleText.length, 10);
           const titleBar = chalk.bgWhite(new Array(Math.floor(width / 2)).fill(' ').join(''));
 
-          console.log(titleBar + titleText + titleBar);
+          this.log(titleBar + titleText + titleBar);
 
           this.renderBuild(build);
         });

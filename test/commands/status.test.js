@@ -5,7 +5,10 @@ const sinon = require('sinon');
 const assume = require('assume');
 
 const mockConfig = {
-  host: 'warehouse.ai',
+  hosts: {
+    wrhs: 'warehouse.ai',
+    status: 'warehouse-status.ai'
+  },
   auth: {
     user: 'user',
     pass: 'pass'
@@ -62,7 +65,7 @@ describe('status', () => {
 
   // Fetch status information
   test
-    .nock('https://warehouse.ai', generateMockWarehouseRoute({
+    .nock('https://warehouse-status.ai', generateMockWarehouseRoute({
       path: '/status/package/env/'
     }))
     .stdout()
@@ -71,7 +74,7 @@ describe('status', () => {
 
   // Fetch status event information
   test
-    .nock('https://warehouse.ai', generateMockWarehouseRoute({
+    .nock('https://warehouse-status.ai', generateMockWarehouseRoute({
       path: '/status-events/package/env/',
       fixture: statusEventFixture
     }))
@@ -81,7 +84,7 @@ describe('status', () => {
 
   // Fetch status information for version
   test
-    .nock('https://warehouse.ai', generateMockWarehouseRoute({
+    .nock('https://warehouse-status.ai', generateMockWarehouseRoute({
       path: '/status/%40scope%2Fpackage/env/version'
     }))
     .stdout()
@@ -90,7 +93,7 @@ describe('status', () => {
 
   // Fetch status event information for version
   test
-    .nock('https://warehouse.ai', generateMockWarehouseRoute({
+    .nock('https://warehouse-status.ai', generateMockWarehouseRoute({
       path: '/status-events/%40scope%2Fpackage/env/version',
       fixture: statusEventFixture
     }))
@@ -100,7 +103,7 @@ describe('status', () => {
 
   // Fetch raw status information
   test
-    .nock('https://warehouse.ai', generateMockWarehouseRoute({
+    .nock('https://warehouse-status.ai', generateMockWarehouseRoute({
       path: '/status/package/env/'
     }))
     .stdout()
@@ -108,4 +111,24 @@ describe('status', () => {
     .it('can fetch raw status information', (ctx) => {
       assume(ctx.stdout).eqls(JSON.stringify(statusFixture) + '\n');
     });
+
+  // No status host
+  test
+    .do(function () {
+      fs.readFileSync // eslint-disable-line no-sync
+        .withArgs(sinon.match('.wrhs'), 'utf8')
+        .returns(JSON.stringify({
+          auth: {
+            user: 'user',
+            pass: 'pass'
+          }
+        }));
+    })
+    .stderr()
+    .command(['get:status', 'package', 'env'])
+    .catch(err => {
+      assume(err.oclif.exit).equals(2);
+      assume(err.message).contains('Missing warehouse status host. Please configure a `~/.wrhs` config file or use the `--status-host` option.');
+    })
+    .it('Outputs an error if there is no status host');
 });

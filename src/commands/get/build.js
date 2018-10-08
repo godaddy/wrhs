@@ -13,7 +13,11 @@ class BuildsCommand extends Command {
     const { flags, args } = this.parse(BuildsCommand);
     const { env, locale } = args; // package is reserved so we don't try to destructure it
     const { pkg, version } = this.parsePackage(args.package);
-    const { host, auth } = this.mergeConfig(flags);
+    const { wrhsHost: host, auth } = this.mergeConfig(flags);
+
+    if (!host) {
+      this.error(this.missingHostError());
+    }
 
     const wrhs = new Warehouse(`https://${auth.user}:${auth.pass}@${host}`);
 
@@ -26,7 +30,7 @@ class BuildsCommand extends Command {
         }
 
         if (flags.json) {
-          console.log(JSON.stringify(build));
+          this.log(JSON.stringify(build));
           return resolve(JSON.stringify(build));
         }
 

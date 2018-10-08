@@ -1,9 +1,32 @@
 const { flags: flagUtils } = require('@oclif/command');
+const request = require('request-promise');
+const debug = require('debug')('wrhs');
+const qs = require('qs');
 const Command = require('../../base');
 const chalk = require('chalk');
 const columns = require('cli-columns');
 
 class StatusCommand extends Command {
+
+  /**
+   * Makes a request to warehouse
+   *
+   * @param {string} host The warehouse status api host
+   * @param {string} apiPath The warehouse api path
+   * @param {Object} query Object to be query string-ified
+   */
+  async getWrhs(host, apiPath, query) {
+    query = qs.stringify(query, { encode: false });
+    query = query ? '?' + query : '';
+
+    debug('Calling %s', `https://${host}${apiPath}${query}`);
+    debug('with config %o', this.config);
+
+    return await request(`https://${host}${apiPath}${query}`, {
+      auth: this.config.auth,
+      transform: JSON.parse
+    });
+  }
 
   /**
    * Takes a status or status event object and renders it
@@ -47,13 +70,17 @@ class StatusCommand extends Command {
     const { pkg, version } = this.parsePackage(args.package);
     const route = flags.events ? 'status-events' : 'status';
     this.config = this.mergeConfig(flags);
-    this.config.host = 'https://' + this.config.host;
+    const { statusHost: host } = this.config;
+
+    if (!host) {
+      this.error(this.missingHostError('status'));
+    }
 
     try {
-      const response = await this.getWrhs(`/${route}/${encodeURIComponent(pkg)}/${args.env}/${version ? version : ''}`);
+      const response = await this.getWrhs(host, `/${route}/${encodeURIComponent(pkg)}/${args.env}/${version ? version : ''}`);
 
       if (flags.json) {
-        return console.log(JSON.stringify(response));
+        return this.log(JSON.stringify(response));
       }
 
       if (flags.events || response.length) {

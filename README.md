@@ -8,7 +8,10 @@ Flawless CLI management of build pipelines & asset deployments for your front-en
 ### Example `.wrhs` file:
 ```
 {
-  "host": "warehouse.ai",
+  "hosts": {
+    "wrhs": "warehouse.ai",
+    "status": "warehouse-status.ai"
+  },
   "auth": {
     "user": "username",
     "pass": "password"
