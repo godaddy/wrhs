@@ -34,7 +34,7 @@ $ npm install -g wrhs
 $ wrhs COMMAND
 running command...
 $ wrhs (-v|--version|version)
-wrhs/0.2.0 darwin-x64 node-v8.9.4
+wrhs/0.3.0 darwin-x64 node-v8.9.4
 $ wrhs --help [COMMAND]
 USAGE
   $ wrhs COMMAND
@@ -72,7 +72,7 @@ DESCRIPTION
   If no version is specified, the head version will be returned.
 ```
 
-_See code: [src/commands/get/build.js](https://github.com/warehouseai/wrhs/blob/v0.2.0/src/commands/get/build.js)_
+_See code: [src/commands/get/build.js](https://github.com/warehouseai/wrhs/blob/v0.3.0/src/commands/get/build.js)_
 
 ## `wrhs get:head PACKAGE ENV`
 
@@ -97,7 +97,7 @@ DESCRIPTION
   Accepts an optional locale.
 ```
 
-_See code: [src/commands/get/head.js](https://github.com/warehouseai/wrhs/blob/v0.2.0/src/commands/get/head.js)_
+_See code: [src/commands/get/head.js](https://github.com/warehouseai/wrhs/blob/v0.3.0/src/commands/get/head.js)_
 
 ## `wrhs get:status PACKAGE ENV`
 
@@ -115,6 +115,7 @@ OPTIONS
   -e, --events                   Should status events be fetched. Defaults to false
   -h, --host=host                The base url for the warehouse API
   -j, --json                     Output response data as JSON
+  -l, --locale=locale            Only get events for a specific locale
   -p, --pass=pass                Password
   -s, --status-host=status-host  The base url for the warehouse status API
   -u, --user=user                Username
@@ -123,7 +124,7 @@ DESCRIPTION
   -e can be used to get the more granular status events.
 ```
 
-_See code: [src/commands/get/status.js](https://github.com/warehouseai/wrhs/blob/v0.2.0/src/commands/get/status.js)_
+_See code: [src/commands/get/status.js](https://github.com/warehouseai/wrhs/blob/v0.3.0/src/commands/get/status.js)_
 
 ## `wrhs help [COMMAND]`
 
