@@ -1,8 +1,12 @@
 const { test } = require('@oclif/test');
-const { status: statusFixture, statusEvent: statusEventFixture } = require('../fixtures/status');
 const fs = require('fs');
 const sinon = require('sinon');
 const assume = require('assume');
+const {
+  status: statusFixture,
+  statusError: statusErrorFixture,
+  statusEvent: statusEventFixture
+} = require('../fixtures/status');
 
 const mockConfig = {
   hosts: {
@@ -33,21 +37,16 @@ const generateMockWarehouseRoute = (options = {}) => {
 };
 
 const validateStatus = ({ stdout }) => {
-  assume(stdout).contains(`@wrhs/warehouse@0.7.1-3 | dev | COMPLETE | total: 42`);
-  assume(stdout).contains(`Previous version:  0.7.1-2`);
-  assume(stdout).contains(`Created:  2018-07-11T00:32:53.865Z`);
-  assume(stdout).contains(`Updated:  2018-07-11T00:32:54.049Z`);
+  assume(stdout).contains('@wrhs/warehouse@0.7.1-3 | dev');
+  assume(stdout).contains('Previous version:  0.7.1-2');
+  assume(stdout).contains('Created:  2018-07-11T00:32:53.865Z');
+  assume(stdout).contains('Updated:  2018-07-11T00:32:54.049Z');
 };
 const validateStatusEvent = ({ stdout }) => {
-  assume(stdout).contains(`@wrhs/warehouse@0.7.1-3 | dev | en-US | total: 42`);
-  assume(stdout).contains(`Message:  built a thing`);
-  assume(stdout).contains(`a thing was built`);
-  assume(stdout).contains(`Created:  2018-07-11T00:32:53.865Z`);
-
-  assume(stdout).contains(`@wrhs/warehouse@0.7.1-3 | dev | en-US | total: 42`);
-  assume(stdout).contains(`Message:  built some other thing`);
-  assume(stdout).contains(`another thing was built`);
-  assume(stdout).contains(`Created:  2018-07-11T00:32:00.865Z`);
+  assume(stdout).contains('@wrhs/warehouse@0.7.1-3 | dev');
+  assume(stdout).contains('2018-07-11T00:32:53.865Z en-US :  built a thing');
+  assume(stdout).contains('2018-07-11T00:32:00.865Z en-US :  built some other thing');
+  assume(stdout).contains('2018-07-11T00:33:00.000Z de    :  built de thing');
 };
 
 describe('status', () => {
@@ -71,6 +70,20 @@ describe('status', () => {
     .stdout()
     .command(['get:status', 'package', 'env'])
     .it('can fetch status information', validateStatus);
+
+  // Prints an events message on error
+  test
+    .nock('https://warehouse-status.ai', generateMockWarehouseRoute({
+      path: '/status/package/env/',
+      fixture: statusErrorFixture
+    }))
+    .stdout()
+    .command(['get:status', 'package', 'env'])
+    .it('can fetch status information', (ctx) => {
+      validateStatus(ctx);
+      assume(ctx.stdout).contains('ERROR');
+      assume(ctx.stdout).contains('This build encountered an error. For more details run `wrhs get:status package env --events`');
+    });
 
   // Fetch status event information
   test
@@ -110,6 +123,20 @@ describe('status', () => {
     .command(['get:status', 'package', 'env', '-j'])
     .it('can fetch raw status information', (ctx) => {
       assume(ctx.stdout).eqls(JSON.stringify(statusFixture) + '\n');
+    });
+
+  test
+    .nock('https://warehouse-status.ai', generateMockWarehouseRoute({
+      path: '/status-events/package/env/',
+      fixture: statusEventFixture
+    }))
+    .stdout()
+    .command(['get:status', 'package', 'env', '-e', '-l', 'de'])
+    .it('filters by locale', (ctx) => {
+      assume(ctx.stdout).contains('@wrhs/warehouse@0.7.1-3 | dev');
+      assume(ctx.stdout).not.to.contain('2018-07-11T00:32:53.865Z en-US :  built a thing');
+      assume(ctx.stdout).not.to.contain('2018-07-11T00:32:00.865Z en-US :  built some other thing');
+      assume(ctx.stdout).contains('2018-07-11T00:33:00.000Z de    :  built de thing');
     });
 
   // No status host
