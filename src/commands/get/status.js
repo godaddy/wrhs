@@ -4,7 +4,6 @@ const debug = require('debug')('wrhs');
 const qs = require('qs');
 const Command = require('../../base');
 const chalk = require('chalk');
-const columns = require('cli-columns');
 
 class StatusCommand extends Command {
 
@@ -32,31 +31,60 @@ class StatusCommand extends Command {
    * Takes a status or status event object and renders it
    *
    * @param {Object} status - Status or status event object
+   * @param {Object} args - The args the command was run with
    */
-  render(status) {
+  render(status, args) {
     const pkgVer = chalk.green.bold(status.pkg + '@' + status.version);
     const locale = status.locale ? `| ${status.locale} ` : '';
     const complete = status.complete ? `| ${chalk.green.bold('COMPLETE')} ` : '';
     const error = status.error ? `| ${chalk.red.bold('ERROR')} ` : '';
 
-    console.log('');
-    console.log(`${pkgVer} | ${chalk.green(status.env)} ${locale}${complete}${error}| total: ${status.total}`);
-    console.log('');
-
-    if (status.message) {
-      console.log('Message: ', status.message);
-      status.details && console.log(columns([' ', status.details]));
-      console.log('');
-    }
+    this.log('');
+    this.log(`${pkgVer} | ${chalk.green(status.env)} ${locale}${complete}${error}`);
+    this.log('');
 
     if (status.previousVersion) {
-      console.log('Previous version: ', status.previousVersion);
-      console.log('');
+      this.log('Previous version: ', status.previousVersion);
+      this.log('');
     }
 
-    console.log('Created: ', status.createDate);
-    status.updateDate && console.log('Updated: ', status.updateDate);
-    console.log('');
+    this.log('Created: ', status.createDate);
+    status.updateDate && this.log('Updated: ', status.updateDate);
+    this.log('');
+
+    if (status.error) {
+      this.log(`This build encountered an error. For more details run \`wrhs get:status ${args.package} ${args.env} ${args.version ? args.version + ' ' : ''}--events\``);
+      this.log('');
+    }
+  }
+
+  /**
+   * Renders the list of events to the console.
+   *
+   * @param {[Object]} events An array of status events
+   * @param {string} locale A locale to filter events by
+   */
+  renderEvents(events, locale) {
+    const firstStatus = events[0];
+    const pkgVer = chalk.green.bold(firstStatus.pkg + '@' + firstStatus.version);
+    const error = !events.every(event => !event.error) ? `| ${chalk.red.bold('ERROR')} ` : '';
+
+    this.log('');
+    this.log(`${pkgVer} | ${chalk.green(firstStatus.env)} ${error}`);
+    this.log('');
+
+    events.forEach(event => {
+      if (locale && event.locale && event.locale.toLowerCase() !== locale.toLowerCase()) return;
+
+      const chalkColor = event.error ? 'red' : 'green';
+      const localeLen = event.locale ? event.locale.length : 0;
+      let eventlocale = event.locale ? chalk.cyan(event.locale) : '';
+      eventlocale += new Array(7 - localeLen).join(' ');
+
+      this.log(`${chalk[chalkColor](event.createDate)} ${eventlocale}: `, event.message);
+    });
+
+    this.log('');
   }
 
   /**
@@ -84,10 +112,10 @@ class StatusCommand extends Command {
       }
 
       if (flags.events || response.length) {
-        return response.forEach(this.render);
+        return this.renderEvents(response, flags.locale);
       }
 
-      this.render(response);
+      this.render(response, args);
     } catch (e) {
       this.renderError(route, args.package, e);
     }
@@ -114,6 +142,11 @@ StatusCommand.flags = {
     events: flagUtils.boolean({
       char: 'e',
       description: 'Should status events be fetched. Defaults to false'
+    }),
+    locale: flagUtils.string({
+      char: 'l',
+      description: 'Only get events for a specific locale',
+      dependsOn: ['events']
     })
   }
 };
