@@ -1,47 +1,46 @@
 const { flags: flagUtils } = require('@oclif/command');
-const request = require('request-promise');
 const debug = require('debug')('wrhs');
-const qs = require('qs');
 const Command = require('../../base');
 const chalk = require('chalk');
+const Warehouse = require('warehouse.ai-api-client');
 
 class StatusCommand extends Command {
 
   /**
-   * Makes a request to warehouse
+   * Renders the header with general information about the package
    *
-   * @param {string} host The warehouse status api host
-   * @param {string} apiPath The warehouse api path
-   * @param {Object} query Object to be query string-ified
+   * @param {Object} status - Status information
+   * @param {boolean} hasError - Should the error flag be displayed in the header?
+   * @param {boolean} isComplete - Is the build complete?
+   * @param {Object} [progress={}] - Progress information
+   * @param {Number} progress.progress - Percentage of builds complete
+   * @param {Number} progress.count - Number of completed builds
+   * @param {Number} progress.total - Total number of builds
    */
-  async getWrhs(host, apiPath, query) {
-    query = qs.stringify(query, { encode: false });
-    query = query ? '?' + query : '';
+  renderHeader(status, hasError, isComplete, { progress, count, total } = {}) {
+    const pkgVer = chalk.green.bold(`${status.pkg}@${status.version}`);
+    const error = hasError ? `| ${chalk.red.bold('ERROR')} ` : '';
+    const complete = isComplete ? chalk.green.bold('COMPLETE') : '';
+    const progressColor = progress < 100 ? chalk.yellow : chalk.green;
+    const prog = `${progressColor(progress)}% (${chalk.cyan(count + '/' + total)})`;
 
-    debug('Calling %s', `https://${host}${apiPath}${query}`);
-    debug('with config %o', this.config);
-
-    return await request(`https://${host}${apiPath}${query}`, {
-      auth: this.config.auth,
-      transform: JSON.parse
-    });
+    this.log('');
+    this.log(`${pkgVer} | ${chalk.green(status.env)} | ${complete || prog} ${error}`);
+    this.log('');
   }
 
   /**
-   * Takes a status or status event object and renders it
+   * Renders status information for a package.
    *
-   * @param {Object} status - Status or status event object
+   * @param {Object} status - Status information
+   * @param {Object} progress - Progress information
+   * @param {Number} progress.progress - Percentage of builds complete
+   * @param {Number} progress.count - Number of completed builds
+   * @param {Number} progress.total - Total number of builds
    * @param {Object} args - The args the command was run with
    */
-  render(status, args) {
-    const pkgVer = chalk.green.bold(status.pkg + '@' + status.version);
-    const locale = status.locale ? `| ${status.locale} ` : '';
-    const complete = status.complete ? `| ${chalk.green.bold('COMPLETE')} ` : '';
-    const error = status.error ? `| ${chalk.red.bold('ERROR')} ` : '';
-
-    this.log('');
-    this.log(`${pkgVer} | ${chalk.green(status.env)} ${locale}${complete}${error}`);
-    this.log('');
+  render(status, progress, args) {
+    this.renderHeader(status, status.error, status.complete, progress);
 
     if (status.previousVersion) {
       this.log('Previous version: ', status.previousVersion);
@@ -53,25 +52,25 @@ class StatusCommand extends Command {
     this.log('');
 
     if (status.error) {
-      this.log(`This build encountered an error. For more details run \`wrhs get:status ${args.package} ${args.env} ${args.version ? args.version + ' ' : ''}--events\``);
+      const cmd = chalk.cyan(`\`wrhs get:status ${args.package} ${args.env} ${args.version ? args.version + ' ' : ''}--events\``);
+      this.log(`This build encountered an error. For more details run ${cmd}`);
       this.log('');
     }
   }
 
   /**
-   * Renders the list of events to the console.
+   * Renders the list of events.
    *
-   * @param {[Object]} events An array of status events
-   * @param {string} locale A locale to filter events by
+   * @param {Object[]} events - An array of status events
+   * @param {Object} progress - Progress information
+   * @param {Number} progress.progress - Percentage of builds complete
+   * @param {Number} progress.count - Number of completed builds
+   * @param {Number} progress.total - Total number of builds
+   * @param {string} locale - A locale to filter events by
    */
-  renderEvents(events, locale) {
+  renderEvents(events, progress, locale) {
     const firstStatus = events[0];
-    const pkgVer = chalk.green.bold(firstStatus.pkg + '@' + firstStatus.version);
-    const error = !events.every(event => !event.error) ? `| ${chalk.red.bold('ERROR')} ` : '';
-
-    this.log('');
-    this.log(`${pkgVer} | ${chalk.green(firstStatus.env)} ${error}`);
-    this.log('');
+    this.renderHeader(firstStatus, !events.every(event => !event.error), progress.progress === 100, progress);
 
     events.forEach(event => {
       if (locale && event.locale && event.locale.toLowerCase() !== locale.toLowerCase()) return;
@@ -97,25 +96,47 @@ class StatusCommand extends Command {
     const { flags, args } = this.parse(StatusCommand);
     const { pkg, version } = this.parsePackage(args.package);
     const route = flags.events ? 'status-events' : 'status';
-    this.config = this.mergeConfig(flags);
-    const { statusHost: host } = this.config;
+    const { statusHost, wrhsHost, auth } = this.mergeConfig(flags);
 
-    if (!host) {
+    if (!statusHost) {
       this.error(this.missingHostError('status'));
     }
 
+    const wrhs = new Warehouse({
+      uri: `https://${auth.user}:${auth.pass}@${wrhsHost}`,
+      statusUri: `https://${auth.user}:${auth.pass}@${statusHost}`
+    });
+
+    const get = flags.events ? 'events' : 'get';
+
     try {
-      const response = await this.getWrhs(host, `/${route}/${encodeURIComponent(pkg)}/${args.env}/${version ? version : ''}`);
+      const response = new Promise((res, rej) => {
+        debug('Getting build status %s for %s@%s in %s', flags.events ? 'events' : 'information', pkg, version || 'HEAD', args.env);
+        wrhs.status[get]({ pkg, env: args.env, version }, function (err, data) {
+          if (err) return rej(err);
+
+          res(data);
+        });
+      });
 
       if (flags.json) {
-        return this.log(JSON.stringify(response));
+        return this.log(JSON.stringify(await response));
       }
 
-      if (flags.events || response.length) {
-        return this.renderEvents(response, flags.locale);
+      const progress = new Promise((res, rej) => {
+        debug('Getting build progress information for %s@%s in %s', pkg, version || 'HEAD', args.env);
+        wrhs.status.progress({ pkg, env: args.env, version }, function (err, data) {
+          if (err) return rej(err);
+
+          res(data);
+        });
+      });
+
+      if (flags.events) {
+        return this.renderEvents(await response, await progress, flags.locale);
       }
 
-      this.render(response, args);
+      this.render(await response, await progress, args);
     } catch (e) {
       this.renderError(route, args.package, e);
     }
