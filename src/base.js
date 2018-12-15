@@ -1,4 +1,5 @@
 const { flags: flagUtils, Command } = require('@oclif/command');
+const Warehouse = require('warehouse.ai-api-client');
 const columns = require('cli-columns');
 const link = require('terminal-link');
 const chalk = require('chalk');
@@ -100,6 +101,29 @@ class WrhsCommand extends Command {
         ...auth
       }
     };
+  }
+
+  /**
+   * Creates an instance of the warehouse API client with the given auth and host options
+   *
+   * @param {Object} auth Auth information
+   * @param {string} auth.user username
+   * @param {string} auth.pass password
+   *
+   * @param {Object} hosts host informaiton
+   * @param {string} hosts.wrhsHost Warehouse API host
+   * @param {string} hosts.statusHost Warehouse status API host
+   *
+   * @returns {Warehouse} The API client instance
+   */
+  wrhs(auth, hosts) {
+    const config = { uri: `https://${auth.user}:${auth.pass}@${hosts.wrhsHost}` };
+
+    if (hosts.statusHost) {
+      config.statusUri = `https://${auth.user}:${auth.pass}@${hosts.statusHost}`;
+    }
+
+    return new Warehouse(config);
   }
 
   /**

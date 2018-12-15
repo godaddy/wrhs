@@ -1,8 +1,8 @@
 const { flags: flagUtils } = require('@oclif/command');
 const debug = require('debug')('wrhs');
+const thenify = require('tinythen');
 const Command = require('../../base');
 const chalk = require('chalk');
-const Warehouse = require('warehouse.ai-api-client');
 
 class StatusCommand extends Command {
 
@@ -102,41 +102,26 @@ class StatusCommand extends Command {
       this.error(this.missingHostError('status'));
     }
 
-    const wrhs = new Warehouse({
-      uri: `https://${auth.user}:${auth.pass}@${wrhsHost}`,
-      statusUri: `https://${auth.user}:${auth.pass}@${statusHost}`
-    });
+    const wrhs = this.wrhs(auth, { wrhsHost, statusHost });
 
     const get = flags.events ? 'events' : 'get';
 
     try {
-      const response = new Promise((res, rej) => {
-        debug('Getting build status %s for %s@%s in %s', flags.events ? 'events' : 'information', pkg, version || 'HEAD', args.env);
-        wrhs.status[get]({ pkg, env: args.env, version }, function (err, data) {
-          if (err) return rej(err);
-
-          res(data);
-        });
-      });
+      debug('Getting build status %s for %s@%s in %s', flags.events ? 'events' : 'information', pkg, version || 'HEAD', args.env);
+      const response = await thenify(wrhs.status, get, { pkg, env: args.env, version });
 
       if (flags.json) {
-        return this.log(JSON.stringify(await response));
+        return this.log(JSON.stringify(response));
       }
 
-      const progress = new Promise((res, rej) => {
-        debug('Getting build progress information for %s@%s in %s', pkg, version || 'HEAD', args.env);
-        wrhs.status.progress({ pkg, env: args.env, version }, function (err, data) {
-          if (err) return rej(err);
-
-          res(data);
-        });
-      });
+      debug('Getting build progress information for %s@%s in %s', pkg, version || 'HEAD', args.env);
+      const progress = await thenify(wrhs.status, 'progress', { pkg, env: args.env, version });
 
       if (flags.events) {
-        return this.renderEvents(await response, await progress, flags.locale);
+        return this.renderEvents(response, progress, flags.locale);
       }
 
-      this.render(await response, await progress, args);
+      this.render(response, progress, args);
     } catch (e) {
       this.renderError(route, args.package, e);
     }
