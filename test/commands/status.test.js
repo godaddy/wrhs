@@ -24,7 +24,9 @@ const generateMockWarehouseRoute = (options = {}) => {
     path,
     query = false,
     auth = mockConfig.auth,
-    fixture = statusFixture
+    fixture = statusFixture,
+    progressFixture = { progress: 100, count: 1, total: 1 },
+    skipProgress
   } = options;
 
   return api => {
@@ -33,6 +35,13 @@ const generateMockWarehouseRoute = (options = {}) => {
       .basicAuth(auth)
       .query(query)
       .reply(200, fixture);
+
+    if (!skipProgress) {
+      api
+        .get(/^\/progress.*/)
+        .basicAuth(auth)
+        .reply(200, progressFixture);
+    }
   };
 };
 
@@ -65,7 +74,7 @@ describe('status', () => {
   // Fetch status information
   test
     .nock('https://warehouse-status.ai', generateMockWarehouseRoute({
-      path: '/status/package/env/'
+      path: '/status/package/env'
     }))
     .stdout()
     .command(['get:status', 'package', 'env'])
@@ -74,21 +83,36 @@ describe('status', () => {
   // Prints an events message on error
   test
     .nock('https://warehouse-status.ai', generateMockWarehouseRoute({
-      path: '/status/package/env/',
-      fixture: statusErrorFixture
+      path: '/status/package/env',
+      fixture: statusErrorFixture,
+      progressFixture: { progress: 50, count: 1, total: 2 }
     }))
     .stdout()
     .command(['get:status', 'package', 'env'])
-    .it('can fetch status information', (ctx) => {
+    .it('Prints an events suggestion if the build had an error', (ctx) => {
       validateStatus(ctx);
       assume(ctx.stdout).contains('ERROR');
       assume(ctx.stdout).contains('This build encountered an error. For more details run `wrhs get:status package env --events`');
     });
 
+  // Prints the build progress
+  test
+    .nock('https://warehouse-status.ai', generateMockWarehouseRoute({
+      path: '/status/package/env',
+      fixture: { ...statusFixture, complete: false },
+      progressFixture: { progress: 50, count: 1, total: 2 }
+    }))
+    .stdout()
+    .command(['get:status', 'package', 'env'])
+    .it('Prints an events suggestion if the build had an error', (ctx) => {
+      validateStatus(ctx);
+      assume(ctx.stdout).contains('50% (1/2)');
+    });
+
   // Fetch status event information
   test
     .nock('https://warehouse-status.ai', generateMockWarehouseRoute({
-      path: '/status-events/package/env/',
+      path: '/status-events/package/env',
       fixture: statusEventFixture
     }))
     .stdout()
@@ -117,7 +141,8 @@ describe('status', () => {
   // Fetch raw status information
   test
     .nock('https://warehouse-status.ai', generateMockWarehouseRoute({
-      path: '/status/package/env/'
+      path: '/status/package/env',
+      skipProgress: true
     }))
     .stdout()
     .command(['get:status', 'package', 'env', '-j'])
@@ -125,9 +150,10 @@ describe('status', () => {
       assume(ctx.stdout).eqls(JSON.stringify(statusFixture) + '\n');
     });
 
+  // Filters by locale
   test
     .nock('https://warehouse-status.ai', generateMockWarehouseRoute({
-      path: '/status-events/package/env/',
+      path: '/status-events/package/env',
       fixture: statusEventFixture
     }))
     .stdout()

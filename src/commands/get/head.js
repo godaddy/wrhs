@@ -1,5 +1,4 @@
 const Command = require('../../base');
-const Warehouse = require('warehouse.ai-api-client');
 const chalk = require('chalk');
 
 class HeadCommand extends Command {
@@ -13,13 +12,13 @@ class HeadCommand extends Command {
   async run() {
     const { flags, args } = this.parse(HeadCommand);
     const { env /* , locale*/ } = args; // package is reserved so we don't try to destructure it
-    const { wrhsHost: host, auth } = this.mergeConfig(flags);
+    const { wrhsHost, auth } = this.mergeConfig(flags);
 
-    if (!host) {
+    if (!wrhsHost) {
       this.error(this.missingHostError());
     }
 
-    const wrhs = new Warehouse(`https://${auth.user}:${auth.pass}@${host}`);
+    const wrhs = this.wrhs(auth, { wrhsHost });
 
     // Get build for environment for a given package name
     return new Promise((resolve, reject) => {
