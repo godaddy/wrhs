@@ -1,10 +1,52 @@
-`wrhs` CLI for Warehouse.ai
-====
+# `wrhs`
 
-Flawless CLI management of build pipelines & asset deployments for your front-end apps powered by [Warehouse.ai].
+[![Version npm](https://img.shields.io/npm/v/wrhs.svg?style=flat-square)](https://www.npmjs.com/package/wrhs)
+[![License](https://img.shields.io/npm/l/wrhs.svg?style=flat-square)](https://github.com/warehouseai/wrhs/blob/master/LICENSE)
+[![npm Downloads](https://img.shields.io/npm/dm/wrhs.svg?style=flat-square)](https://npmcharts.com/compare/wrhs?minimal=true)
+[![Build Status](https://travis-ci.org/warehouseai/wrhs.svg?branch=master)](https://travis-ci.org/warehouseai/wrhs)
+[![Dependencies](https://img.shields.io/david/warehouseai/wrhs.svg?style=flat-square)](https://github.com/warehouseai/wrhs/blob/master/package.json)
 
-# Configuration
-`wrhs` configuration can be passed in via CLI flags (more information on this below), or by creating a configuration file at `~/.wrhs`.
+CLI for [Warehouse.ai]. CLI to manage build pipelines & asset deployments
+for your front-end apps powered by [Warehouse.ai]. A useful addition to
+the [Warehouse.ai UI][wrhs-ui].
+
+<!-- toc -->
+* [Install](#install)
+* [Usage](#usage)
+* [Configuration](#configuration)
+* [Commands](#commands)
+<!-- tocstop -->
+## Install
+
+Global installation of the CLI is preferred.
+
+```sh-session
+npm install -g wrhs
+```
+
+<!-- usage -->
+## Usage
+
+Ensure [configuration](#configuration) is setup before you run any commands.
+
+```sh-session
+$ wrhs COMMAND
+running command...
+$ wrhs (-v|--version|version)
+wrhs/0.3.1 darwin-x64 node-v10.14.1
+$ wrhs --help [COMMAND]
+USAGE
+  $ wrhs COMMAND
+...
+```
+<!-- usagestop -->
+
+## Configuration
+
+`wrhs` configuration can be passed in via CLI flags (more information on this
+below), or by creating a configuration file at `~/.wrhs`. _Note: by default
+the CLI expects the configuration file to be available under your home folder._
+
 ### Example `.wrhs` file:
 ```
 {
@@ -19,36 +61,14 @@ Flawless CLI management of build pipelines & asset deployments for your front-en
 }
 ```
 
-
-[![License](https://img.shields.io/npm/l/wrhs.svg)](https://github.com/warehouseai/wrhs/blob/master/package.json)
-
-<!-- toc -->
-* [Configuration](#configuration)
-* [Usage](#usage)
-* [Commands](#commands)
-<!-- tocstop -->
-# Usage
-<!-- usage -->
-```sh-session
-$ npm install -g wrhs
-$ wrhs COMMAND
-running command...
-$ wrhs (-v|--version|version)
-wrhs/0.3.1 darwin-x64 node-v10.14.1
-$ wrhs --help [COMMAND]
-USAGE
-  $ wrhs COMMAND
-...
-```
-<!-- usagestop -->
-# Commands
+## Commands
 <!-- commands -->
 * [`wrhs get:build PACKAGE ENV [LOCALE]`](#wrhs-getbuild-package-env-locale)
 * [`wrhs get:head PACKAGE ENV`](#wrhs-gethead-package-env)
 * [`wrhs get:status PACKAGE ENV`](#wrhs-getstatus-package-env)
 * [`wrhs help [COMMAND]`](#wrhs-help-command)
 
-## `wrhs get:build PACKAGE ENV [LOCALE]`
+### `wrhs get:build PACKAGE ENV [LOCALE]`
 
 Gets information about builds that exist in warehouse.
 
@@ -74,7 +94,7 @@ DESCRIPTION
 
 _See code: [src/commands/get/build.js](https://github.com/warehouseai/wrhs/blob/v0.3.1/src/commands/get/build.js)_
 
-## `wrhs get:head PACKAGE ENV`
+### `wrhs get:head PACKAGE ENV`
 
 Shows information about the head build for the given package in the given environment.
 
@@ -99,7 +119,7 @@ DESCRIPTION
 
 _See code: [src/commands/get/head.js](https://github.com/warehouseai/wrhs/blob/v0.3.1/src/commands/get/head.js)_
 
-## `wrhs get:status PACKAGE ENV`
+### `wrhs get:status PACKAGE ENV`
 
 Get information about the status of a build.
 
@@ -126,7 +146,7 @@ DESCRIPTION
 
 _See code: [src/commands/get/status.js](https://github.com/warehouseai/wrhs/blob/v0.3.1/src/commands/get/status.js)_
 
-## `wrhs help [COMMAND]`
+### `wrhs help [COMMAND]`
 
 display help for wrhs
 
@@ -144,5 +164,5 @@ OPTIONS
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.1.4/src/commands/help.ts)_
 <!-- commandsstop -->
 
-
 [Warehouse.ai]: https://github.com/godaddy/warehouse.ai
+[wrhs-ui]: https://github.com/godaddy/warehouse.ai-ui
