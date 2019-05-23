@@ -7,8 +7,8 @@
 [![Dependencies](https://img.shields.io/david/warehouseai/wrhs.svg?style=flat-square)](https://github.com/warehouseai/wrhs/blob/master/package.json)
 
 CLI for [Warehouse.ai]. CLI to manage build pipelines & asset deployments
-for your front-end apps powered by [Warehouse.ai]. A useful addition to
-the [Warehouse.ai UI][wrhs-ui].
+for your front-end apps powered by [Warehouse.ai]. There is also a
+[web-based UI][wrhs-ui] available for [Warehouse.ai].?
 
 <!-- toc -->
 * [Install](#install)
