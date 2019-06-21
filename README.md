@@ -62,7 +62,7 @@ the CLI expects the configuration file to be available under your home folder._
 
 ## Commands
 <!-- commands -->
-* [`wrhs build PACKAGE ENV`](#wrhs-getbuild-package-env-locale)
+* [`wrhs build PACKAGE ENV`](#wrhs-build-package-env)
 * [`wrhs get:build PACKAGE ENV [LOCALE]`](#wrhs-getbuild-package-env-locale)
 * [`wrhs get:head PACKAGE ENV`](#wrhs-gethead-package-env)
 * [`wrhs get:status PACKAGE ENV`](#wrhs-getstatus-package-env)
