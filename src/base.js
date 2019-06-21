@@ -71,6 +71,15 @@ class WrhsCommand extends Command {
   }
 
   /**
+   * Builds a missing version error message
+   *
+   * @returns {string} The missing host error message
+   */
+  missingVersionError() {
+    return 'Missing package version. Please sure package is in the form `packageName@version` where `version` is the specific version to build';
+  }
+
+  /**
    *
    * @param {string} command The command that encountered an error
    * @param {string} pkg The package the encountered an error
