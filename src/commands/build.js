@@ -60,13 +60,11 @@ TriggerBuildCommand.args = [{
 
 TriggerBuildCommand.flags = {
   ...Command.flags,
-  ...{
-    promote: flagUtils.boolean({
-      char: 'm',
-      default: false,
-      description: 'Should promotion happen on successful build. Defaults to false'
-    })
-  }
+  promote: flagUtils.boolean({
+    char: 'm',
+    default: false,
+    description: 'Should promotion happen on successful build. Defaults to false'
+  })
 };
 
 module.exports = TriggerBuildCommand;
