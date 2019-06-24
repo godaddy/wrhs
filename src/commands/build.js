@@ -35,8 +35,7 @@ class TriggerBuildCommand extends Command {
           this.log(JSON.stringify(response));
           return resolve(JSON.stringify(response));
         }
-
-        this.log('Build triggered successfully. See `get:status` command to get the status of a build.');
+        this.log(`Build triggered successfully. You can use 'wrhs get:status ${pkg}@${version} ${env}' to get the status of this build.`);
         resolve(response);
       });
     });

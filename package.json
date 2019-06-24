@@ -80,6 +80,7 @@
         "description": "get information about things in warehouse"
       }
     },
+    "repositoryPrefix": "<%- repo %>/blob/<%- version %>/<%- commandPath %>",
     "bin": "wrhs",
     "plugins": [
       "@oclif/plugin-help"

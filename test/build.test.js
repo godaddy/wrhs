@@ -28,7 +28,7 @@ const generateMockWarehouseRoute = (options = {}) => {
 };
 
 const validate = ({ stdout }) => {
-  assume(stdout).contains('Build triggered successfully. See `get:status` command to get the status of a build.');
+  assume(stdout).contains(`Build triggered successfully. You can use 'wrhs get:status package@version dev' to get the status of this build`);
 };
 
 describe('build', function () {

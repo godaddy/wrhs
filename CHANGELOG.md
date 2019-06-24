@@ -1,5 +1,7 @@
 # CHANGELOG
-
+- [#13] Add build command
+  - builds a specific version of a package on warehouse
+  - optionally promote with -m flag
 - [#12] Update `README.md`
   - Add badges
   - Update patch/minor dependencies
@@ -11,3 +13,4 @@
 
 [#11]: https://github.com/warehouse.ai/wrhs/pull/11
 [#12]: https://github.com/warehouse.ai/wrhs/pull/12
+[#13]: https://github.com/warehouseai/wrhs/pull/13
