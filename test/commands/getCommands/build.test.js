@@ -1,5 +1,5 @@
 const { test } = require('@oclif/test');
-const buildFixture = require('../fixtures/build');
+const buildFixture = require('../../fixtures/build');
 const fs = require('fs');
 const sinon = require('sinon');
 const assume = require('assume');
@@ -58,7 +58,7 @@ const validate = ({ stdout }) => {
   assume(stdout).contains('https://warehouse.ai/wrhs-assets/f2ebdb79528153bcd007be8115a0853e/warehouse.js');
 };
 
-describe('build', function () {
+describe('get:build', function () {
   before(function () {
     sinon.stub(fs, 'readFileSync')
       .withArgs(sinon.match('.wrhs'), 'utf8')
@@ -138,7 +138,6 @@ describe('build', function () {
     .stdout()
     .command(['get:build', 'package', 'dev'])
     .it('fallsback to the `host` config', validate);
-
   // No host
   test
     .do(function () {

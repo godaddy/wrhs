@@ -6,7 +6,7 @@ const {
   status: statusFixture,
   statusError: statusErrorFixture,
   statusEvent: statusEventFixture
-} = require('../fixtures/status');
+} = require('../../fixtures/status');
 
 const mockConfig = {
   hosts: {
@@ -58,7 +58,7 @@ const validateStatusEvent = ({ stdout }) => {
   assume(stdout).contains('2018-07-11T00:33:00.000Z de    :  built de thing');
 };
 
-describe('status', () => {
+describe('get:status', () => {
   before(function () {
     sinon.stub(fs, 'readFileSync')
       .withArgs(sinon.match('.wrhs'), 'utf8')

@@ -144,17 +144,15 @@ StatusCommand.args = [{
 
 StatusCommand.flags = {
   ...Command.flags,
-  ...{
-    events: flagUtils.boolean({
-      char: 'e',
-      description: 'Should status events be fetched. Defaults to false'
-    }),
-    locale: flagUtils.string({
-      char: 'l',
-      description: 'Only get events for a specific locale',
-      dependsOn: ['events']
-    })
-  }
+  events: flagUtils.boolean({
+    char: 'e',
+    description: 'Should status events be fetched. Defaults to false'
+  }),
+  locale: flagUtils.string({
+    char: 'l',
+    description: 'Only get events for a specific locale',
+    dependsOn: ['events']
+  })
 };
 
 module.exports = StatusCommand;

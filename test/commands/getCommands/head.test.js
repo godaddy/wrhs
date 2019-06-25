@@ -1,5 +1,5 @@
 const { test } = require('@oclif/test');
-const responseFixture = require('../fixtures/head');
+const responseFixture = require('../../fixtures/head');
 const fs = require('fs');
 const sinon = require('sinon');
 const assume = require('assume');
@@ -78,7 +78,7 @@ const validate = ({ stdout }) => {
   assume(stdout).contains('4cc89887f01dc1d02758c0e9a3d0d856/pre-script.js    f2ebdb79528153bcd007be8115a0853e/warehouse.js');
 };
 
-describe('head', () => {
+describe('get:head', () => {
   before(function () {
     sinon.stub(fs, 'readFileSync')
       .withArgs(sinon.match('.wrhs'), 'utf8')
