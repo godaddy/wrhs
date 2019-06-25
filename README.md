@@ -32,7 +32,7 @@ $ npm install -g wrhs
 $ wrhs COMMAND
 running command...
 $ wrhs (-v|--version|version)
-wrhs/0.3.1 darwin-x64 node-v10.13.0
+wrhs/0.4.0 darwin-x64 node-v8.16.0
 $ wrhs --help [COMMAND]
 USAGE
   $ wrhs COMMAND
@@ -70,28 +70,31 @@ the CLI expects the configuration file to be available under your home folder._
 
 ## `wrhs build PACKAGE ENV`
 
-Triggers a build for a specific version on warehouse.
+Triggers a build for a specific version on warehouse. 
 
 ```
 USAGE
-  $ wrhs build PACKAGE ENV 
+  $ wrhs build PACKAGE ENV
 
 ARGUMENTS
-  PACKAGE  The package to build. Make sure has the form packageName@version, where `version` is the specific version to build
+  PACKAGE  The package to build. Make sure it is in the form packageName@version where `version` is the specific version
+           to build
+
   ENV      The environment to build in
 
 OPTIONS
   -h, --host=host                The base url for the warehouse API
   -j, --json                     Output response data as JSON
+  -m, --promote                  Should promotion happen on successful build. Defaults to false
   -p, --pass=pass                Password
   -s, --status-host=status-host  The base url for the warehouse status API
   -u, --user=user                Username
-  -m, --promote                  Should promotion happen on successful build. Defaults to false
 
 DESCRIPTION
   -m Optionally specify if promotion should happen on successful build
 ```
-_See code: [src/commands/build.js](https://github.com/warehouseai/wrhs/blob/master/src/commands/build.js)_
+
+_See code: [src/commands/build.js](https://github.com/warehouseai/wrhs/blob/0.4.0/src/commands/build.js)_
 
 ## `wrhs get:build PACKAGE ENV [LOCALE]`
 
@@ -117,7 +120,7 @@ DESCRIPTION
   If no version is specified, the head version will be returned.
 ```
 
-_See code: [src/commands/get/build.js](https://github.com/warehouseai/wrhs/blob/master/src/commands/get/build.js)_
+_See code: [src/commands/get/build.js](https://github.com/warehouseai/wrhs/blob/0.4.0/src/commands/get/build.js)_
 
 ## `wrhs get:head PACKAGE ENV`
 
@@ -142,7 +145,7 @@ DESCRIPTION
   Accepts an optional locale.
 ```
 
-_See code: [src/commands/get/head.js](https://github.com/warehouseai/wrhs/blob/master/src/commands/get/head.js)_
+_See code: [src/commands/get/head.js](https://github.com/warehouseai/wrhs/blob/0.4.0/src/commands/get/head.js)_
 
 ## `wrhs get:status PACKAGE ENV`
 
@@ -169,7 +172,7 @@ DESCRIPTION
   -e can be used to get the more granular status events.
 ```
 
-_See code: [src/commands/get/status.js](https://github.com/warehouseai/wrhs/blob/master/src/commands/get/status.js)_
+_See code: [src/commands/get/status.js](https://github.com/warehouseai/wrhs/blob/0.4.0/src/commands/get/status.js)_
 
 ## `wrhs help [COMMAND]`
 

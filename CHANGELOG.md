@@ -1,4 +1,7 @@
 # CHANGELOG
+
+### 0.4.0
+
 - [#13] Add build command
   - builds a specific version of a package on warehouse
   - optionally promote with -m flag
