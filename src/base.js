@@ -76,7 +76,7 @@ class WrhsCommand extends Command {
    * @returns {string} The missing version number error message
    */
   missingVersionError() {
-    return 'Missing package version. Please sure package is in the form `packageName@version` where `version` is the specific version to build';
+    return 'Missing package version. Please sure package is in the form `packageName@version` where `version` is the specific version to build/promote';
   }
 
   /**
