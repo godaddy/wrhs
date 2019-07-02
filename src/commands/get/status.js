@@ -99,7 +99,7 @@ class StatusCommand extends Command {
     const { statusHost, wrhsHost, auth } = this.mergeConfig(flags);
 
     if (!statusHost) {
-      this.error(this.missingHostError('status'));
+      return this.error(this.missingHostError('status'));
     }
 
     const wrhs = this.wrhs(auth, { wrhsHost, statusHost });

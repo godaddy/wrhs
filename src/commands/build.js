@@ -16,10 +16,10 @@ class TriggerBuildCommand extends Command {
     const { wrhsHost, auth } = this.mergeConfig(flags);
 
     if (!wrhsHost) {
-      this.error(this.missingHostError());
+      return this.error(this.missingHostError());
     }
     if (!version) {
-      this.error(this.missingVersionError());
+      return this.error(this.missingVersionError('build'));
     }
 
     const wrhs = this.wrhs(auth, { wrhsHost });

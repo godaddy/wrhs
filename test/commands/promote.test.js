@@ -62,7 +62,7 @@ describe('promote', function () {
     .command(['promote', 'package', 'dev'])
     .catch(err => {
       assume(err.oclif.exit).equals(2);
-      assume(err.message).contains('Missing package version. Please sure package is in the form `packageName@version` where `version` is the specific version to build/promote');
+      assume(err.message).contains('Missing package version. Please sure package is in the form `packageName@version` where `version` is the specific version to promote');
     })
     .it('Outputs an error if there is no version supplied as part of package');
 
@@ -115,6 +115,6 @@ describe('promote', function () {
     })
     .nock('https://wrhs-host-fallback.ai', generateMockWarehouseRoute())
     .stdout()
-    .command(['build', 'package@version', 'dev'])
+    .command(['promote', 'package@version', 'dev'])
     .it('fallsback to the `host` config', validate);
 });

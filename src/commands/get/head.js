@@ -15,7 +15,7 @@ class HeadCommand extends Command {
     const { wrhsHost, auth } = this.mergeConfig(flags);
 
     if (!wrhsHost) {
-      this.error(this.missingHostError());
+      return this.error(this.missingHostError());
     }
 
     const wrhs = this.wrhs(auth, { wrhsHost });
