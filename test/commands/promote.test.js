@@ -28,12 +28,12 @@ const generateMockWarehouseRoute = (options = {}) => {
 };
 
 const validate = ({ stdout }) => {
-  assume(stdout).contains(`Promote triggered successfully. You can use 'wrhs get:build package dev' to confirm that your speicifc version has been promoted.`);
+  assume(stdout).contains(`Promote triggered successfully. You can use 'wrhs get:build package dev' to confirm that your specific version has been promoted.`);
 };
 
 const validateWithBuild = ({ stdout }) => {
   assume(stdout).contains(`Build triggered successfully. You can use 'wrhs get:status package@version dev' to get the status of this build`);
-  assume(stdout).contains(`Promote will be triggered upon successful build. You can use 'wrhs get:build package dev' to confirm that your speicifc version has been promoted.`);
+  assume(stdout).contains(`Promote will be triggered upon successful build. You can use 'wrhs get:build package dev' to confirm that your specific version has been promoted.`);
 };
 
 describe('promote', function () {
@@ -62,7 +62,7 @@ describe('promote', function () {
     .command(['promote', 'package', 'dev'])
     .catch(err => {
       assume(err.oclif.exit).equals(2);
-      assume(err.message).contains('Missing package version. Please sure package is in the form `packageName@version` where `version` is the specific version to promote');
+      assume(err.message).contains('Missing package version. Please make sure `package` is in the form `packageName@version` where `version` is the specific version to promote');
     })
     .it('Outputs an error if there is no version supplied as part of package');
 

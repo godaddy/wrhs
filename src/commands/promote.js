@@ -36,9 +36,9 @@ class PromoteCommand extends Command {
         }
         if (flags.build) {
           this.log(`Build triggered successfully. You can use 'wrhs get:status ${pkg}@${version} ${env}' to get the status of this build.`);
-          this.log(`Promote will be triggered upon successful build. You can use 'wrhs get:build ${pkg} ${env}' to confirm that your speicifc version has been promoted.`);
+          this.log(`Promote will be triggered upon successful build. You can use 'wrhs get:build ${pkg} ${env}' to confirm that your specific version has been promoted.`);
         } else {
-          this.log(`Promote triggered successfully. You can use 'wrhs get:build ${pkg} ${env}' to confirm that your speicifc version has been promoted.`);
+          this.log(`Promote triggered successfully. You can use 'wrhs get:build ${pkg} ${env}' to confirm that your specific version has been promoted.`);
         }
         resolve(response);
       });
@@ -54,11 +54,12 @@ PromoteCommand.args = [{
   name: 'package',
   required: true,
   description: 'The package to promote. Make sure it is in the form packageName@version where' +
-    ' `version` is the specific version to promote. If NOT using the -b optional build flag, please make sure that the specific version is already built.'
+    ' `version` is the specific version to promote. If NOT using the -b optional build flag,' +
+    'please make sure that the specific version is already built.'
 }, {
   name: 'env',
   required: true,
-  description: 'The environment to promote in'
+  description: 'The environment to promote to'
 }];
 
 PromoteCommand.flags = {
@@ -66,7 +67,7 @@ PromoteCommand.flags = {
   build: flagUtils.boolean({
     char: 'b',
     default: false,
-    description: 'Should build the pacakge before promoting. Defaults to false'
+    description: 'Should build the package before promoting. Defaults to false'
   })
 };
 

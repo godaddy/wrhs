@@ -57,7 +57,7 @@ describe('build', function () {
     .command(['build', 'package', 'dev'])
     .catch(err => {
       assume(err.oclif.exit).equals(2);
-      assume(err.message).contains('Missing package version. Please sure package is in the form `packageName@version` where `version` is the specific version to build');
+      assume(err.message).contains('Missing package version. Please make sure `package` is in the form `packageName@version` where `version` is the specific version to build');
     })
     .it('Outputs an error if there is no version supplied as part of package');
 
