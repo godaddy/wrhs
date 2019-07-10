@@ -10,8 +10,8 @@ class PromoteCommand extends Command {
    */
   async run() {
     const { flags, args } = this.parse(PromoteCommand);
-    const { env } = args; // package is reserved so we don't try to destructure it
-    const { pkg, version } = this.parsePackage(args.package);
+    const { env, package: packageArg } = args;
+    const { pkg, version } = this.parsePackage(packageArg);
     const { wrhsHost, auth } = this.mergeConfig(flags);
 
     if (!wrhsHost) {
@@ -27,7 +27,7 @@ class PromoteCommand extends Command {
     return new Promise((resolve, reject) => {
       wrhs.builds.promote({ env, pkg, version, build: flags.build }, (err, response) => {
         if (err) {
-          this.renderError('promote', args.package, err);
+          this.renderError('promote', packageArg, err);
           return reject(err);
         }
         if (flags.json) {
