@@ -1,5 +1,9 @@
 # CHANGELOG
 
+- [#14] Add promote command
+  - promotes a specific version of a built package on warehouse
+  - optionally build with -b flag if not already built
+  
 ### 0.4.0
 
 - [#13] Add build command
@@ -17,3 +21,4 @@
 [#11]: https://github.com/warehouse.ai/wrhs/pull/11
 [#12]: https://github.com/warehouse.ai/wrhs/pull/12
 [#13]: https://github.com/warehouseai/wrhs/pull/13
+[#14]: https://github.com/warehouseai/wrhs/pull/14

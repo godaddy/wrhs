@@ -12,6 +12,7 @@
     "prepack": "oclif-dev manifest && oclif-dev readme && npm shrinkwrap",
     "pretest": "npm run lint",
     "test": "nyc mocha --forbid-only \"test/**/*.test.js\"",
+    "test:mocha": "TEST_OUTPUT=1 nyc mocha 'test/**/*.test.js'",
     "version": "oclif-dev readme && git add README.md"
   },
   "files": [

@@ -10,12 +10,12 @@ class BuildsCommand extends Command {
    */
   async run() {
     const { flags, args } = this.parse(BuildsCommand);
-    const { env, locale } = args; // package is reserved so we don't try to destructure it
-    const { pkg, version } = this.parsePackage(args.package);
+    const { env, locale, package: packageArg } = args;
+    const { pkg, version } = this.parsePackage(packageArg);
     const { wrhsHost, auth } = this.mergeConfig(flags);
 
     if (!wrhsHost) {
-      this.error(this.missingHostError());
+      return this.error(this.missingHostError());
     }
 
     const wrhs = this.wrhs(auth, { wrhsHost });
@@ -24,7 +24,7 @@ class BuildsCommand extends Command {
     return new Promise((resolve, reject) => {
       wrhs.builds.get({ env, pkg, locale, version }, (err, build) => {
         if (err) {
-          this.renderError('build', args.package, err);
+          this.renderError('build', packageArg, err);
           return reject(err);
         }
 

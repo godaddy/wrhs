@@ -11,20 +11,20 @@ class HeadCommand extends Command {
    */
   async run() {
     const { flags, args } = this.parse(HeadCommand);
-    const { env /* , locale*/ } = args; // package is reserved so we don't try to destructure it
+    const { env, package: packageArg /* , locale*/ } = args;
     const { wrhsHost, auth } = this.mergeConfig(flags);
 
     if (!wrhsHost) {
-      this.error(this.missingHostError());
+      return this.error(this.missingHostError());
     }
 
     const wrhs = this.wrhs(auth, { wrhsHost });
 
     // Get build for environment for a given package name
     return new Promise((resolve, reject) => {
-      wrhs.builds.heads({ env, pkg: args.package /* , locale*/ }, (err, response) => {
+      wrhs.builds.heads({ env, pkg: packageArg /* , locale*/ }, (err, response) => {
         if (err) {
-          this.renderError('build head', args.package, err);
+          this.renderError('build head', packageArg, err);
           return reject(err);
         }
 

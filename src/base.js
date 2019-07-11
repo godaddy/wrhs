@@ -72,11 +72,11 @@ class WrhsCommand extends Command {
 
   /**
    * Builds a missing version error message
-   *
+   * @param {string} action action
    * @returns {string} The missing version number error message
    */
-  missingVersionError() {
-    return 'Missing package version. Please sure package is in the form `packageName@version` where `version` is the specific version to build';
+  missingVersionError(action) {
+    return `Missing package version. Please make sure \`package\` is in the form \`packageName@version\` where \`version\` is the specific version to ${action}.`;
   }
 
   /**
