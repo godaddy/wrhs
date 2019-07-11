@@ -1,5 +1,7 @@
 # CHANGELOG
 
+### 0.5.0
+
 - [#14] Add promote command
   - promotes a specific version of a built package on warehouse
   - optionally build with -b flag if not already built
