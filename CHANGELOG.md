@@ -1,5 +1,7 @@
 # CHANGELOG
 
+- [#17] Added `get:release-line` command
+
 ### 0.5.0
 
 - [#14] Add promote command
@@ -24,3 +26,4 @@
 [#12]: https://github.com/warehouse.ai/wrhs/pull/12
 [#13]: https://github.com/warehouseai/wrhs/pull/13
 [#14]: https://github.com/warehouseai/wrhs/pull/14
+[#17]: https://github.com/warehouseai/wrhs/pull/17
