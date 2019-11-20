@@ -46,9 +46,11 @@ class StatusCommand extends Command {
       this.log('Previous version: ', status.previousVersion);
       this.log('');
     }
+    const updateDate = status.updateDate || status.updatedAt;
+    const createDate = status.createDate || status.createdAt;
 
-    this.log('Created: ', status.createDate);
-    status.updateDate && this.log('Updated: ', status.updateDate);
+    this.log('Created: ', createDate);
+    updateDate && this.log('Updated: ', updateDate);
     this.log('');
 
     if (status.error) {
