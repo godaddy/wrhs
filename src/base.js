@@ -36,6 +36,9 @@ class WrhsCommand extends Command {
   renderBuild(build) {
     const groups = ['Fingerprints', 'Artifacts', 'Recommended', 'Files'];
 
+    const createDate = build.createDate || build.createdAt;
+    const updateDate = build.udpateDate || build.updatedAt;
+
     this.log('');
     this.log(`${chalk.green.bold(build.name)} | ${chalk.green(build.env)} | ${build.version} | ${build.locale}`);
     this.log('CDN: ', chalk.cyan(build.cdnUrl));
@@ -44,8 +47,8 @@ class WrhsCommand extends Command {
     this.log('Previous build ID:  ', build.previousBuildId);
     this.log('Rollback build IDs: ', build.rollbackBuildIds);
     this.log('');
-    this.log('Created: ', build.createDate);
-    this.log('Updated: ', build.udpateDate);
+    this.log('Created: ', createDate);
+    this.log('Updated: ', updateDate);
     this.log('');
 
     groups.forEach(group => {

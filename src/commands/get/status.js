@@ -46,9 +46,11 @@ class StatusCommand extends Command {
       this.log('Previous version: ', status.previousVersion);
       this.log('');
     }
+    const updateDate = status.updateDate || status.updatedAt;
+    const createDate = status.createDate || status.createdAt;
 
-    this.log('Created: ', status.createDate);
-    status.updateDate && this.log('Updated: ', status.updateDate);
+    this.log('Created: ', createDate);
+    updateDate && this.log('Updated: ', updateDate);
     this.log('');
 
     if (status.error) {
@@ -79,8 +81,9 @@ class StatusCommand extends Command {
       const localeLen = event.locale ? event.locale.length : 0;
       let eventlocale = event.locale ? chalk.cyan(event.locale) : '';
       eventlocale += new Array(7 - localeLen).join(' ');
+      const createDate = event.createDate || event.createdAt;
 
-      this.log(`${chalk[chalkColor](event.createDate)} ${eventlocale}: `, event.message);
+      this.log(`${chalk[chalkColor](createDate)} ${eventlocale}: `, event.message);
     });
 
     this.log('');
