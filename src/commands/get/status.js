@@ -81,8 +81,9 @@ class StatusCommand extends Command {
       const localeLen = event.locale ? event.locale.length : 0;
       let eventlocale = event.locale ? chalk.cyan(event.locale) : '';
       eventlocale += new Array(7 - localeLen).join(' ');
+      const createDate = event.createDate || event.createdAt;
 
-      this.log(`${chalk[chalkColor](event.createDate)} ${eventlocale}: `, event.message);
+      this.log(`${chalk[chalkColor](createDate)} ${eventlocale}: `, event.message);
     });
 
     this.log('');
