@@ -71,7 +71,7 @@ ReleaseLineCommand.description = `Gets information about a given release line fr
 ReleaseLineCommand.args = [{
   name: 'package',
   required: true,
-  description: 'The package and version (optional) to get the release line for'
+  description: 'The package and version (optional) to get the release line for (example: `pkg@1.2.3`)'
 }];
 
 ReleaseLineCommand.flags = Command.flags;
