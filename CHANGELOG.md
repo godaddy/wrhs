@@ -1,5 +1,6 @@
 # CHANGELOG
 
+- [#17] Added `get:release-line` command
 - [#16] Support createdAt and updatedAt style dates used with `dynamodb`
 
 ### 0.5.0
@@ -27,3 +28,4 @@
 [#13]: https://github.com/warehouseai/wrhs/pull/13
 [#14]: https://github.com/warehouseai/wrhs/pull/14
 [#16]: https://github.com/warehouseai/wrhs/pull/16
+[#17]: https://github.com/warehouseai/wrhs/pull/17
