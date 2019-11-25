@@ -1,5 +1,7 @@
 # CHANGELOG
 
+### 0.6.0
+
 - [#17] Added `get:release-line` command
 - [#16] Support createdAt and updatedAt style dates used with `dynamodb`
 

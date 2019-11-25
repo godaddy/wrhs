@@ -32,7 +32,7 @@ $ npm install -g wrhs
 $ wrhs COMMAND
 running command...
 $ wrhs (-v|--version|version)
-wrhs/0.5.0 darwin-x64 node-v8.16.0
+wrhs/0.6.0 darwin-x64 node-v10.15.0
 $ wrhs --help [COMMAND]
 USAGE
   $ wrhs COMMAND
@@ -65,6 +65,7 @@ the CLI expects the configuration file to be available under your home folder._
 * [`wrhs build PACKAGE ENV`](#wrhs-build-package-env)
 * [`wrhs get:build PACKAGE ENV [LOCALE]`](#wrhs-getbuild-package-env-locale)
 * [`wrhs get:head PACKAGE ENV`](#wrhs-gethead-package-env)
+* [`wrhs get:release-line PACKAGE`](#wrhs-getrelease-line-package)
 * [`wrhs get:status PACKAGE ENV`](#wrhs-getstatus-package-env)
 * [`wrhs help [COMMAND]`](#wrhs-help-command)
 * [`wrhs promote PACKAGE ENV`](#wrhs-promote-package-env)
@@ -95,7 +96,7 @@ DESCRIPTION
   -m Optionally specify if promotion should happen on successful build
 ```
 
-_See code: [src/commands/build.js](https://github.com/warehouseai/wrhs/blob/0.5.0/src/commands/build.js)_
+_See code: [src/commands/build.js](https://github.com/warehouseai/wrhs/blob/0.6.0/src/commands/build.js)_
 
 ## `wrhs get:build PACKAGE ENV [LOCALE]`
 
@@ -121,7 +122,7 @@ DESCRIPTION
   If no version is specified, the head version will be returned.
 ```
 
-_See code: [src/commands/get/build.js](https://github.com/warehouseai/wrhs/blob/0.5.0/src/commands/get/build.js)_
+_See code: [src/commands/get/build.js](https://github.com/warehouseai/wrhs/blob/0.6.0/src/commands/get/build.js)_
 
 ## `wrhs get:head PACKAGE ENV`
 
@@ -146,7 +147,28 @@ DESCRIPTION
   Accepts an optional locale.
 ```
 
-_See code: [src/commands/get/head.js](https://github.com/warehouseai/wrhs/blob/0.5.0/src/commands/get/head.js)_
+_See code: [src/commands/get/head.js](https://github.com/warehouseai/wrhs/blob/0.6.0/src/commands/get/head.js)_
+
+## `wrhs get:release-line PACKAGE`
+
+Gets information about a given release line from warehouse.
+
+```
+USAGE
+  $ wrhs get:release-line PACKAGE
+
+ARGUMENTS
+  PACKAGE  The package and version (optional) to get the release line for (example: `pkg@1.2.3`)
+
+OPTIONS
+  -h, --host=host                The base url for the warehouse API
+  -j, --json                     Output response data as JSON
+  -p, --pass=pass                Password
+  -s, --status-host=status-host  The base url for the warehouse status API
+  -u, --user=user                Username
+```
+
+_See code: [src/commands/get/release-line.js](https://github.com/warehouseai/wrhs/blob/0.6.0/src/commands/get/release-line.js)_
 
 ## `wrhs get:status PACKAGE ENV`
 
@@ -173,7 +195,7 @@ DESCRIPTION
   -e can be used to get the more granular status events.
 ```
 
-_See code: [src/commands/get/status.js](https://github.com/warehouseai/wrhs/blob/0.5.0/src/commands/get/status.js)_
+_See code: [src/commands/get/status.js](https://github.com/warehouseai/wrhs/blob/0.6.0/src/commands/get/status.js)_
 
 ## `wrhs help [COMMAND]`
 
@@ -190,7 +212,7 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.1.6/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.1/src/commands/help.ts)_
 
 ## `wrhs promote PACKAGE ENV`
 
@@ -219,7 +241,7 @@ DESCRIPTION
   -b Optionally specify to build as well
 ```
 
-_See code: [src/commands/promote.js](https://github.com/warehouseai/wrhs/blob/0.5.0/src/commands/promote.js)_
+_See code: [src/commands/promote.js](https://github.com/warehouseai/wrhs/blob/0.6.0/src/commands/promote.js)_
 <!-- commandsstop -->
 
 [Warehouse.ai]: https://github.com/godaddy/warehouse.ai
