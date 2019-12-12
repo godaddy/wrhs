@@ -69,8 +69,9 @@ class StatusCommand extends Command {
    * @param {Number} progress.count - Number of completed builds
    * @param {Number} progress.total - Total number of builds
    * @param {string} locale - A locale to filter events by
+   * @param {bool} verbose - Whether to display verbose data
    */
-  renderEvents(events, progress, locale) {
+  renderEvents(events, progress, locale, verbose) {
     const firstStatus = events[0];
     this.renderHeader(firstStatus, !events.every(event => !event.error), progress.progress === 100, progress);
 
@@ -82,8 +83,13 @@ class StatusCommand extends Command {
       let eventlocale = event.locale ? chalk.cyan(event.locale) : '';
       eventlocale += new Array(7 - localeLen).join(' ');
       const createDate = event.createDate || event.createdAt;
+      const verboseDetails = verbose ? 
+        `\n\t${chalk.yellow('Details')}: ${ event.details || '[None]' }` :
+        ''
 
-      this.log(`${chalk[chalkColor](createDate)} ${eventlocale}: `, event.message);
+      this.log(`${chalk[chalkColor](createDate)} ${eventlocale}: `,
+        event.message,
+        verboseDetails);
     });
 
     this.log('');
@@ -121,7 +127,7 @@ class StatusCommand extends Command {
       const progress = await thenify(wrhs.status, 'progress', { pkg, env: args.env, version });
 
       if (flags.events) {
-        return this.renderEvents(response, progress, flags.locale);
+        return this.renderEvents(response, progress, flags.locale, flags.verbose);
       }
 
       this.render(response, progress, args);
@@ -150,6 +156,11 @@ StatusCommand.flags = {
   events: flagUtils.boolean({
     char: 'e',
     description: 'Should status events be fetched. Defaults to false'
+  }),
+  verbose: flagUtils.boolean({
+    char: 'v',
+    description: 'Should status events be more verbose. Events will print out their details property. Defaults to false',
+    dependsOn: ['events']
   }),
   locale: flagUtils.string({
     char: 'l',

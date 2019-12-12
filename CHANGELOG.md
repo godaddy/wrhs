@@ -1,5 +1,7 @@
 # CHANGELOG
 
+- [#??] Added support for `--verbose`/`-v` to `get:status`
+
 ### 0.6.0
 
 - [#17] Added `get:release-line` command
