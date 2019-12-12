@@ -1,5 +1,7 @@
 # CHANGELOG
 
+### 0.7.0
+
 - [#21] Added support for `--verbose`/`-v` to `get:status`
 
 ### 0.6.0

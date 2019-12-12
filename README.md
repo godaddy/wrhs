@@ -32,7 +32,7 @@ $ npm install -g wrhs
 $ wrhs COMMAND
 running command...
 $ wrhs (-v|--version|version)
-wrhs/0.6.0 darwin-x64 node-v10.16.2
+wrhs/0.7.0 darwin-x64 node-v10.16.0
 $ wrhs --help [COMMAND]
 USAGE
   $ wrhs COMMAND
@@ -96,7 +96,7 @@ DESCRIPTION
   -m Optionally specify if promotion should happen on successful build
 ```
 
-_See code: [src/commands/build.js](https://github.com/warehouseai/wrhs/blob/0.6.0/src/commands/build.js)_
+_See code: [src/commands/build.js](https://github.com/warehouseai/wrhs/blob/0.7.0/src/commands/build.js)_
 
 ## `wrhs get:build PACKAGE ENV [LOCALE]`
 
@@ -122,7 +122,7 @@ DESCRIPTION
   If no version is specified, the head version will be returned.
 ```
 
-_See code: [src/commands/get/build.js](https://github.com/warehouseai/wrhs/blob/0.6.0/src/commands/get/build.js)_
+_See code: [src/commands/get/build.js](https://github.com/warehouseai/wrhs/blob/0.7.0/src/commands/get/build.js)_
 
 ## `wrhs get:head PACKAGE ENV`
 
@@ -147,7 +147,7 @@ DESCRIPTION
   Accepts an optional locale.
 ```
 
-_See code: [src/commands/get/head.js](https://github.com/warehouseai/wrhs/blob/0.6.0/src/commands/get/head.js)_
+_See code: [src/commands/get/head.js](https://github.com/warehouseai/wrhs/blob/0.7.0/src/commands/get/head.js)_
 
 ## `wrhs get:release-line PACKAGE`
 
@@ -168,7 +168,7 @@ OPTIONS
   -u, --user=user                Username
 ```
 
-_See code: [src/commands/get/release-line.js](https://github.com/warehouseai/wrhs/blob/0.6.0/src/commands/get/release-line.js)_
+_See code: [src/commands/get/release-line.js](https://github.com/warehouseai/wrhs/blob/0.7.0/src/commands/get/release-line.js)_
 
 ## `wrhs get:status PACKAGE ENV`
 
@@ -198,7 +198,7 @@ DESCRIPTION
   -e can be used to get the more granular status events.
 ```
 
-_See code: [src/commands/get/status.js](https://github.com/warehouseai/wrhs/blob/0.6.0/src/commands/get/status.js)_
+_See code: [src/commands/get/status.js](https://github.com/warehouseai/wrhs/blob/0.7.0/src/commands/get/status.js)_
 
 ## `wrhs help [COMMAND]`
 
@@ -244,7 +244,7 @@ DESCRIPTION
   -b Optionally specify to build as well
 ```
 
-_See code: [src/commands/promote.js](https://github.com/warehouseai/wrhs/blob/0.6.0/src/commands/promote.js)_
+_See code: [src/commands/promote.js](https://github.com/warehouseai/wrhs/blob/0.7.0/src/commands/promote.js)_
 <!-- commandsstop -->
 
 [Warehouse.ai]: https://github.com/godaddy/warehouse.ai
