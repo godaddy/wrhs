@@ -32,7 +32,7 @@ $ npm install -g wrhs
 $ wrhs COMMAND
 running command...
 $ wrhs (-v|--version|version)
-wrhs/0.6.0 darwin-x64 node-v10.15.0
+wrhs/0.6.0 darwin-x64 node-v10.16.2
 $ wrhs --help [COMMAND]
 USAGE
   $ wrhs COMMAND
@@ -190,6 +190,9 @@ OPTIONS
   -p, --pass=pass                Password
   -s, --status-host=status-host  The base url for the warehouse status API
   -u, --user=user                Username
+
+  -v, --verbose                  Should status events be more verbose. Events will print out their details property.
+                                 Defaults to false
 
 DESCRIPTION
   -e can be used to get the more granular status events.

@@ -1,6 +1,6 @@
 # CHANGELOG
 
-- [#??] Added support for `--verbose`/`-v` to `get:status`
+- [#21] Added support for `--verbose`/`-v` to `get:status`
 
 ### 0.6.0
 
@@ -33,3 +33,4 @@
 [#14]: https://github.com/warehouseai/wrhs/pull/14
 [#16]: https://github.com/warehouseai/wrhs/pull/16
 [#17]: https://github.com/warehouseai/wrhs/pull/17
+[#21]: https://github.com/warehouseai/wrhs/pull/21
