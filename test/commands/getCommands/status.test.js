@@ -165,6 +165,22 @@ describe('get:status', () => {
       assume(ctx.stdout).contains('2018-07-11T00:33:00.000Z de    :  built de thing');
     });
 
+  // Verbose Output
+  test
+    .nock('https://warehouse-status.ai', generateMockWarehouseRoute({
+      path: '/status-events/%40scope%2Fpackage/env/version',
+      fixture: statusEventFixture
+    }))
+    .stdout()
+    .command(['get:status', '@scope/package@version', 'env', '-e', '-v'])
+    .it('can fetch status event information for a given version', ctx => {
+      validateStatusEvent(ctx);
+      assume(ctx.stdout).contains('Details: a thing was built');
+      assume(ctx.stdout).contains('Details: another thing was built');
+      assume(ctx.stdout).contains('Details: [None]');
+    });
+
+
   // No status host
   test
     .do(function () {
