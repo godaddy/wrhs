@@ -3,6 +3,7 @@ const { test } = require('@oclif/test');
 const fs = require('fs');
 const sinon = require('sinon');
 const assume = require('assume');
+assume.use(require('assume-sinon'));
 
 const mockConfig = {
   host: 'warehouse.ai',

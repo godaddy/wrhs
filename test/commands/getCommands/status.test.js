@@ -8,6 +8,7 @@ const {
   statusError: statusErrorFixture,
   statusEvent: statusEventFixture
 } = require('../../fixtures/status');
+assume.use(require('assume-sinon'));
 
 const mockConfig = {
   hosts: {
