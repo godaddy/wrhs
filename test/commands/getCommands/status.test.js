@@ -1,3 +1,4 @@
+/* eslint no-sync: 0 */
 const { test } = require('@oclif/test');
 const fs = require('fs');
 const sinon = require('sinon');
@@ -59,15 +60,19 @@ const validateStatusEvent = ({ stdout }) => {
 };
 
 describe('get:status', () => {
-  before(function () {
+  beforeEach(function () {
     sinon.stub(fs, 'readFileSync')
       .withArgs(sinon.match('.wrhs'), 'utf8')
       .returns(JSON.stringify(mockConfig));
 
-    fs.readFileSync.callThrough(); // eslint-disable-line no-sync
+    fs.readFileSync
+      .withArgs(sinon.match('.foo-bar'), 'utf8')
+      .returns(JSON.stringify(mockConfig));
+
+    fs.readFileSync.callThrough();
   });
 
-  after(function () {
+  afterEach(function () {
     sinon.restore();
   });
 
@@ -184,7 +189,7 @@ describe('get:status', () => {
   // No status host
   test
     .do(function () {
-      fs.readFileSync // eslint-disable-line no-sync
+      fs.readFileSync
         .withArgs(sinon.match('.wrhs'), 'utf8')
         .returns(JSON.stringify({
           auth: {
@@ -197,7 +202,20 @@ describe('get:status', () => {
     .command(['get:status', 'package', 'env'])
     .catch(err => {
       assume(err.oclif.exit).equals(2);
-      assume(err.message).contains('Missing warehouse status host. Please configure a `~/.wrhs` config file or use the `--status-host` option.');
+      assume(err.message).contains('Missing warehouse status host. Please configure a `~/.wrhs` config file, use the `--config` option, or use the `--status-host` option.');
     })
     .it('Outputs an error if there is no status host');
+
+  // Different Host File
+  test
+    .nock('https://warehouse-status.ai', generateMockWarehouseRoute({
+      path: '/status/package/env'
+    }))
+    .stdout()
+    .command(['get:status', 'package', 'env', '--config', '~/.foo-bar'])
+    .it('can override wrhs config file', function () {
+      assume(fs.readFileSync).was.calledWith(sinon.match('.foo-bar'), 'utf8');
+      assume(fs.readFileSync).was.not.calledWith(sinon.match('.wrhs'), 'utf8');
+      validateStatus(...arguments);
+    });
 });

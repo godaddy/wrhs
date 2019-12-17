@@ -6,6 +6,7 @@ const chalk = require('chalk');
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
+const untildify = require('untildify');
 
 const defaultConfigLocation = path.join(os.homedir(), '.wrhs');
 const configDocUrl = 'https://github.com/warehouseai/wrhs/blob/master/README.md#configuration';
@@ -70,7 +71,7 @@ class WrhsCommand extends Command {
    * @returns {string} The missing host error message
    */
   missingHostError(isStatus) {
-    return `Missing warehouse ${isStatus ? 'status ' : ''}host. Please configure a \`~/.wrhs\` config file or use the \`--${isStatus ? 'status-' : ''}host\` option.\n ${seeTheDocsMessage}`;
+    return `Missing warehouse ${isStatus ? 'status ' : ''}host. Please configure a \`~/.wrhs\` config file, use the \`--config\` option, or use the \`--${isStatus ? 'status-' : ''}host\` option.\n ${seeTheDocsMessage}`;
   }
 
   /**
@@ -139,15 +140,20 @@ class WrhsCommand extends Command {
   }
 
   /**
-   * Attempts to load the configuration file from `~/.wrhs`
+   * Attempts to load the configuration file
    */
   init() {
+    let { flags:
+      { config = defaultConfigLocation }
+    } = this.parse(this.constructor);
+    config = untildify(config);
+
     let userConfig = {};
     try {
-      userConfig = JSON.parse(fs.readFileSync(defaultConfigLocation, 'utf8')); // eslint-disable-line no-sync
+      userConfig = JSON.parse(fs.readFileSync(path.resolve(config), 'utf8')); // eslint-disable-line no-sync
     } catch (e) {
       this.debug(e);
-      this.log(chalk.red(`Unable to load wrhs config from ${defaultConfigLocation}`));
+      this.log(chalk.red(`Unable to load wrhs config from ${config}`));
 
       if (e.code === 'ENOENT') {
         this.log(seeTheDocsMessage);
@@ -182,6 +188,10 @@ WrhsCommand.flags = {
   'json': flagUtils.boolean({
     char: 'j',
     description: 'Output response data as JSON'
+  }),
+  'config': flagUtils.string({
+    char: 'c',
+    description: 'The file location of the warehouse config, defaults to `~/.wrhs`'
   })
 };
 
