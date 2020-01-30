@@ -1,5 +1,7 @@
 # CHANGELOG
 
+### 0.8.0
+
 - [#22] Added support for `--config`
 
 ### 0.7.0
