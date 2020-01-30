@@ -1,8 +1,10 @@
+/* eslint no-sync: 0 */
 const { test } = require('@oclif/test');
 const buildFixture = require('../../fixtures/build');
 const fs = require('fs');
 const sinon = require('sinon');
 const assume = require('assume');
+assume.use(require('assume-sinon'));
 
 const mockConfig = {
   host: 'warehouse.ai',
@@ -59,15 +61,15 @@ const validate = ({ stdout }) => {
 };
 
 describe('get:build', function () {
-  before(function () {
+  beforeEach(function () {
     sinon.stub(fs, 'readFileSync')
       .withArgs(sinon.match('.wrhs'), 'utf8')
       .returns(JSON.stringify(mockConfig));
 
-    fs.readFileSync.callThrough(); // eslint-disable-line no-sync
+    fs.readFileSync.callThrough();
   });
 
-  after(function () {
+  afterEach(function () {
     sinon.restore();
   });
 
@@ -124,7 +126,7 @@ describe('get:build', function () {
   // Host fallback
   test
     .do(function () {
-      fs.readFileSync // eslint-disable-line no-sync
+      fs.readFileSync
         .withArgs(sinon.match('.wrhs'), 'utf8')
         .returns(JSON.stringify({
           host: 'wrhs-host.ai',
@@ -138,10 +140,11 @@ describe('get:build', function () {
     .stdout()
     .command(['get:build', 'package', 'dev'])
     .it('fallsback to the `host` config', validate);
+
   // No host
   test
     .do(function () {
-      fs.readFileSync // eslint-disable-line no-sync
+      fs.readFileSync
         .withArgs(sinon.match('.wrhs'), 'utf8')
         .returns(JSON.stringify({
           auth: {
@@ -154,7 +157,30 @@ describe('get:build', function () {
     .command(['get:build', 'package', 'env'])
     .catch(err => {
       assume(err.oclif.exit).equals(2);
-      assume(err.message).contains('Missing warehouse host. Please configure a `~/.wrhs` config file or use the `--host` option.');
+      assume(err.message).contains('Missing warehouse host. Please configure a `~/.wrhs` config file, use the `--config` option, or use the `--host` option.');
     })
     .it('Outputs an error if there is no wrhs host');
+
+
+  // Different Host File
+  test
+    .do(function () {
+      fs.readFileSync
+        .withArgs(sinon.match('.foo-bar'), 'utf8')
+        .returns(JSON.stringify({
+          host: 'wrhs-host.ai',
+          auth: {
+            user: 'user',
+            pass: 'pass'
+          }
+        }));
+    })
+    .nock('https://wrhs-host.ai', generateMockWarehouseRoute())
+    .stdout()
+    .command(['get:build', 'package', 'dev', '--config', '~/.foo-bar'])
+    .it('can override wrhs config file', function () {
+      assume(fs.readFileSync).was.calledWith(sinon.match('.foo-bar'), 'utf8');
+      assume(fs.readFileSync).was.not.calledWith(sinon.match('.wrhs'), 'utf8');
+      validate(...arguments);
+    });
 });

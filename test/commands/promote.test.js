@@ -1,7 +1,9 @@
+/* eslint no-sync: 0 */
 const { test } = require('@oclif/test');
 const fs = require('fs');
 const sinon = require('sinon');
 const assume = require('assume');
+assume.use(require('assume-sinon'));
 
 const mockConfig = {
   host: 'warehouse.ai',
@@ -37,15 +39,15 @@ const validateWithBuild = ({ stdout }) => {
 };
 
 describe('promote', function () {
-  before(function () {
+  beforeEach(function () {
     sinon.stub(fs, 'readFileSync')
       .withArgs(sinon.match('.wrhs'), 'utf8')
       .returns(JSON.stringify(mockConfig));
 
-    fs.readFileSync.callThrough(); // eslint-disable-line no-sync
+    fs.readFileSync.callThrough();
   });
 
-  after(function () {
+  afterEach(function () {
     sinon.restore();
   });
 
@@ -103,7 +105,7 @@ describe('promote', function () {
   // Host fallback
   test
     .do(function () {
-      fs.readFileSync // eslint-disable-line no-sync
+      fs.readFileSync
         .withArgs(sinon.match('.wrhs'), 'utf8')
         .returns(JSON.stringify({
           host: 'wrhs-host-fallback.ai',
@@ -117,4 +119,27 @@ describe('promote', function () {
     .stdout()
     .command(['promote', 'package@version', 'dev'])
     .it('fallsback to the `host` config', validate);
+
+
+  // Different Host File
+  test
+    .do(function () {
+      fs.readFileSync
+        .withArgs(sinon.match('.foo-bar'), 'utf8')
+        .returns(JSON.stringify({
+          host: 'wrhs-host-fallback.ai',
+          auth: {
+            user: 'user',
+            pass: 'pass'
+          }
+        }));
+    })
+    .nock('https://wrhs-host-fallback.ai', generateMockWarehouseRoute())
+    .stdout()
+    .command(['promote', 'package@version', 'dev', '--config', '~/.foo-bar'])
+    .it('can override wrhs config file', function () {
+      assume(fs.readFileSync).was.calledWith(sinon.match('.foo-bar'), 'utf8');
+      assume(fs.readFileSync).was.not.calledWith(sinon.match('.wrhs'), 'utf8');
+      validate(...arguments);
+    });
 });

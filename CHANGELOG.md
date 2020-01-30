@@ -1,5 +1,7 @@
 # CHANGELOG
 
+- [#22] Added support for `--config`
+
 ### 0.7.0
 
 - [#21] Added support for `--verbose`/`-v` to `get:status`
@@ -36,3 +38,4 @@
 [#16]: https://github.com/warehouseai/wrhs/pull/16
 [#17]: https://github.com/warehouseai/wrhs/pull/17
 [#21]: https://github.com/warehouseai/wrhs/pull/21
+[#22]: https://github.com/warehouseai/wrhs/pull/22

@@ -32,7 +32,7 @@ $ npm install -g wrhs
 $ wrhs COMMAND
 running command...
 $ wrhs (-v|--version|version)
-wrhs/0.7.0 darwin-x64 node-v10.16.0
+wrhs/0.7.0 darwin-x64 node-v10.16.2
 $ wrhs --help [COMMAND]
 USAGE
   $ wrhs COMMAND
@@ -85,6 +85,7 @@ ARGUMENTS
   ENV      The environment to build in
 
 OPTIONS
+  -c, --config=config            The file location of the warehouse config, defaults to `~/.wrhs`
   -h, --host=host                The base url for the warehouse API
   -j, --json                     Output response data as JSON
   -m, --promote                  Should promotion happen on successful build. Defaults to false
@@ -112,6 +113,7 @@ ARGUMENTS
   LOCALE   The specific locale to fetch. Defaults to en-US
 
 OPTIONS
+  -c, --config=config            The file location of the warehouse config, defaults to `~/.wrhs`
   -h, --host=host                The base url for the warehouse API
   -j, --json                     Output response data as JSON
   -p, --pass=pass                Password
@@ -137,6 +139,7 @@ ARGUMENTS
   ENV      The environment to get the head build for
 
 OPTIONS
+  -c, --config=config            The file location of the warehouse config, defaults to `~/.wrhs`
   -h, --host=host                The base url for the warehouse API
   -j, --json                     Output response data as JSON
   -p, --pass=pass                Password
@@ -161,6 +164,7 @@ ARGUMENTS
   PACKAGE  The package and version (optional) to get the release line for (example: `pkg@1.2.3`)
 
 OPTIONS
+  -c, --config=config            The file location of the warehouse config, defaults to `~/.wrhs`
   -h, --host=host                The base url for the warehouse API
   -j, --json                     Output response data as JSON
   -p, --pass=pass                Password
@@ -183,6 +187,7 @@ ARGUMENTS
   ENV      The environment to get status information for
 
 OPTIONS
+  -c, --config=config            The file location of the warehouse config, defaults to `~/.wrhs`
   -e, --events                   Should status events be fetched. Defaults to false
   -h, --host=host                The base url for the warehouse API
   -j, --json                     Output response data as JSON
@@ -234,6 +239,7 @@ ARGUMENTS
 
 OPTIONS
   -b, --build                    Should build the package before promoting. Defaults to false
+  -c, --config=config            The file location of the warehouse config, defaults to `~/.wrhs`
   -h, --host=host                The base url for the warehouse API
   -j, --json                     Output response data as JSON
   -p, --pass=pass                Password
