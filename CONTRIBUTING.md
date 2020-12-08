@@ -82,8 +82,7 @@ Git handles attribution automatically.
 
 ## Code Documentation
 
-Ensure that every function in `wrhs` is documented and follows the standards set by [JSDoc]. Finally,
-please stick to the code style as defined by the [Godaddy JS styleguide][style].
+Ensure that every function in `wrhs` is documented and follows the standards set by [JSDoc]. Finally, please stick to the code style as defined by the [Godaddy JS styleguide][style].
 
 # Additional Resources
 
