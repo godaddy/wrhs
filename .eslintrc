@@ -1,5 +1,7 @@
 {
-  "extends": "godaddy",
+  "extends": [
+    "godaddy"
+  ],
   "rules": {
     "no-console": 0
   }
