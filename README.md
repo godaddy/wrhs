@@ -1,6 +1,6 @@
 # Warehouse CLI
 
-Robust CLI for the next Object ledger and CDN generation
+Robust CLI for the next generation of Object ledger and CDN.
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/wrhs.svg)](https://npmjs.org/package/wrhs)
