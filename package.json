@@ -1,0 +1,70 @@
+{
+  "name": "wrhs",
+  "description": "Robust CLI for the next generation of Object ledger and CDN",
+  "version": "1.0.0",
+  "author": "GoDaddy.com Operating Company LLC",
+  "bin": {
+    "wrhs": "./bin/run"
+  },
+  "bugs": "https://github.com/warehouseai/wrhs/issues",
+  "dependencies": {
+    "@oclif/command": "^1.8.0",
+    "@oclif/config": "^1.17.0",
+    "@oclif/plugin-help": "^3.2.0"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1.25.1",
+    "@oclif/test": "^1.2.8",
+    "chai": "^4.2.0",
+    "eslint": "^7.15.0",
+    "eslint-config-godaddy": "^4.0.1",
+    "eslint-plugin-mocha": "^8.0.0",
+    "globby": "^11.0.1",
+    "mocha": "^8.2.1",
+    "nyc": "^15.1.0",
+    "prettier": "^2.2.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "/bin",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json",
+    "/src"
+  ],
+  "homepage": "https://github.com/warehouseai/wrhs",
+  "keywords": [
+    "warehouse",
+    "ledger",
+    "asset",
+    "object",
+    "cdn"
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "oclif": {
+    "commands": "./src/commands",
+    "bin": "wrhs",
+    "plugins": [
+      "@oclif/plugin-help"
+    ]
+  },
+  "repository": "https://github.com/warehouseai/wrhs",
+  "scripts": {
+    "postpack": "rm -f oclif.manifest.json",
+    "posttest": "npm run lint",
+    "prepack": "oclif-dev manifest && oclif-dev readme",
+    "test": "nyc mocha --forbid-only \"test/**/*.test.js\"",
+    "version": "oclif-dev readme && git add README.md",
+    "lint": "npm run prettier && npm run eslint",
+    "eslint": "eslint --max-warnings 0 --ignore-pattern /.nyc_output ./",
+    "prettier": "prettier --write src test"
+  },
+  "prettier": {
+    "trailingComma": "none",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true
+  }
+}
