@@ -6,11 +6,9 @@ const path = require('path');
  * @typedef {Object} WrhsNextConfig
  * @property {string} baseUrl Warehouse API base url
  * @property {Object} auth Warehouse auth info
- *
- * @typedef {import('@oclif/dev-cli').}
  */
 
-const DEFAULT_CONFIG_FILENAME = '.wrhs_next';
+const DEFAULT_CONFIG_FILENAME = '.wrhs';
 
 /* Utility class to manage CLI configuration */
 class Config {
