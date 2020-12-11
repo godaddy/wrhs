@@ -4,8 +4,6 @@ const Config = require('../../utils/config');
 const Request = require('../../utils/request');
 
 class CreateCommand extends Command {
-  static args = [{ name: 'name', required: true }];
-
   constructor() {
     super(...arguments);
     const config = new Config({ log: this.log.bind(this) });
@@ -41,6 +39,8 @@ class CreateCommand extends Command {
     }
   }
 }
+
+CreateCommand.args = [{ name: 'name', required: true }];
 
 CreateCommand.description = 'Create an object in the Warehouse ledger';
 

@@ -8,6 +8,7 @@ class Config {
   constructor({ log }) {
     this._log = log;
     this._filepath =
+      // eslint-disable-next-line no-process-env
       process.env.WRHS_NEXT_CONFIG ||
       path.join(os.homedir(), DEFAULT_CONFIG_FILENAME);
   }
@@ -15,18 +16,18 @@ class Config {
   load() {
     let data;
     try {
+      // eslint-disable-next-line no-sync
       data = fs.readFileSync(this._filepath);
     } catch (err) {
       this._log(`Warehouse config file not found at '${this._filepath}'`);
-      process.exit(1);
+      throw err;
     }
 
     try {
       return JSON.parse(data);
     } catch (err) {
-      console.log(err)
       this._log('Invalid Warehouse configuration');
-      process.exit(1);
+      throw err;
     }
   }
 }
