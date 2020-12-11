@@ -3,7 +3,7 @@ const { Command, flags } = require('@oclif/command');
 const Config = require('../../utils/config');
 const Request = require('../../utils/request');
 
-/* Class rappresenting the Create command */
+/* Class representing the Create command */
 class CreateCommand extends Command {
   /**
    * Create an instance of CreateCommand class
@@ -18,7 +18,7 @@ class CreateCommand extends Command {
   /**
    * Read data from the stdin
    * @private
-   * @returns {Promise<string>} Promise rapprsenting the data string read from stdin
+   * @returns {Promise<string>} Promise representing the data string read from stdin
    */
   async _readStdin() {
     let data = '';
@@ -35,7 +35,7 @@ class CreateCommand extends Command {
 
   /**
    * Execute the create command
-   * @returns {Promise<void>} Promise rappresenting the command execution result
+   * @returns {Promise<void>} Promise representing the command execution result
    */
   async run() {
     const cmd = this.parse(CreateCommand);
