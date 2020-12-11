@@ -73,8 +73,7 @@ CreateCommand.flags = {
   }),
   variant: flags.string({
     char: 'a',
-    description: 'object variant',
-    default: '_default'
+    description: 'object variant'
   }),
   expiration: flags.string({ char: 'x', description: 'object expiration' }),
   data: flags.string({ char: 'd', description: 'object data' })
