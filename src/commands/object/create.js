@@ -35,7 +35,7 @@ class CreateCommand extends Command {
 
   /**
    * Execute the create command
-   * @returns {Promise<void>} Promise rappresenting the command execution result
+   * @returns {Promise<void>} Promise representing the command execution result
    */
   async run() {
     const cmd = this.parse(CreateCommand);
