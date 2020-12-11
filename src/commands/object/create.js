@@ -18,7 +18,7 @@ class CreateCommand extends Command {
   /**
    * Read data from the stdin
    * @private
-   * @returns {Promise<string>} Promise rapprsenting the data string read from stdin
+   * @returns {Promise<string>} Promise representing the data string read from stdin
    */
   async _readStdin() {
     let data = '';
