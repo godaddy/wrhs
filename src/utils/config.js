@@ -2,9 +2,21 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
+/**
+ * @typedef {Object} WrhsNextConfig
+ * @property {string} baseUrl Warehouse API base url
+ * @property {Object} auth Warehouse auth info
+ */
+
 const DEFAULT_CONFIG_FILENAME = '.wrhs_next';
 
+/* Utility class to manage CLI configuration */
 class Config {
+  /**
+   * Create a Config instance
+   * @param {Object} opts Constructor parameters
+   * @param {function} opts.log Log function 
+   */
   constructor({ log }) {
     this._log = log;
     this._filepath =
@@ -13,6 +25,10 @@ class Config {
       path.join(os.homedir(), DEFAULT_CONFIG_FILENAME);
   }
 
+  /**
+   * Load and verify configuration file
+   * @returns {WrhsNextConfig} Warehouse Next configuration object
+   */
   load() {
     let data;
     try {
