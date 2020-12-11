@@ -48,7 +48,7 @@ class Request {
    * Send a POST http request
    * @param {string} endpoint API endpoint
    * @param {Object} body JSON-like body data
-   * @returns {Promise<Object>} Promise rappresenting the API response
+   * @returns {Promise<Object>} Promise representing the API response
    */
   async post(endpoint, body) {
     /** @type NodeFetchResponse */
