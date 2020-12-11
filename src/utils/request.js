@@ -20,7 +20,7 @@ class Request {
   /**
    * Validate http response
    * @param {NodeFetchResponse} res HTTP response
-   * @returns {Promise<void>} Promise rappresenting the verification result
+   * @returns {Promise<void>} Promise representing the verification result
    */
   async _checkRespStatus(res) {
     if (!res.ok) {
