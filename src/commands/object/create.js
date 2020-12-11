@@ -10,8 +10,8 @@ class CreateCommand extends Command {
    */
   constructor() {
     super(...arguments);
-    const config = new Config({ log: this.log.bind(this) });
-    const { baseUrl, username, password } = config.load();
+    this._config = new Config();
+    const { baseUrl, username, password } = this._config.load();
     this._request = new Request({ baseUrl, username, password });
   }
 

@@ -6,6 +6,8 @@ const path = require('path');
  * @typedef {Object} WrhsNextConfig
  * @property {string} baseUrl Warehouse API base url
  * @property {Object} auth Warehouse auth info
+ *
+ * @typedef {import('@oclif/dev-cli').}
  */
 
 const DEFAULT_CONFIG_FILENAME = '.wrhs_next';
@@ -14,11 +16,8 @@ const DEFAULT_CONFIG_FILENAME = '.wrhs_next';
 class Config {
   /**
    * Create a Config instance
-   * @param {Object} opts Constructor parameters
-   * @param {function} opts.log Log function
    */
-  constructor({ log }) {
-    this._log = log;
+  constructor() {
     this._filepath =
       // eslint-disable-next-line no-process-env
       process.env.WRHS_NEXT_CONFIG ||
@@ -35,15 +34,13 @@ class Config {
       // eslint-disable-next-line no-sync
       data = fs.readFileSync(this._filepath);
     } catch (err) {
-      this._log(`Warehouse config file not found at '${this._filepath}'`);
-      throw err;
+      throw new Error(`Warehouse config file not found at '${this._filepath}'`);
     }
 
     try {
       return JSON.parse(data);
     } catch (err) {
-      this._log('Invalid Warehouse configuration');
-      throw err;
+      throw new Error('Invalid Warehouse configuration');
     }
   }
 }
