@@ -3,7 +3,7 @@ const { Command, flags } = require('@oclif/command');
 const Config = require('../../utils/config');
 const Request = require('../../utils/request');
 
-/* Class rappresenting the Create command */
+/* Class representing the Create command */
 class CreateCommand extends Command {
   /**
    * Create an instance of CreateCommand class
