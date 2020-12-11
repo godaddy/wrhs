@@ -15,7 +15,7 @@ class Config {
   /**
    * Create a Config instance
    * @param {Object} opts Constructor parameters
-   * @param {function} opts.log Log function 
+   * @param {function} opts.log Log function
    */
   constructor({ log }) {
     this._log = log;

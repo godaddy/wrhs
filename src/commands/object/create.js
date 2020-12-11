@@ -66,8 +66,16 @@ CreateCommand.flags = {
     description: 'object environment',
     default: 'production'
   }),
-  version: flags.string({ char: 'v', description: 'object version', required: true }),
-  variant: flags.string({ char: 'a', description: 'object variant', default: '_default' }),
+  version: flags.string({
+    char: 'v',
+    description: 'object version',
+    required: true
+  }),
+  variant: flags.string({
+    char: 'a',
+    description: 'object variant',
+    default: '_default'
+  }),
   expiration: flags.string({ char: 'x', description: 'object expiration' }),
   data: flags.string({ char: 'd', description: 'object data' })
 };
