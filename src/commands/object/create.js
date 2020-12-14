@@ -77,7 +77,7 @@ CreateCommand.flags = {
   }),
   expiration: flags.string({
     char: 'x',
-    description: 'object expiration in human redable format or milliseconds (e.g., 365d, 48h, 1607973280797)'
+    description: 'object expiration in human readable format or milliseconds (e.g., 365d, 48h, 1607973280797)'
   }),
   data: flags.string({
     char: 'd',
