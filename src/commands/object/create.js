@@ -63,20 +63,26 @@ CreateCommand.description = 'Create an object in the Warehouse ledger';
 CreateCommand.flags = {
   env: flags.string({
     char: 'e',
-    description: 'object environment',
+    description: 'object environment (e.g., production, test)',
     default: 'production'
   }),
   version: flags.string({
     char: 'v',
-    description: 'object version',
+    description: 'object version (e.g., v1.2.1)',
     required: true
   }),
   variant: flags.string({
     char: 'a',
-    description: 'object variant'
+    description: 'object variant (e.g., en_US)'
   }),
-  expiration: flags.string({ char: 'x', description: 'object expiration' }),
-  data: flags.string({ char: 'd', description: 'object data' })
+  expiration: flags.string({
+    char: 'x',
+    description: 'object expiration in human redable format or milliseconds (e.g., 365d, 48h, 1607973280797)'
+  }),
+  data: flags.string({
+    char: 'd',
+    description: 'object data (e.g., \'{ "foo": "bar" }\')'
+  })
 };
 
 module.exports = CreateCommand;
