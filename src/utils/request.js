@@ -56,7 +56,7 @@ class Request {
       method: 'post',
       body: JSON.stringify(body),
       headers: {
-        'Authorization': this._basicAuth,
+        'Authorization': this._auth,
         'Content-Type': 'application/json'
       }
     });

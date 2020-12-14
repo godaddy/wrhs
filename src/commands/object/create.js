@@ -10,9 +10,9 @@ class CreateCommand extends Command {
    */
   constructor() {
     super(...arguments);
-    this._config = new Config();
+    this._config = new CreateCommand.Config();
     const { baseUrl, username, password } = this._config.load();
-    this._request = new Request({ baseUrl, username, password });
+    this._request = new CreateCommand.Request({ baseUrl, username, password });
   }
 
   /**
@@ -51,8 +51,20 @@ class CreateCommand extends Command {
       data = await this._readStdin();
     }
 
-    // TODO(jdaeli): implement
-    this.log(env, variant, version, name, data, expiration);
+    const { created } = await this._request.post('/objects', {
+      name,
+      env,
+      expiration,
+      variant,
+      version,
+      data
+    });
+
+    if (!created) {
+      return this.error('Unknown error: failed to create object');
+    }
+
+    this.log('Object created sucessfully');
   }
 }
 
@@ -77,12 +89,16 @@ CreateCommand.flags = {
   }),
   expiration: flags.string({
     char: 'x',
-    description: 'object expiration in human readable format or milliseconds (e.g., 365d, 48h, 1607973280797)'
+    description:
+      'object expiration in human readable format or milliseconds (e.g., 365d, 48h, 1607973280797)'
   }),
   data: flags.string({
     char: 'd',
     description: 'object data (e.g., \'{ "foo": "bar" }\')'
   })
 };
+
+CreateCommand.Config = Config;
+CreateCommand.Request = Request;
 
 module.exports = CreateCommand;
