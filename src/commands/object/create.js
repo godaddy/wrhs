@@ -1,20 +1,9 @@
-const { Command, flags } = require('@oclif/command');
+const { flags } = require('@oclif/command');
 
-const Config = require('../../utils/config');
-const Request = require('../../utils/request');
+const BaseCommand = require('../../utils/base-command');
 
-/* Class representing the Create command */
-class CreateCommand extends Command {
-  /**
-   * Create an instance of CreateCommand class
-   */
-  constructor() {
-    super(...arguments);
-    this._config = new CreateCommand.Config();
-    const { baseUrl, username, password } = this._config.load();
-    this._request = new CreateCommand.Request({ baseUrl, username, password });
-  }
-
+/* Class representing the object:create command */
+class CreateCommand extends BaseCommand {
   /**
    * Read data from the stdin
    * @private
@@ -51,7 +40,7 @@ class CreateCommand extends Command {
       data = await this._readStdin();
     }
 
-    const { created } = await this._request.post('/objects', {
+    await this._request.post('/objects', {
       name,
       env,
       expiration,
@@ -59,10 +48,6 @@ class CreateCommand extends Command {
       version,
       data
     });
-
-    if (!created) {
-      return this.error('Unknown error: failed to create object');
-    }
 
     this.log('Object created sucessfully');
   }
@@ -75,8 +60,7 @@ CreateCommand.description = 'Create an object in the Warehouse ledger';
 CreateCommand.flags = {
   env: flags.string({
     char: 'e',
-    description: 'object environment (e.g., production, test)',
-    default: 'production'
+    description: 'object environment (e.g., production, test)'
   }),
   version: flags.string({
     char: 'v',
@@ -97,8 +81,5 @@ CreateCommand.flags = {
     description: 'object data (e.g., \'{ "foo": "bar" }\')'
   })
 };
-
-CreateCommand.Config = Config;
-CreateCommand.Request = Request;
 
 module.exports = CreateCommand;

@@ -1,6 +1,6 @@
 const { expect, test } = require('@oclif/test');
 
-const CreateCommand = require('../../../src/commands/object/create');
+const BaseCommand = require('../../../src/utils/base-command');
 
 const TEST_USR = 'test';
 const TEST_PWD = 'test';
@@ -8,7 +8,7 @@ const TEST_URL = 'https://wrhs.com';
 
 describe('object:create', function () {
   before(function () {
-    CreateCommand.Config = class ConfigMock {
+    BaseCommand.Config = class ConfigMock {
       load() {
         return { username: TEST_USR, password: TEST_PWD, baseUrl: TEST_URL };
       }
@@ -21,7 +21,6 @@ describe('object:create', function () {
         .post('/objects', {
           name: 'test-object',
           version: '1.0.0',
-          env: 'production',
           data: 'data can be just a string'
         })
         .basicAuth({ user: TEST_USR, pass: TEST_PWD })

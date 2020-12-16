@@ -1,3 +1,4 @@
+const { URL } = require('url');
 const fetch = require('node-fetch');
 
 /**
@@ -25,9 +26,7 @@ class Request {
   async _checkRespStatus(res) {
     if (!res.ok) {
       const errorBody = await res.text();
-      throw new Error(
-        `HTTP Error Response: ${res.status} ${res.statusText} ${errorBody}`
-      );
+      throw new Error(`${res.status} ${res.statusText} ${errorBody}`);
     }
   }
 
@@ -58,6 +57,31 @@ class Request {
       headers: {
         'Authorization': this._auth,
         'Content-Type': 'application/json'
+      }
+    });
+
+    await this._checkRespStatus(resp);
+
+    return resp.json();
+  }
+
+  /**
+   * Send a GET http request
+   * @param {string} endpoint API endpoint
+   * @param {Object} [query] Optional query parameters
+   * @returns {Promise<Object>} Promise representing the API response
+   */
+  async get(endpoint, query = {}) {
+    const getUrl = new URL(`${this._baseUrl}${endpoint}`);
+    Object.keys(query).forEach(
+      (key) => query[key] && getUrl.searchParams.append(key, query[key])
+    );
+
+    /** @type NodeFetchResponse */
+    const resp = await fetch(getUrl, {
+      method: 'get',
+      headers: {
+        Authorization: this._auth
       }
     });
 
