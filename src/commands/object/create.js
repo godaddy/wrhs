@@ -1,20 +1,9 @@
-const { Command, flags } = require('@oclif/command');
+const { flags } = require('@oclif/command');
 
-const Config = require('../../utils/config');
-const Request = require('../../utils/request');
+const BaseCommand = require('../../utils/base-command');
 
-/* Class representing the Create command */
-class CreateCommand extends Command {
-  /**
-   * Create an instance of CreateCommand class
-   */
-  constructor() {
-    super(...arguments);
-    this._config = new Config();
-    const { baseUrl, username, password } = this._config.load();
-    this._request = new Request({ baseUrl, username, password });
-  }
-
+/* Class representing the object:create command */
+class CreateCommand extends BaseCommand {
   /**
    * Read data from the stdin
    * @private
@@ -51,8 +40,16 @@ class CreateCommand extends Command {
       data = await this._readStdin();
     }
 
-    // TODO(jdaeli): implement
-    this.log(env, variant, version, name, data, expiration);
+    await this._request.post('/objects', {
+      name,
+      env,
+      expiration,
+      variant,
+      version,
+      data
+    });
+
+    this.log('Object created sucessfully');
   }
 }
 
@@ -63,8 +60,7 @@ CreateCommand.description = 'Create an object in the Warehouse ledger';
 CreateCommand.flags = {
   env: flags.string({
     char: 'e',
-    description: 'object environment (e.g., production, test)',
-    default: 'production'
+    description: 'object environment (e.g., production, test)'
   }),
   version: flags.string({
     char: 'v',
@@ -77,7 +73,8 @@ CreateCommand.flags = {
   }),
   expiration: flags.string({
     char: 'x',
-    description: 'object expiration in human readable format or milliseconds (e.g., 365d, 48h, 1607973280797)'
+    description:
+      'object expiration in human readable format or milliseconds (e.g., 365d, 48h, 1607973280797)'
   }),
   data: flags.string({
     char: 'd',
