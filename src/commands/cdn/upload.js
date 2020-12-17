@@ -1,7 +1,7 @@
 const { flags } = require('@oclif/command');
 
 const BaseCommand = require('../../utils/base-command');
-const { createTarball } = require('../../utils/file');
+const { getFilesAndDir, createTarball } = require('../../utils/file');
 
 /* Class representing the cdn:upload command */
 class UploadCommand extends BaseCommand {
@@ -16,7 +16,8 @@ class UploadCommand extends BaseCommand {
       args: { filepath }
     } = cmd;
 
-    const { tarPath, deleteTarball } = await createTarball(filepath);
+    const { files, dir } = await getFilesAndDir(filepath);
+    const { tarPath, deleteTarball } = await createTarball(dir, files);
 
     try {
       const result = await this._request.uploadFile({

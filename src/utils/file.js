@@ -7,9 +7,16 @@ const tmp = require('tmp');
 
 /**
  * @typedef {import('fs').Stats} FSStats
+ */
+/**
  * @typedef {Object} CreateTarballResult
  * @property {string} tarPath Absolue path to the tarball file
  * @property {function} deleteTarball Callback method for cleaning up file
+ */
+/**
+ * @typedef {Object} GetFilesAndDirResult
+ * @property {string[]} files Array of file names
+ * @property {string} dir Directory path
  */
 
 /**
@@ -45,34 +52,63 @@ async function getFileStats(filepath) {
 }
 
 /**
- * Create a tarball and return the path to the file
+ * Get files and directory for file path
  * @param {string} filepath Path to the file or folder
- * @returns {Promise<CreateTarballResult>} Promise rappresenting the absolute path to the tarball and a clean up callback
+ * @returns {Promise<GetFilesAndDirResult>} Promise rappresenting the file stats
  */
-async function createTarball(filepath) {
+async function getFilesAndDir(filepath) {
   let safePath = _resolveHome(filepath);
   if (!path.isAbsolute(safePath)) {
     safePath = path.join(process.cwd(), safePath);
   }
-  await getFileStats(safePath);
+  const stats = await getFileStats(safePath);
+  let files;
+  let dir;
+  if (stats.isDirectory()) {
+    const dirents = await fs.readdir(safePath, { withFileTypes: true });
+    // Ignore subfolders
+    files = dirents
+      .filter((dirent) => dirent.isFile())
+      .map((dirent) => dirent.name);
+    dir = safePath;
+  } else {
+    files = [path.basename(safePath)];
+    dir = path.dirname(safePath);
+  }
+  return { files, dir };
+}
 
-  const { dirPath, deleteTarball } = await new Promise((resolve, reject) => {
+/**
+ * Create a tarball and return the path to the file
+ * @param {string} dir Directory path
+ * @param {string[]} files Array of file names
+ * @returns {Promise<CreateTarballResult>} Promise rappresenting the absolute path to the tarball and a clean up callback
+ */
+async function createTarball(dir, files) {
+  const { tarDir, delteTarDir } = await new Promise((resolve, reject) => {
     tmp.dir({ unsafeCleanup: true }, (err, tmpDir, cleanupCb) => {
       if (err) return reject(err);
-      resolve({ dirPath: tmpDir, deleteTarball: cleanupCb });
+      resolve({ tarDir: tmpDir, delteTarDir: cleanupCb });
     });
   });
 
-  const tarPath = path.join(dirPath, 'tarball.tgz');
+  const tarPath = path.join(tarDir, 'tarball.tgz');
 
   try {
-    await tar.c({ file: tarPath, noDirRecurse: true }, [safePath]);
+    await tar.c(
+      {
+        file: tarPath,
+        follow: false,
+        cwd: dir
+      },
+      files
+    );
   } catch (err) {
-    deleteTarball();
+    delteTarDir();
     throw err;
   }
 
-  return { tarPath, deleteTarball };
+  return { tarPath, deleteTarball: delteTarDir };
 }
 
 /**
@@ -90,5 +126,6 @@ function expToTimestamp(exp) {
 module.exports = {
   createTarball,
   expToTimestamp,
+  getFilesAndDir,
   getFileStats
 };
