@@ -28,11 +28,11 @@ class UploadCommand extends BaseCommand {
 
       this.log(JSON.stringify(result, null, 2));
     } catch (err) {
-      deleteTarball();
+      // Avoid unhandled promise rejection
       throw err;
+    } finally {
+      deleteTarball();
     }
-
-    deleteTarball();
   }
 }
 
