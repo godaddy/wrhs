@@ -88,7 +88,7 @@ async function createTarball(dir, files) {
   const { tarDir, deleteTarDir } = await new Promise((resolve, reject) => {
     tmp.dir({ unsafeCleanup: true }, (err, tmpDir, cleanupCb) => {
       if (err) return reject(err);
-      resolve({ tarDir: tmpDir, delteTarDir: cleanupCb });
+      resolve({ tarDir: tmpDir, deleteTarDir: cleanupCb });
     });
   });
 
