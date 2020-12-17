@@ -18,8 +18,6 @@ class UploadCommand extends BaseCommand {
 
     const { tarPath, deleteTarball } = await createTarball(filepath);
 
-    console.log(tarPath);
-
     try {
       const result = await this._request.uploadFile({
         endpoint: '/cdn',

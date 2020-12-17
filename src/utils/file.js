@@ -66,7 +66,7 @@ async function createTarball(filepath) {
   const tarPath = path.join(dirPath, 'tarball.tgz');
 
   try {
-    await tar.c({ file: tarPath }, [safePath]);
+    await tar.c({ file: tarPath, noDirRecurse: true }, [safePath]);
   } catch (err) {
     deleteTarball();
     throw err;
