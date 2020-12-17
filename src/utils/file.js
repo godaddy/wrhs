@@ -112,7 +112,7 @@ async function createTarball(dir, files) {
 }
 
 /**
- * Convert expiration in human readable format to timestamp in milliseconds.
+ * Safely convert expiration to timestamp in milliseconds.
  * @param {string|number} exp Expiration in ms or human readable format
  * @returns {number} Expiration timestamp in milliseconds
  */
