@@ -1,9 +1,29 @@
-const { Command, flags } = require('@oclif/command');
+const { flags } = require('@oclif/command');
 
-class UploadCommand extends Command {
+const BaseCommand = require('../../utils/base-command');
+const { filepathToTarballStream } = require('../../utils/file');
+
+/* Class representing the cdn:upload command */
+class UploadCommand extends BaseCommand {
+  /**
+   * Execute the create command
+   * @returns {Promise<void>} Promise representing the command execution result
+   */
   async run() {
-    // TBD
-    this.log('This is not implemented yet');
+    const cmd = this.parse(UploadCommand);
+    const {
+      flags: { expiration },
+      args: { filepath }
+    } = cmd;
+
+    const tarStream = await filepathToTarballStream(filepath);
+
+    const result = this._request._upload({
+      endpoint: '/cdn',
+      dataStream: tarStream
+    });
+
+    this.log(JSON.stringify(result, null, 2));
   }
 }
 

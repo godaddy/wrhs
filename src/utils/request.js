@@ -2,6 +2,8 @@ const { promises: fs } = require('fs');
 const fetch = require('node-fetch');
 const { URL } = require('url');
 
+const { getFileStats } = require('./file');
+
 /**
  * @typedef {import('node-fetch').Response} NodeFetchResponse
  */
@@ -111,7 +113,7 @@ class Request {
    * @param {Object} opts Method paramaters
    * @param {string} opts.endpoint Upload endpoint
    * @param {ReadableStream} opts.dataStream Readable data stream
-   * @param {number} opts.dataLength Data length in bytes
+   * @param {number} [opts.dataLength] Data length in bytes
    * @returns {Promise<Object>} Promise representing the upload result
    */
   async _upload({ endpoint, dataStream, dataLength }) {
@@ -120,7 +122,7 @@ class Request {
       method: 'post',
       headers: {
         'Authorization': this._auth,
-        'Content-length': dataLength
+        'Content-Length': dataLength
       },
       body: dataStream
     });
@@ -141,17 +143,7 @@ class Request {
    * @returns {Promise<Object>} Promise representing the upload result
    */
   async uploadFile(endpoint, file) {
-    let stats;
-    try {
-      stats = await fs.stat(file);
-    } catch (err) {
-      if (err.code === 'ENOENT') {
-        throw new Error(`File not found: ${file}`);
-      }
-      throw err;
-    }
-
-    const { size: dataLength } = stats;
+    const { size: dataLength } = await getFileStats(file);
 
     const dataStream = fs.createReadStream(file);
 
