@@ -6,6 +6,38 @@ const { getFilesAndDir, createTarball } = require('../../utils/file');
 /* Class representing the cdn:upload command */
 class UploadCommand extends BaseCommand {
   /**
+   * Handle files upload to Warehouse CDN
+   * @protected
+   * @param {string} filepath Path to the file or folder
+   * @param {string|number} expiration Files expiration in ms or human readable format
+   * @returns {Promise<Object>} Promise representing upload response data
+   */
+  async _handleUpload(filepath, expiration) {
+    const { files, dir } = await getFilesAndDir(filepath);
+    const { tarPath, deleteTarball } = await createTarball(dir, files);
+
+    let result;
+    let error;
+    try {
+      result = await this._request.uploadFile({
+        endpoint: '/cdn',
+        filepath: tarPath,
+        query: { expiration }
+      });
+    } catch (err) {
+      error = err;
+    }
+
+    deleteTarball();
+
+    if (error) {
+      throw err;
+    }
+
+    return result;
+  }
+
+  /**
    * Execute the create command
    * @returns {Promise<void>} Promise representing the command execution result
    */
@@ -16,23 +48,9 @@ class UploadCommand extends BaseCommand {
       args: { filepath }
     } = cmd;
 
-    const { files, dir } = await getFilesAndDir(filepath);
-    const { tarPath, deleteTarball } = await createTarball(dir, files);
-
-    try {
-      const result = await this._request.uploadFile({
-        endpoint: '/cdn',
-        filepath: tarPath,
-        query: { expiration }
-      });
-
-      this.log(JSON.stringify(result, null, 2));
-    } catch (err) {
-      deleteTarball();
-      throw err;
-    }
-
-    deleteTarball();
+    const result = await this._handleUpload(filepath, expiration)
+    
+    this.log(JSON.stringify(result, null, 2));
   }
 }
 

@@ -1,19 +1,30 @@
-const { Command, flags } = require('@oclif/command');
+const { flags } = require('@oclif/command');
 
-class UploadCommand extends Command {
+const CDNUploadCommand = require('./cdn/upload');
+const { getFilesAndDir, createTarball } = require('../../utils/file');
+
+/* Class representing the upload command */
+class UploadCommand extends CDNUploadCommand {
+  /**
+   * Execute the create command
+   * @returns {Promise<void>} Promise representing the command execution result
+   */
   async run() {
-    // TBD
-    this.log('This is not implemented yet');
+    const cmd = this.parse(UploadCommand);
+    const {
+      flags: { expiration },
+      args: { filepath }
+    } = cmd;
+
+    const result = await this._handleUpload(filepath, expiration);
+    
+    this.log('Upload completed and object sucessfully created');
   }
 }
 
 UploadCommand.args = [
   {
     name: 'filepath',
-    required: true
-  },
-  {
-    name: 'name',
     required: true
   }
 ];
@@ -22,19 +33,6 @@ UploadCommand.description =
   'Upload a file to the CDN and create an object in the Warehouse ledger';
 
 UploadCommand.flags = {
-  env: flags.string({
-    char: 'e',
-    description: 'object environment (e.g., production, test)'
-  }),
-  version: flags.string({
-    char: 'v',
-    description: 'object version (e.g., v1.2.1)',
-    required: true
-  }),
-  variant: flags.string({
-    char: 'a',
-    description: 'object variant (e.g., en_US)'
-  }),
   expiration: flags.string({
     char: 'x',
     description:
