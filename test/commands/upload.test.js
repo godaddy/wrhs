@@ -1,5 +1,4 @@
 const path = require('path');
-const sinon = require('sinon');
 const { expect, test } = require('@oclif/test');
 
 const BaseCommand = require('../../src/utils/base-command');
@@ -36,10 +35,6 @@ describe('upload', () => {
         }
       ]
     };
-  });
-
-  after(function () {
-    sinon.restore();
   });
 
   test
