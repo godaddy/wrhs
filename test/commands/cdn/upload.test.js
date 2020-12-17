@@ -46,7 +46,7 @@ describe('cdn:upload', () => {
       return api
         .post('/cdn?expiration=365d')
         .basicAuth({ user: TEST_USR, pass: TEST_PWD })
-        .matchHeader('Content-Length', (val) => val === '3072')
+        .matchHeader('Content-Length', (val) => parseInt(val, 10) === 3072)
         .reply(201, resData);
     })
     .do(() => {
