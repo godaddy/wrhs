@@ -1,7 +1,6 @@
 const { flags } = require('@oclif/command');
 
 const CDNUploadCommand = require('./cdn/upload');
-const { getFilesAndDir, createTarball } = require('../../utils/file');
 
 /* Class representing the upload command */
 class UploadCommand extends CDNUploadCommand {
@@ -17,7 +16,7 @@ class UploadCommand extends CDNUploadCommand {
     } = cmd;
 
     const result = await this._handleUpload(filepath, expiration);
-    
+
     this.log('Upload completed and object sucessfully created');
   }
 }

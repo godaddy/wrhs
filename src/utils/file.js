@@ -35,7 +35,7 @@ function _resolveHome(filepath) {
 /**
  * Get file stats using fs.stats
  * @param {string} filepath Path to the file or folder
- * @returns {Promise<FSStats>} Promise rappresenting the file stats
+ * @returns {Promise<FSStats>} Promise representing the file stats
  */
 async function getFileStats(filepath) {
   let stats;
@@ -85,10 +85,10 @@ async function getFilesAndDir(filepath) {
  * @returns {Promise<CreateTarballResult>} Promise rappresenting the absolute path to the tarball and a clean up callback
  */
 async function createTarball(dir, files) {
-  const { tarDir, delteTarDir } = await new Promise((resolve, reject) => {
+  const { tarDir, deleteTarDir } = await new Promise((resolve, reject) => {
     tmp.dir({ unsafeCleanup: true }, (err, tmpDir, cleanupCb) => {
       if (err) return reject(err);
-      resolve({ tarDir: tmpDir, delteTarDir: cleanupCb });
+      resolve({ tarDir: tmpDir, deleteTarDir: cleanupCb });
     });
   });
 
@@ -104,11 +104,11 @@ async function createTarball(dir, files) {
       files
     );
   } catch (err) {
-    delteTarDir();
+    deleteTarDir();
     throw err;
   }
 
-  return { tarPath, deleteTarball: delteTarDir };
+  return { tarPath, deleteTarball: deleteTarDir };
 }
 
 /**
