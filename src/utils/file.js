@@ -104,7 +104,7 @@ async function createTarball(dir, files) {
       files
     );
   } catch (err) {
-    delteTarDir();
+    deleteTarDir();
     throw err;
   }
 
