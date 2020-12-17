@@ -85,7 +85,7 @@ async function getFilesAndDir(filepath) {
  * @returns {Promise<CreateTarballResult>} Promise rappresenting the absolute path to the tarball and a clean up callback
  */
 async function createTarball(dir, files) {
-  const { tarDir, delteTarDir } = await new Promise((resolve, reject) => {
+  const { tarDir, deleteTarDir } = await new Promise((resolve, reject) => {
     tmp.dir({ unsafeCleanup: true }, (err, tmpDir, cleanupCb) => {
       if (err) return reject(err);
       resolve({ tarDir: tmpDir, delteTarDir: cleanupCb });
