@@ -1,7 +1,7 @@
 const { flags } = require('@oclif/command');
 
 const BaseCommand = require('../../utils/base-command');
-const { filepathToTarballStream } = require('../../utils/file');
+const { createTarball } = require('../../utils/file');
 
 /* Class representing the cdn:upload command */
 class UploadCommand extends BaseCommand {
@@ -16,14 +16,24 @@ class UploadCommand extends BaseCommand {
       args: { filepath }
     } = cmd;
 
-    const tarStream = await filepathToTarballStream(filepath);
+    const { tarPath, deleteTarball } = await createTarball(filepath);
 
-    const result = this._request._upload({
-      endpoint: '/cdn',
-      dataStream: tarStream
-    });
+    console.log(tarPath);
 
-    this.log(JSON.stringify(result, null, 2));
+    try {
+      const result = await this._request.uploadFile({
+        endpoint: '/cdn',
+        filepath: tarPath,
+        query: { expiration }
+      });
+
+      this.log(JSON.stringify(result, null, 2));
+    } catch (err) {
+      deleteTarball();
+      throw err;
+    }
+
+    deleteTarball();
   }
 }
 
