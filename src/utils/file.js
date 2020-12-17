@@ -108,7 +108,7 @@ async function createTarball(dir, files) {
     throw err;
   }
 
-  return { tarPath, deleteTarball: delteTarDir };
+  return { tarPath, deleteTarball: deleteTarDir };
 }
 
 /**
