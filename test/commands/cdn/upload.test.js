@@ -41,6 +41,10 @@ describe('cdn:upload', () => {
     };
   });
 
+  after(function () {
+    sinon.restore();
+  });
+
   test
     .nock(TEST_URL, function (api) {
       return api

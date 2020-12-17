@@ -31,7 +31,7 @@ class UploadCommand extends BaseCommand {
     deleteTarball();
 
     if (error) {
-      throw err;
+      throw error;
     }
 
     return result;
@@ -48,8 +48,8 @@ class UploadCommand extends BaseCommand {
       args: { filepath }
     } = cmd;
 
-    const result = await this._handleUpload(filepath, expiration)
-    
+    const result = await this._handleUpload(filepath, expiration);
+
     this.log(JSON.stringify(result, null, 2));
   }
 }
@@ -61,8 +61,7 @@ UploadCommand.args = [
   }
 ];
 
-UploadCommand.description =
-  'Upload a file to the CDN and create an object in the Warehouse ledger';
+UploadCommand.description = 'Upload a file to the Warehouse CDN';
 
 UploadCommand.flags = {
   expiration: flags.string({
