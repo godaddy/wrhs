@@ -1,6 +1,8 @@
-const { promises: fs } = require('fs');
+const fs = require('fs');
 const fetch = require('node-fetch');
 const { URL } = require('url');
+
+const { getFileStats } = require('./file');
 
 /**
  * @typedef {import('node-fetch').Response} NodeFetchResponse
@@ -112,15 +114,21 @@ class Request {
    * @param {string} opts.endpoint Upload endpoint
    * @param {ReadableStream} opts.dataStream Readable data stream
    * @param {number} opts.dataLength Data length in bytes
+   * @param {string} [opts.query] Querystring key-value parameters
    * @returns {Promise<Object>} Promise representing the upload result
    */
-  async _upload({ endpoint, dataStream, dataLength }) {
+  async _upload({ endpoint, dataStream, dataLength, query = {} }) {
+    const uploadUrl = new URL(`${this._baseUrl}${endpoint}`);
+    Object.keys(query).forEach(
+      (key) => query[key] && uploadUrl.searchParams.append(key, query[key])
+    );
+
     /** @type NodeFetchResponse */
-    const resp = fetch(endpoint, {
+    const resp = await fetch(uploadUrl, {
       method: 'post',
       headers: {
         'Authorization': this._auth,
-        'Content-length': dataLength
+        'Content-Length': dataLength
       },
       body: dataStream
     });
@@ -136,29 +144,22 @@ class Request {
 
   /**
    * Upload a file using an http POST request
-   * @param {string} endpoint Upload endpoint
-   * @param {string} file Absolute path to the file
+   * @param {Object} opts Method paramaters
+   * @param {string} opts.endpoint Upload endpoint
+   * @param {string} opts.filepath Absolute path to the file
+   * @param {string} [opts.query] Querystring key-value parameters
    * @returns {Promise<Object>} Promise representing the upload result
    */
-  async uploadFile(endpoint, file) {
-    let stats;
-    try {
-      stats = await fs.stat(file);
-    } catch (err) {
-      if (err.code === 'ENOENT') {
-        throw new Error(`File not found: ${file}`);
-      }
-      throw err;
-    }
+  async uploadFile({ endpoint, filepath, query = {} }) {
+    const { size: dataLength } = await getFileStats(filepath);
 
-    const { size: dataLength } = stats;
-
-    const dataStream = fs.createReadStream(file);
+    const dataStream = fs.createReadStream(filepath);
 
     return this._upload({
       endpoint,
       dataLength,
-      dataStream
+      dataStream,
+      query
     });
   }
 
