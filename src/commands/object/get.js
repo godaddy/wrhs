@@ -15,7 +15,7 @@ class GetCommand extends BaseCommand {
       args: { name }
     } = cmd;
 
-    const result = await this._request.get(`/objects/${name}`, {
+    const result = await this._request.get(`/objects/${encodeURIComponent(name)}`, {
       accepted_variants: acceptedVariants,
       env,
       version

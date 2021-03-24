@@ -15,7 +15,7 @@ class SetHead extends BaseCommand {
       args: { name }
     } = cmd;
 
-    await this._request.put(`/objects/${name}/${env}`, {
+    await this._request.put(`/objects/${encodeURIComponent(name)}/${encodeURIComponent(env)}`, {
       head: version
     });
 
