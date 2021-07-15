@@ -1,7 +1,7 @@
 {
   "name": "wrhs",
   "description": "Robust CLI for the next generation of Object ledger and CDN",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "author": "GoDaddy.com Operating Company LLC",
   "bin": {
     "wrhs": "./bin/run"
