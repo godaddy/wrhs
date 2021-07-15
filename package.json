@@ -6,6 +6,9 @@
   "bin": {
     "wrhs": "./bin/run"
   },
+  "exports": {
+    "./request": "./src/utils/request.js"
+  },
   "bugs": "https://github.com/warehouseai/wrhs/issues",
   "dependencies": {
     "@oclif/command": "^1.8.0",
