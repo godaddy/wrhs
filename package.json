@@ -1,13 +1,10 @@
 {
   "name": "wrhs",
   "description": "Robust CLI for the next generation of Object ledger and CDN",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "author": "GoDaddy.com Operating Company LLC",
   "bin": {
     "wrhs": "./bin/run"
-  },
-  "exports": {
-    "./request": "./src/utils/request.js"
   },
   "bugs": "https://github.com/warehouseai/wrhs/issues",
   "dependencies": {
@@ -52,6 +49,9 @@
   ],
   "license": "MIT",
   "main": "src/index.js",
+  "exports": {
+    "./request": "./src/utils/request.js"
+  },
   "oclif": {
     "commands": "./src/commands",
     "bin": "wrhs",
