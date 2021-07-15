@@ -15,11 +15,14 @@ class GetCommand extends BaseCommand {
       args: { name }
     } = cmd;
 
-    const result = await this._request.get(`/objects/${encodeURIComponent(name)}`, {
-      accepted_variants: acceptedVariants,
-      env,
-      version
-    });
+    const result = await this._request.get(
+      `/objects/${encodeURIComponent(name)}`,
+      {
+        accepted_variants: acceptedVariants,
+        env,
+        version
+      }
+    );
 
     this.log(JSON.stringify(result, null, 2));
   }
