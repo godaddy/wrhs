@@ -1,7 +1,7 @@
 {
   "name": "wrhs",
   "description": "Robust CLI for the next generation of Object ledger and CDN",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "author": "GoDaddy.com Operating Company LLC",
   "bin": {
     "wrhs": "./bin/run"
@@ -49,9 +49,6 @@
   ],
   "license": "MIT",
   "main": "src/index.js",
-  "exports": {
-    "./request": "./src/utils/request.js"
-  },
   "oclif": {
     "commands": "./src/commands",
     "bin": "wrhs",
