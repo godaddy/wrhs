@@ -1,11 +1,14 @@
-# Warehouse CLI
-
-Robust CLI for the next generation of Object ledger and CDN.
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/wrhs.svg)](https://npmjs.org/package/wrhs)
 [![Downloads/week](https://img.shields.io/npm/dw/wrhs.svg)](https://npmjs.org/package/wrhs)
 [![License](https://img.shields.io/npm/l/wrhs.svg)](https://github.com/https://github.com/warehouseai/wrhs/wrhs/blob/master/package.json)
+[![npm Downloads](https://img.shields.io/npm/dm/wrhs.svg?style=flat-square)](https://npmcharts.com/compare/wrhs?minimal=true)
+[![Dependencies](https://img.shields.io/david/warehouseai/wrhs.svg?style=flat-square)](https://github.com/warehouseai/wrhs/blob/master/package.json)
+
+# Warehouse CLI
+
+Robust CLI for the next generation of Object ledger and CDN.
 
 <!-- toc -->
 * [Warehouse CLI](#warehouse-cli)
