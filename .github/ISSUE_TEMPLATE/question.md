@@ -4,7 +4,7 @@ about: You need help using the Warehouse CLI or want to discuss a topic or featu
 labels: "Type: Question"
 ---
 
-GitHub Issues in `warehouse.ai/wrhs` repository are used exclusively for tracking bugs in the Warehouse CLI.
+GitHub Issues in `warehouseai/wrhs` repository are used exclusively for tracking bugs in the Warehouse CLI.
 Please do not submit support requests through GitHub. Bugs are inherent software issues or problems
 potentially affecting anyone who uses this project. Whereas support request are unique issues experienced
 by the consumer. If you have doubts whether a problem is a bug or support request feel free to reach out

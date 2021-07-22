@@ -1,209 +1,75 @@
-# `wrhs`
+# Warehouse CLI
 
-[![Version npm](https://img.shields.io/npm/v/wrhs.svg?style=flat-square)](https://www.npmjs.com/package/wrhs)
-[![License](https://img.shields.io/npm/l/wrhs.svg?style=flat-square)](https://github.com/warehouseai/wrhs/blob/master/LICENSE)
-[![npm Downloads](https://img.shields.io/npm/dm/wrhs.svg?style=flat-square)](https://npmcharts.com/compare/wrhs?minimal=true)
-[![Build Status](https://travis-ci.org/warehouseai/wrhs.svg?branch=master)](https://travis-ci.org/warehouseai/wrhs)
-[![Dependencies](https://img.shields.io/david/warehouseai/wrhs.svg?style=flat-square)](https://github.com/warehouseai/wrhs/blob/master/package.json)
+Robust CLI for the next generation of Object ledger and CDN.
 
-CLI for [Warehouse.ai]. CLI to manage build pipelines & asset deployments
-for your front-end apps powered by [Warehouse.ai]. There is also a
-[web-based UI][wrhs-ui] available for [Warehouse.ai].
+[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
+[![Version](https://img.shields.io/npm/v/wrhs.svg)](https://npmjs.org/package/wrhs)
+[![Downloads/week](https://img.shields.io/npm/dw/wrhs.svg)](https://npmjs.org/package/wrhs)
+[![License](https://img.shields.io/npm/l/wrhs.svg)](https://github.com/https://github.com/warehouseai/wrhs/wrhs/blob/master/package.json)
 
-* [Install](#install)
+<!-- toc -->
+* [Warehouse CLI](#warehouse-cli)
 * [Usage](#usage)
-* [Configuration](#configuration)
 * [Commands](#commands)
-
-## Install
-
-Global installation of the CLI is preferred.
-
-```sh-session
-npm install -g wrhs
-```
-
-Ensure [configuration](#configuration) is setup before you run any commands.
-
-## Usage
+<!-- tocstop -->
+# Usage
 <!-- usage -->
 ```sh-session
 $ npm install -g wrhs
 $ wrhs COMMAND
 running command...
 $ wrhs (-v|--version|version)
-wrhs/0.8.0 darwin-x64 node-v10.16.2
+wrhs/1.0.0-alpha.4 darwin-x64 node-v14.15.0
 $ wrhs --help [COMMAND]
 USAGE
   $ wrhs COMMAND
 ...
 ```
 <!-- usagestop -->
-
-## Configuration
-
-`wrhs` configuration can be passed in via CLI flags (more information on this
-below), or by creating a configuration file at `~/.wrhs`. _Note: by default
-the CLI expects the configuration file to be available under your home folder._
-
-### Example `.wrhs` file:
-```
-{
-  "hosts": {
-    "wrhs": "warehouse.ai",
-    "status": "warehouse-status.ai"
-  },
-  "auth": {
-    "user": "username",
-    "pass": "password"
-  }
-}
-```
-
-## Commands
+# Commands
 <!-- commands -->
-* [`wrhs build PACKAGE ENV`](#wrhs-build-package-env)
-* [`wrhs get:build PACKAGE ENV [LOCALE]`](#wrhs-getbuild-package-env-locale)
-* [`wrhs get:head PACKAGE ENV`](#wrhs-gethead-package-env)
-* [`wrhs get:release-line PACKAGE`](#wrhs-getrelease-line-package)
-* [`wrhs get:status PACKAGE ENV`](#wrhs-getstatus-package-env)
+* [`wrhs cdn`](#wrhs-cdn)
+* [`wrhs cdn:upload FILEPATH`](#wrhs-cdnupload-filepath)
 * [`wrhs help [COMMAND]`](#wrhs-help-command)
-* [`wrhs promote PACKAGE ENV`](#wrhs-promote-package-env)
+* [`wrhs object`](#wrhs-object)
+* [`wrhs object:create NAME`](#wrhs-objectcreate-name)
+* [`wrhs object:get NAME`](#wrhs-objectget-name)
+* [`wrhs object:set-head NAME`](#wrhs-objectset-head-name)
+* [`wrhs upload FILEPATH NAME`](#wrhs-upload-filepath-name)
 
-## `wrhs build PACKAGE ENV`
-
-Triggers a build for a specific version on warehouse. 
-
-```
-USAGE
-  $ wrhs build PACKAGE ENV
-
-ARGUMENTS
-  PACKAGE  The package to build. Make sure it is in the form packageName@version where `version` is the specific version
-           to build
-
-  ENV      The environment to build in
-
-OPTIONS
-  -c, --config=config            The file location of the warehouse config, defaults to `~/.wrhs`
-  -h, --host=host                The base url for the warehouse API
-  -j, --json                     Output response data as JSON
-  -m, --promote                  Should promotion happen on successful build. Defaults to false
-  -p, --pass=pass                Password
-  -s, --status-host=status-host  The base url for the warehouse status API
-  -u, --user=user                Username
-
-DESCRIPTION
-  -m Optionally specify if promotion should happen on successful build
-```
-
-_See code: [src/commands/build.js](https://github.com/warehouseai/wrhs/blob/0.8.0/src/commands/build.js)_
-
-## `wrhs get:build PACKAGE ENV [LOCALE]`
-
-Gets information about builds that exist in warehouse.
+## `wrhs cdn`
 
 ```
 USAGE
-  $ wrhs get:build PACKAGE ENV [LOCALE]
-
-ARGUMENTS
-  PACKAGE  The package to get builds for
-  ENV      The environment to get builds for
-  LOCALE   The specific locale to fetch. Defaults to en-US
+  $ wrhs cdn
 
 OPTIONS
-  -c, --config=config            The file location of the warehouse config, defaults to `~/.wrhs`
-  -h, --host=host                The base url for the warehouse API
-  -j, --json                     Output response data as JSON
-  -p, --pass=pass                Password
-  -s, --status-host=status-host  The base url for the warehouse status API
-  -u, --user=user                Username
-
-DESCRIPTION
-  If no version is specified, the head version will be returned.
+  --boolean
+  --build
+  --enum
+  --help
+  --integer
+  --option
+  --string
+  --version
 ```
 
-_See code: [src/commands/get/build.js](https://github.com/warehouseai/wrhs/blob/0.8.0/src/commands/get/build.js)_
+_See code: [src/commands/cdn/index.js](https://github.com/warehouseai/wrhs/blob/v1.0.0-alpha.4/src/commands/cdn/index.js)_
 
-## `wrhs get:head PACKAGE ENV`
+## `wrhs cdn:upload FILEPATH`
 
-Shows information about the head build for the given package in the given environment.
+Upload a file to the Warehouse CDN
 
 ```
 USAGE
-  $ wrhs get:head PACKAGE ENV
-
-ARGUMENTS
-  PACKAGE  The package to get the head build for
-  ENV      The environment to get the head build for
+  $ wrhs cdn:upload FILEPATH
 
 OPTIONS
-  -c, --config=config            The file location of the warehouse config, defaults to `~/.wrhs`
-  -h, --host=host                The base url for the warehouse API
-  -j, --json                     Output response data as JSON
-  -p, --pass=pass                Password
-  -s, --status-host=status-host  The base url for the warehouse status API
-  -u, --user=user                Username
-
-DESCRIPTION
-  Accepts an optional locale.
+  -x, --expiration=expiration  object expiration in human readable format or milliseconds (e.g., 365d, 48h,
+                               1607973280797)
 ```
 
-_See code: [src/commands/get/head.js](https://github.com/warehouseai/wrhs/blob/0.8.0/src/commands/get/head.js)_
-
-## `wrhs get:release-line PACKAGE`
-
-Gets information about a given release line from warehouse.
-
-```
-USAGE
-  $ wrhs get:release-line PACKAGE
-
-ARGUMENTS
-  PACKAGE  The package and version (optional) to get the release line for (example: `pkg@1.2.3`)
-
-OPTIONS
-  -c, --config=config            The file location of the warehouse config, defaults to `~/.wrhs`
-  -h, --host=host                The base url for the warehouse API
-  -j, --json                     Output response data as JSON
-  -p, --pass=pass                Password
-  -s, --status-host=status-host  The base url for the warehouse status API
-  -u, --user=user                Username
-```
-
-_See code: [src/commands/get/release-line.js](https://github.com/warehouseai/wrhs/blob/0.8.0/src/commands/get/release-line.js)_
-
-## `wrhs get:status PACKAGE ENV`
-
-Get information about the status of a build.
-
-```
-USAGE
-  $ wrhs get:status PACKAGE ENV
-
-ARGUMENTS
-  PACKAGE  The package to get status information for
-  ENV      The environment to get status information for
-
-OPTIONS
-  -c, --config=config            The file location of the warehouse config, defaults to `~/.wrhs`
-  -e, --events                   Should status events be fetched. Defaults to false
-  -h, --host=host                The base url for the warehouse API
-  -j, --json                     Output response data as JSON
-  -l, --locale=locale            Only get events for a specific locale
-  -p, --pass=pass                Password
-  -s, --status-host=status-host  The base url for the warehouse status API
-  -u, --user=user                Username
-
-  -v, --verbose                  Should status events be more verbose. Events will print out their details property.
-                                 Defaults to false
-
-DESCRIPTION
-  -e can be used to get the more granular status events.
-```
-
-_See code: [src/commands/get/status.js](https://github.com/warehouseai/wrhs/blob/0.8.0/src/commands/get/status.js)_
+_See code: [src/commands/cdn/upload.js](https://github.com/warehouseai/wrhs/blob/v1.0.0-alpha.4/src/commands/cdn/upload.js)_
 
 ## `wrhs help [COMMAND]`
 
@@ -220,38 +86,94 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.1/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.0/src/commands/help.ts)_
 
-## `wrhs promote PACKAGE ENV`
-
-Promotes a build for a specific version on warehouse. 
+## `wrhs object`
 
 ```
 USAGE
-  $ wrhs promote PACKAGE ENV
-
-ARGUMENTS
-  PACKAGE  The package to promote. Make sure it is in the form packageName@version where `version` is the specific
-           version to promote. If NOT using the -b optional build flag,please make sure that the specific version is
-           already built.
-
-  ENV      The environment to promote to
+  $ wrhs object
 
 OPTIONS
-  -b, --build                    Should build the package before promoting. Defaults to false
-  -c, --config=config            The file location of the warehouse config, defaults to `~/.wrhs`
-  -h, --host=host                The base url for the warehouse API
-  -j, --json                     Output response data as JSON
-  -p, --pass=pass                Password
-  -s, --status-host=status-host  The base url for the warehouse status API
-  -u, --user=user                Username
-
-DESCRIPTION
-  -b Optionally specify to build as well
+  --boolean
+  --build
+  --enum
+  --help
+  --integer
+  --option
+  --string
+  --version
 ```
 
-_See code: [src/commands/promote.js](https://github.com/warehouseai/wrhs/blob/0.8.0/src/commands/promote.js)_
-<!-- commandsstop -->
+_See code: [src/commands/object/index.js](https://github.com/warehouseai/wrhs/blob/v1.0.0-alpha.4/src/commands/object/index.js)_
 
-[Warehouse.ai]: https://github.com/godaddy/warehouse.ai
-[wrhs-ui]: https://github.com/godaddy/warehouse.ai-ui
+## `wrhs object:create NAME`
+
+Create an object in the Warehouse ledger
+
+```
+USAGE
+  $ wrhs object:create NAME
+
+OPTIONS
+  -a, --variant=variant        object variant (e.g., en_US)
+  -d, --data=data              object data (e.g., '{ "foo": "bar" }')
+  -e, --env=env                object environment (e.g., production, test)
+  -v, --version=version        (required) object version (e.g., v1.2.1)
+
+  -x, --expiration=expiration  object expiration in human readable format or milliseconds (e.g., 365d, 48h,
+                               1607973280797)
+```
+
+_See code: [src/commands/object/create.js](https://github.com/warehouseai/wrhs/blob/v1.0.0-alpha.4/src/commands/object/create.js)_
+
+## `wrhs object:get NAME`
+
+Get an object from the Warehouse ledger
+
+```
+USAGE
+  $ wrhs object:get NAME
+
+OPTIONS
+  -a, --accepted-variants=accepted-variants  accepted object variants (e.g., en_US,fr_CA)
+  -e, --env=env                              object environment (e.g., production, test)
+  -v, --version=version                      object version (e.g., v1.2.1)
+```
+
+_See code: [src/commands/object/get.js](https://github.com/warehouseai/wrhs/blob/v1.0.0-alpha.4/src/commands/object/get.js)_
+
+## `wrhs object:set-head NAME`
+
+Set the object head to a specific version
+
+```
+USAGE
+  $ wrhs object:set-head NAME
+
+OPTIONS
+  -e, --env=env          [default: production] object environment (e.g., production, test)
+  -v, --version=version  (required) object head version (e.g., v1.2.1)
+```
+
+_See code: [src/commands/object/set-head.js](https://github.com/warehouseai/wrhs/blob/v1.0.0-alpha.4/src/commands/object/set-head.js)_
+
+## `wrhs upload FILEPATH NAME`
+
+Upload a file to the CDN and create an object in the Warehouse ledger
+
+```
+USAGE
+  $ wrhs upload FILEPATH NAME
+
+OPTIONS
+  -a, --variant=variant        object variant (e.g., en_US)
+  -e, --env=env                object environment (e.g., production, test)
+  -v, --version=version        (required) object version (e.g., v1.2.1)
+
+  -x, --expiration=expiration  object expiration in human readable format or milliseconds (e.g., 365d, 48h,
+                               1607973280797)
+```
+
+_See code: [src/commands/upload.js](https://github.com/warehouseai/wrhs/blob/v1.0.0-alpha.4/src/commands/upload.js)_
+<!-- commandsstop -->

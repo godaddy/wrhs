@@ -1,19 +1,37 @@
 {
   "name": "wrhs",
-  "version": "0.8.0",
-  "description": "Flawless CLI management of build pipelines & asset deployments for your front-end apps powered by Warehouse.ai.",
-  "main": "src/index.js",
+  "description": "Robust CLI for the next generation of Object ledger and CDN",
+  "version": "1.0.0-alpha.4",
+  "author": "GoDaddy.com Operating Company LLC",
   "bin": {
     "wrhs": "./bin/run"
   },
-  "scripts": {
-    "lint": "eslint-godaddy src/*.js src/**/*.js test/*.js test/**/*.js",
-    "postpack": "rm -f oclif.manifest.json npm-shrinkwrap.json",
-    "prepack": "oclif-dev manifest && oclif-dev readme && npm shrinkwrap",
-    "posttest": "npm run lint",
-    "test": "nyc mocha \"test/**/*.test.js\"",
-    "test:mocha": "TEST_OUTPUT=1 nyc mocha 'test/**/*.test.js'",
-    "version": "oclif-dev readme && git add README.md"
+  "bugs": "https://github.com/warehouseai/wrhs/issues",
+  "dependencies": {
+    "@oclif/command": "^1.8.0",
+    "@oclif/config": "^1.17.0",
+    "@oclif/plugin-help": "^3.2.0",
+    "ms": "^2.1.3",
+    "node-fetch": "^2.6.1",
+    "tar": "^6.0.5",
+    "tmp": "^0.2.1"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1.25.1",
+    "@oclif/test": "^1.2.8",
+    "@types/node-fetch": "^2.5.7",
+    "chai": "^4.2.0",
+    "eslint": "^7.15.0",
+    "eslint-config-godaddy": "^4.0.1",
+    "eslint-plugin-mocha": "^8.0.0",
+    "globby": "^11.0.1",
+    "mocha": "^8.2.1",
+    "nyc": "^15.1.0",
+    "prettier": "^2.2.1",
+    "sinon": "^9.2.2"
+  },
+  "engines": {
+    "node": ">=12.0.0"
   },
   "files": [
     "/bin",
@@ -21,72 +39,39 @@
     "/oclif.manifest.json",
     "/src"
   ],
-  "engines": {
-    "node": ">= 8.0.0"
-  },
-  "homepage": "https://github.com/warehouseai/wrhs#readme",
-  "author": "GoDaddy.com Operating Company, LLC",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/warehouseai/wrhs/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/warehouseai/wrhs.git"
-  },
+  "homepage": "https://github.com/warehouseai/wrhs",
   "keywords": [
-    "warehouse.ai",
-    "wrhs",
     "warehouse",
-    "webpack",
-    "browserify",
-    "s3",
-    "cloud",
-    "npm",
-    "build",
-    "serverless",
-    "babel",
-    "oclif"
+    "ledger",
+    "asset",
+    "object",
+    "cdn"
   ],
-  "dependencies": {
-    "@oclif/command": "^1.5.13",
-    "@oclif/config": "^1.13.0",
-    "@oclif/plugin-help": "^2.1.6",
-    "chalk": "^2.4.2",
-    "cli-columns": "^3.1.2",
-    "debug": "^4.1.1",
-    "terminal-link": "^1.3.0",
-    "tinythen": "^1.0.1",
-    "untildify": "^4.0.0",
-    "warehouse.ai-api-client": "^4.4.0"
-  },
-  "devDependencies": {
-    "@oclif/dev-cli": "^1.22.0",
-    "@oclif/test": "^1.2.4",
-    "assume": "^2.2.0",
-    "assume-sinon": "^1.0.1",
-    "chai": "^4.1.2",
-    "eslint": "^5.16.0",
-    "eslint-config-godaddy": "^3.0.0",
-    "eslint-config-oclif": "^3.1.0",
-    "eslint-plugin-json": "^1.4.0",
-    "eslint-plugin-mocha": "^5.3.0",
-    "mocha": "^5.2.0",
-    "nock": "^10.0.6",
-    "nyc": "^13.3.0",
-    "sinon": "^7.3.2"
-  },
+  "license": "MIT",
+  "main": "src/index.js",
   "oclif": {
     "commands": "./src/commands",
-    "topics": {
-      "get": {
-        "description": "get information about things in warehouse"
-      }
-    },
-    "repositoryPrefix": "<%- repo %>/blob/<%- version %>/<%- commandPath %>",
     "bin": "wrhs",
     "plugins": [
       "@oclif/plugin-help"
     ]
+  },
+  "repository": "https://github.com/warehouseai/wrhs",
+  "scripts": {
+    "postpack": "rm -f oclif.manifest.json",
+    "posttest": "npm run lint",
+    "prepack": "oclif-dev manifest && oclif-dev readme",
+    "test": "nyc mocha --forbid-only \"test/**/*.test.js\"",
+    "version": "oclif-dev readme && git add README.md",
+    "lint": "npm run prettier && npm run eslint",
+    "eslint": "eslint --max-warnings 0 --ignore-pattern /.nyc_output ./",
+    "prettier": "prettier --write src test"
+  },
+  "prettier": {
+    "trailingComma": "none",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true,
+    "quoteProps": "consistent"
   }
 }
