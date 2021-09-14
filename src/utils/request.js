@@ -128,7 +128,8 @@ class Request {
       method: 'post',
       headers: {
         'Authorization': this._auth,
-        'Content-Length': dataLength
+        'Content-Length': dataLength,
+        'Content-Type': 'application/octet-stream'
       },
       body: dataStream
     });
