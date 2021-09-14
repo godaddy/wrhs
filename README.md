@@ -22,7 +22,7 @@ $ npm install -g wrhs
 $ wrhs COMMAND
 running command...
 $ wrhs (-v|--version|version)
-wrhs/1.0.0 darwin-x64 node-v14.15.0
+wrhs/1.0.0 darwin-x64 node-v12.14.1
 $ wrhs --help [COMMAND]
 USAGE
   $ wrhs COMMAND
