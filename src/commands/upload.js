@@ -11,11 +11,11 @@ class UploadCommand extends CdnUploadCommand {
   async run() {
     const cmd = this.parse(UploadCommand);
     const {
-      flags: { env, expiration, variant, version },
+      flags: { cdn_base_url: cdnBaseUrl, env, expiration, variant, version },
       args: { filepath, name }
     } = cmd;
 
-    const data = await this._handleUpload(filepath, expiration);
+    const data = await this._handleUpload(filepath, expiration, cdnBaseUrl);
 
     await this._request.post('/objects', {
       name,
@@ -62,6 +62,11 @@ UploadCommand.flags = {
     char: 'x',
     description:
       'object expiration in human readable format or milliseconds (e.g., 365d, 48h, 1607973280797)'
+  }),
+  cdn_base_url: flags.string({
+    char: 'u',
+    description:
+      'cdn base url value that overrides default one configued in the server'
   })
 };
 

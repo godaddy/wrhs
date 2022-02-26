@@ -22,7 +22,7 @@ $ npm install -g wrhs
 $ wrhs COMMAND
 running command...
 $ wrhs (-v|--version|version)
-wrhs/1.0.1 darwin-x64 node-v12.14.1
+wrhs/1.1.0 darwin-x64 node-v16.13.1
 $ wrhs --help [COMMAND]
 USAGE
   $ wrhs COMMAND
@@ -57,7 +57,7 @@ OPTIONS
   --version
 ```
 
-_See code: [src/commands/cdn/index.js](https://github.com/warehouseai/wrhs/blob/v1.0.1/src/commands/cdn/index.js)_
+_See code: [src/commands/cdn/index.js](https://github.com/warehouseai/wrhs/blob/v1.1.0/src/commands/cdn/index.js)_
 
 ## `wrhs cdn:upload FILEPATH`
 
@@ -68,11 +68,13 @@ USAGE
   $ wrhs cdn:upload FILEPATH
 
 OPTIONS
-  -x, --expiration=expiration  object expiration in human readable format or milliseconds (e.g., 365d, 48h,
-                               1607973280797)
+  -u, --cdn_base_url=cdn_base_url  cdn base url value that overrides default one configued in the server
+
+  -x, --expiration=expiration      object expiration in human readable format or milliseconds (e.g., 365d, 48h,
+                                   1607973280797)
 ```
 
-_See code: [src/commands/cdn/upload.js](https://github.com/warehouseai/wrhs/blob/v1.0.1/src/commands/cdn/upload.js)_
+_See code: [src/commands/cdn/upload.js](https://github.com/warehouseai/wrhs/blob/v1.1.0/src/commands/cdn/upload.js)_
 
 ## `wrhs help [COMMAND]`
 
@@ -108,7 +110,7 @@ OPTIONS
   --version
 ```
 
-_See code: [src/commands/object/index.js](https://github.com/warehouseai/wrhs/blob/v1.0.1/src/commands/object/index.js)_
+_See code: [src/commands/object/index.js](https://github.com/warehouseai/wrhs/blob/v1.1.0/src/commands/object/index.js)_
 
 ## `wrhs object:create NAME`
 
@@ -128,7 +130,7 @@ OPTIONS
                                1607973280797)
 ```
 
-_See code: [src/commands/object/create.js](https://github.com/warehouseai/wrhs/blob/v1.0.1/src/commands/object/create.js)_
+_See code: [src/commands/object/create.js](https://github.com/warehouseai/wrhs/blob/v1.1.0/src/commands/object/create.js)_
 
 ## `wrhs object:get NAME`
 
@@ -144,7 +146,7 @@ OPTIONS
   -v, --version=version                      object version (e.g., v1.2.1)
 ```
 
-_See code: [src/commands/object/get.js](https://github.com/warehouseai/wrhs/blob/v1.0.1/src/commands/object/get.js)_
+_See code: [src/commands/object/get.js](https://github.com/warehouseai/wrhs/blob/v1.1.0/src/commands/object/get.js)_
 
 ## `wrhs object:set-head NAME`
 
@@ -159,7 +161,7 @@ OPTIONS
   -v, --version=version  (required) object head version (e.g., v1.2.1)
 ```
 
-_See code: [src/commands/object/set-head.js](https://github.com/warehouseai/wrhs/blob/v1.0.1/src/commands/object/set-head.js)_
+_See code: [src/commands/object/set-head.js](https://github.com/warehouseai/wrhs/blob/v1.1.0/src/commands/object/set-head.js)_
 
 ## `wrhs upload FILEPATH NAME`
 
@@ -170,13 +172,14 @@ USAGE
   $ wrhs upload FILEPATH NAME
 
 OPTIONS
-  -a, --variant=variant        object variant (e.g., en_US)
-  -e, --env=env                object environment (e.g., production, test)
-  -v, --version=version        (required) object version (e.g., v1.2.1)
+  -a, --variant=variant            object variant (e.g., en_US)
+  -e, --env=env                    object environment (e.g., production, test)
+  -u, --cdn_base_url=cdn_base_url  cdn base url value that overrides default one configued in the server
+  -v, --version=version            (required) object version (e.g., v1.2.1)
 
-  -x, --expiration=expiration  object expiration in human readable format or milliseconds (e.g., 365d, 48h,
-                               1607973280797)
+  -x, --expiration=expiration      object expiration in human readable format or milliseconds (e.g., 365d, 48h,
+                                   1607973280797)
 ```
 
-_See code: [src/commands/upload.js](https://github.com/warehouseai/wrhs/blob/v1.0.1/src/commands/upload.js)_
+_See code: [src/commands/upload.js](https://github.com/warehouseai/wrhs/blob/v1.1.0/src/commands/upload.js)_
 <!-- commandsstop -->

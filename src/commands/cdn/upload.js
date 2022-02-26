@@ -10,9 +10,10 @@ class UploadCommand extends BaseCommand {
    * @protected
    * @param {string} filepath Path to the file or folder
    * @param {string|number} expiration Files expiration in ms or human readable format
+   * @param {string} cdnBaseUrl CDN Base Url that overrides default one configued at server level
    * @returns {Promise<Object>} Promise representing upload response data
    */
-  async _handleUpload(filepath, expiration) {
+  async _handleUpload(filepath, expiration, cdnBaseUrl) {
     const { files, dir } = await getFilesAndDir(filepath);
     const { tarPath, deleteTarball } = await createTarball(dir, files);
 
@@ -22,7 +23,7 @@ class UploadCommand extends BaseCommand {
       result = await this._request.uploadFile({
         endpoint: '/cdn',
         filepath: tarPath,
-        query: { expiration }
+        query: { expiration, cdn_base_url: cdnBaseUrl }
       });
     } catch (err) {
       error = err;
@@ -44,11 +45,11 @@ class UploadCommand extends BaseCommand {
   async run() {
     const cmd = this.parse(UploadCommand);
     const {
-      flags: { expiration },
+      flags: { expiration, cdn_base_url: cdnBaseUrl },
       args: { filepath }
     } = cmd;
 
-    const result = await this._handleUpload(filepath, expiration);
+    const result = await this._handleUpload(filepath, expiration, cdnBaseUrl);
 
     this.log(JSON.stringify(result, null, 2));
   }
@@ -68,6 +69,11 @@ UploadCommand.flags = {
     char: 'x',
     description:
       'object expiration in human readable format or milliseconds (e.g., 365d, 48h, 1607973280797)'
+  }),
+  cdn_base_url: flags.string({
+    char: 'u',
+    description:
+      'cdn base url value that overrides default one configued in the server'
   })
 };
 
