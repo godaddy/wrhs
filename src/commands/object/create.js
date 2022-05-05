@@ -40,6 +40,12 @@ class CreateCommand extends BaseCommand {
       data = await this._readStdin();
     }
 
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (err) {}
+    }
+
     await this._request.post('/objects', {
       name,
       env,
