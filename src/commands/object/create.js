@@ -38,6 +38,8 @@ class CreateCommand extends BaseCommand {
 
     if (!data) {
       data = await this._readStdin();
+    } else if (typeof data === 'string') {
+      data = JSON.parse(data);
     }
 
     await this._request.post('/objects', {
