@@ -43,9 +43,7 @@ class CreateCommand extends BaseCommand {
     if (typeof data === 'string') {
       try {
         data = JSON.parse(data);
-      } catch (err) {
-        console.error(`Unable to parse due to: ${err}`);
-      }
+      } catch (err) {}
     }
 
     await this._request.post('/objects', {
