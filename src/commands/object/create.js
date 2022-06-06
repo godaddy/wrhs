@@ -43,6 +43,7 @@ class CreateCommand extends BaseCommand {
     if (typeof data === 'string') {
       try {
         data = JSON.parse(data);
+        // eslint-disable-next-line no-empty
       } catch (err) {}
     }
 
