@@ -47,7 +47,7 @@ class CreateCommand extends BaseCommand {
       } catch (err) {}
     }
 
-    await this._request.post('/objects', {
+    await this._sdk.object().create({
       name,
       env,
       expiration,

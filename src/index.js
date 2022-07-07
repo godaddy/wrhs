@@ -1,2 +1,3 @@
 module.exports = require('@oclif/command');
-module.exports.Request = require('./utils/request');
+// Keep exporting Request for backward compatibility
+module.exports.Request = require('./utils/base-command').Request;

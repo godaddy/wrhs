@@ -17,7 +17,7 @@ class UploadCommand extends CdnUploadCommand {
 
     const data = await this._handleUpload(filepath, expiration, cdnBaseUrl);
 
-    await this._request.post('/objects', {
+    await this._sdk.object().create({
       name,
       env,
       expiration,

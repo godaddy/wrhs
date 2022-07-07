@@ -15,12 +15,11 @@ class SetHead extends BaseCommand {
       args: { name }
     } = cmd;
 
-    await this._request.put(
-      `/objects/${encodeURIComponent(name)}/${encodeURIComponent(env)}`,
-      {
-        head: version
-      }
-    );
+    await this._sdk.object().setHead({
+      name,
+      env,
+      version
+    });
 
     this.log(
       `Head set succesfully to version ${version} in ${env} for ${name}`
