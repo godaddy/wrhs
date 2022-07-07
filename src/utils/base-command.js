@@ -1,7 +1,7 @@
 const { Command } = require('@oclif/command');
+const { WarehouseSDK, WarehouseRequest } = require('warehouse.ai-api-client');
 
 const Config = require('./config');
-const { WarehouseSDK, WarehouseRequest } = require('warehouse.ai-api-client');
 
 /* Class representing a Base command */
 class BaseCommand extends Command {

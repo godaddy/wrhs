@@ -1,10 +1,10 @@
 const { flags } = require('@oclif/command');
-
-const BaseCommand = require('../../utils/base-command');
 const {
   getFilesAndDir,
   createTarball
 } = require('warehouse.ai-api-client/lib/utils/file');
+
+const BaseCommand = require('../../utils/base-command');
 
 /* Class representing the cdn:upload command */
 class UploadCommand extends BaseCommand {
