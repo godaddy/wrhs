@@ -12,7 +12,6 @@ class BaseCommand extends Command {
     super(...arguments);
     this._config = new BaseCommand.Config();
     const { baseUrl, username, password } = this._config.load();
-    // Keep _request for backward compatibility
     this._request = new BaseCommand.Request({ baseUrl, username, password });
     // Since v1.2.0 wrhs starts using dedicated SDK
     this._sdk = new BaseCommand.WarehouseSDK({ baseUrl, username, password });
