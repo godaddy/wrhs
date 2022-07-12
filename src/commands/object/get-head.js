@@ -10,9 +10,10 @@ class GetHead extends BaseCommand {
       args: { name }
     } = cmd;
 
-    const result = await this._request.get(
-      `/head/${encodeURIComponent(name)}/${encodeURIComponent(env)}`
-    );
+    const result = await this._sdk.object().getHead({
+      name,
+      env
+    });
 
     this.log(JSON.stringify(result, null, 2));
   }

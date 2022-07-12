@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const { expect, test } = require('@oclif/test');
 
 const BaseCommand = require('../../../src/utils/base-command');
-const fileUtil = require('../../../src/utils/file');
+const fileUtil = require('warehouse.ai-api-client/lib/utils/file');
 
 const FILES_DIR = `${path.join(process.cwd(), 'test', 'fixtures', 'files')}`;
 const TEST_USR = 'test';
