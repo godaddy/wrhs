@@ -22,7 +22,7 @@ $ npm install -g wrhs
 $ wrhs COMMAND
 running command...
 $ wrhs (-v|--version|version)
-wrhs/1.1.3 darwin-x64 node-v16.13.1
+wrhs/1.2.1 darwin-arm64 node-v18.12.1
 $ wrhs --help [COMMAND]
 USAGE
   $ wrhs COMMAND
@@ -58,7 +58,7 @@ OPTIONS
   --version
 ```
 
-_See code: [src/commands/cdn/index.js](https://github.com/warehouseai/wrhs/blob/v1.1.3/src/commands/cdn/index.js)_
+_See code: [src/commands/cdn/index.js](https://github.com/warehouseai/wrhs/blob/v1.2.1/src/commands/cdn/index.js)_
 
 ## `wrhs cdn:upload FILEPATH`
 
@@ -75,7 +75,7 @@ OPTIONS
                                    1607973280797)
 ```
 
-_See code: [src/commands/cdn/upload.js](https://github.com/warehouseai/wrhs/blob/v1.1.3/src/commands/cdn/upload.js)_
+_See code: [src/commands/cdn/upload.js](https://github.com/warehouseai/wrhs/blob/v1.2.1/src/commands/cdn/upload.js)_
 
 ## `wrhs help [COMMAND]`
 
@@ -92,7 +92,7 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.0/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.18/src/commands/help.ts)_
 
 ## `wrhs object`
 
@@ -111,7 +111,7 @@ OPTIONS
   --version
 ```
 
-_See code: [src/commands/object/index.js](https://github.com/warehouseai/wrhs/blob/v1.1.3/src/commands/object/index.js)_
+_See code: [src/commands/object/index.js](https://github.com/warehouseai/wrhs/blob/v1.2.1/src/commands/object/index.js)_
 
 ## `wrhs object:create NAME`
 
@@ -131,7 +131,7 @@ OPTIONS
                                1607973280797)
 ```
 
-_See code: [src/commands/object/create.js](https://github.com/warehouseai/wrhs/blob/v1.1.3/src/commands/object/create.js)_
+_See code: [src/commands/object/create.js](https://github.com/warehouseai/wrhs/blob/v1.2.1/src/commands/object/create.js)_
 
 ## `wrhs object:get NAME`
 
@@ -147,7 +147,7 @@ OPTIONS
   -v, --version=version                      object version (e.g., v1.2.1)
 ```
 
-_See code: [src/commands/object/get.js](https://github.com/warehouseai/wrhs/blob/v1.1.3/src/commands/object/get.js)_
+_See code: [src/commands/object/get.js](https://github.com/warehouseai/wrhs/blob/v1.2.1/src/commands/object/get.js)_
 
 ## `wrhs object:get-head NAME`
 
@@ -161,7 +161,7 @@ OPTIONS
   -e, --env=env  object environment (e.g., production, test)
 ```
 
-_See code: [src/commands/object/get-head.js](https://github.com/warehouseai/wrhs/blob/v1.1.3/src/commands/object/get-head.js)_
+_See code: [src/commands/object/get-head.js](https://github.com/warehouseai/wrhs/blob/v1.2.1/src/commands/object/get-head.js)_
 
 ## `wrhs object:set-head NAME`
 
@@ -176,7 +176,7 @@ OPTIONS
   -v, --version=version  (required) object head version (e.g., v1.2.1)
 ```
 
-_See code: [src/commands/object/set-head.js](https://github.com/warehouseai/wrhs/blob/v1.1.3/src/commands/object/set-head.js)_
+_See code: [src/commands/object/set-head.js](https://github.com/warehouseai/wrhs/blob/v1.2.1/src/commands/object/set-head.js)_
 
 ## `wrhs upload FILEPATH NAME`
 
@@ -196,5 +196,5 @@ OPTIONS
                                    1607973280797)
 ```
 
-_See code: [src/commands/upload.js](https://github.com/warehouseai/wrhs/blob/v1.1.3/src/commands/upload.js)_
+_See code: [src/commands/upload.js](https://github.com/warehouseai/wrhs/blob/v1.2.1/src/commands/upload.js)_
 <!-- commandsstop -->
