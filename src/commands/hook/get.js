@@ -26,7 +26,7 @@ class GetCommand extends BaseCommand {
 
 GetCommand.args = [{ name: 'name', required: true }];
 
-GetCommand.description = 'Get a hook';
+GetCommand.description = 'Get an object hook';
 
 GetCommand.flags = {
   id: flags.string({

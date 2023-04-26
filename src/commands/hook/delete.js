@@ -26,7 +26,7 @@ class DeleteCommand extends BaseCommand {
 
 DeleteCommand.args = [{ name: 'name', required: true }];
 
-DeleteCommand.description = 'Delete a hook';
+DeleteCommand.description = 'Delete an object hook';
 
 DeleteCommand.flags = {
   id: flags.string({

@@ -26,7 +26,7 @@ class CreateCommand extends BaseCommand {
 
 CreateCommand.args = [{ name: 'name', required: true }];
 
-CreateCommand.description = 'Create an object in the Warehouse ledger';
+CreateCommand.description = 'Create an object hook';
 
 CreateCommand.flags = {
   url: flags.string({

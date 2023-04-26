@@ -22,6 +22,6 @@ class ListCommand extends BaseCommand {
 
 ListCommand.args = [{ name: 'name', required: true }];
 
-ListCommand.description = 'List all object enviroments';
+ListCommand.description = 'List all object hooks';
 
 module.exports = ListCommand;
