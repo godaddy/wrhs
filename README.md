@@ -22,7 +22,7 @@ $ npm install -g wrhs
 $ wrhs COMMAND
 running command...
 $ wrhs (-v|--version|version)
-wrhs/1.1.1 darwin-x64 node-v14.19.1
+wrhs/1.2.0 darwin-arm64 node-v18.14.1
 $ wrhs --help [COMMAND]
 USAGE
   $ wrhs COMMAND
@@ -57,7 +57,7 @@ OPTIONS
   --version
 ```
 
-_See code: [src/commands/cdn/index.js](https://github.com/warehouseai/wrhs/blob/v1.1.1/src/commands/cdn/index.js)_
+_See code: [src/commands/cdn/index.js](https://github.com/warehouseai/wrhs/blob/v1.2.0/src/commands/cdn/index.js)_
 
 ## `wrhs cdn:upload FILEPATH`
 
@@ -74,7 +74,7 @@ OPTIONS
                                    1607973280797)
 ```
 
-_See code: [src/commands/cdn/upload.js](https://github.com/warehouseai/wrhs/blob/v1.1.1/src/commands/cdn/upload.js)_
+_See code: [src/commands/cdn/upload.js](https://github.com/warehouseai/wrhs/blob/v1.2.0/src/commands/cdn/upload.js)_
 
 ## `wrhs help [COMMAND]`
 
@@ -110,7 +110,7 @@ OPTIONS
   --version
 ```
 
-_See code: [src/commands/object/index.js](https://github.com/warehouseai/wrhs/blob/v1.1.1/src/commands/object/index.js)_
+_See code: [src/commands/object/index.js](https://github.com/warehouseai/wrhs/blob/v1.2.0/src/commands/object/index.js)_
 
 ## `wrhs object:create NAME`
 
@@ -130,7 +130,7 @@ OPTIONS
                                1607973280797)
 ```
 
-_See code: [src/commands/object/create.js](https://github.com/warehouseai/wrhs/blob/v1.1.1/src/commands/object/create.js)_
+_See code: [src/commands/object/create.js](https://github.com/warehouseai/wrhs/blob/v1.2.0/src/commands/object/create.js)_
 
 ## `wrhs object:get NAME`
 
@@ -146,7 +146,7 @@ OPTIONS
   -v, --version=version                      object version (e.g., v1.2.1)
 ```
 
-_See code: [src/commands/object/get.js](https://github.com/warehouseai/wrhs/blob/v1.1.1/src/commands/object/get.js)_
+_See code: [src/commands/object/get.js](https://github.com/warehouseai/wrhs/blob/v1.2.0/src/commands/object/get.js)_
 
 ## `wrhs object:set-head NAME`
 
@@ -161,7 +161,7 @@ OPTIONS
   -v, --version=version  (required) object head version (e.g., v1.2.1)
 ```
 
-_See code: [src/commands/object/set-head.js](https://github.com/warehouseai/wrhs/blob/v1.1.1/src/commands/object/set-head.js)_
+_See code: [src/commands/object/set-head.js](https://github.com/warehouseai/wrhs/blob/v1.2.0/src/commands/object/set-head.js)_
 
 ## `wrhs upload FILEPATH NAME`
 
@@ -181,5 +181,5 @@ OPTIONS
                                    1607973280797)
 ```
 
-_See code: [src/commands/upload.js](https://github.com/warehouseai/wrhs/blob/v1.1.1/src/commands/upload.js)_
+_See code: [src/commands/upload.js](https://github.com/warehouseai/wrhs/blob/v1.2.0/src/commands/upload.js)_
 <!-- commandsstop -->
