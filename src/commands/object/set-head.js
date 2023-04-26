@@ -11,19 +11,33 @@ class SetHead extends BaseCommand {
   async run() {
     const cmd = this.parse(SetHead);
     const {
-      flags: { env, version },
+      flags: { env, version, fromEnv },
       args: { name }
     } = cmd;
 
-    await this._sdk.object().setHead({
-      name,
-      env,
-      version
-    });
+    if (version) {
+      await this._sdk.object().setHead({
+        name,
+        env,
+        version
+      });
 
-    this.log(
-      `Head set succesfully to version ${version} in ${env} for ${name}`
-    );
+      this.log(
+        `Head set succesfully to version ${version} in ${env} for ${name}`
+      );
+    } else if (fromEnv) {
+      await this._sdk.object().setHead({
+        name,
+        env,
+        fromEnv
+      });
+
+      this.log(
+        `Head set succesfully from env ${fromEnv} in ${env} for ${name}`
+      );
+    } else {
+      this.log('Flag -e or -f is required');
+    }
   }
 }
 
@@ -40,7 +54,12 @@ SetHead.flags = {
   version: flags.string({
     char: 'v',
     description: 'object head version (e.g., v1.2.1)',
-    required: true
+    required: false
+  }),
+  fromEnv: flags.string({
+    char: 'f',
+    description: 'use head version for env',
+    required: false
   })
 };
 
