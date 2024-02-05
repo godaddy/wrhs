@@ -16,6 +16,7 @@
   "devDependencies": {
     "@oclif/dev-cli": "^1.25.1",
     "@oclif/test": "^3.1.14",
+    "auto-changelog": "^2.4.0",
     "c8": "^9.1.0",
     "eslint": "^8.56.0",
     "eslint-config-godaddy": "^7.0.2",
@@ -56,7 +57,7 @@
     "posttest": "npm run lint",
     "prepack": "oclif-dev manifest && oclif-dev readme",
     "test": "c8 mocha \"test/**/*.test.js\"",
-    "version": "oclif-dev readme && git add README.md",
+    "version": "oclif-dev readme && auto-changelog -p && git add README.md CHANGELOG.md",
     "lint": "npm run prettier && npm run eslint",
     "eslint": "eslint './{src, test}/**/*.js'",
     "prettier": "prettier --write src test"
