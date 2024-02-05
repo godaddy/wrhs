@@ -6,25 +6,23 @@
   "bin": {
     "wrhs": "./bin/run"
   },
-  "bugs": "https://github.com/warehouseai/wrhs/issues",
+  "bugs": "https://github.com/godaddy/wrhs/issues",
   "dependencies": {
     "@oclif/command": "^1.8.0",
     "@oclif/config": "^1.17.0",
-    "@oclif/plugin-help": "^3.2.0",
+    "@oclif/plugin-help": "^6.0.12",
     "warehouse.ai-api-client": "^7.1.2"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.25.1",
-    "@oclif/test": "^1.2.8",
-    "chai": "^4.2.0",
-    "eslint": "^7.15.0",
-    "eslint-config-godaddy": "^4.0.1",
-    "eslint-plugin-mocha": "^8.0.0",
-    "globby": "^11.0.1",
-    "mocha": "^8.2.1",
-    "nyc": "^15.1.0",
-    "prettier": "^2.2.1",
-    "sinon": "^9.2.2"
+    "@oclif/test": "^3.1.14",
+    "c8": "^9.1.0",
+    "eslint": "^8.56.0",
+    "eslint-config-godaddy": "^7.0.2",
+    "eslint-plugin-mocha": "^10.2.0",
+    "mocha": "^10.2.0",
+    "prettier": "^3.2.5",
+    "sinon": "^17.0.1"
   },
   "engines": {
     "node": ">=12.0.0",
@@ -35,7 +33,7 @@
     "/oclif.manifest.json",
     "/src"
   ],
-  "homepage": "https://github.com/warehouseai/wrhs",
+  "homepage": "https://github.com/godaddy/wrhs",
   "keywords": [
     "warehouse",
     "ledger",
@@ -52,15 +50,15 @@
       "@oclif/plugin-help"
     ]
   },
-  "repository": "https://github.com/warehouseai/wrhs",
+  "repository": "https://github.com/godaddy/wrhs",
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "npm run lint",
     "prepack": "oclif-dev manifest && oclif-dev readme",
-    "test": "nyc mocha --forbid-only \"test/**/*.test.js\"",
+    "test": "c8 mocha \"test/**/*.test.js\"",
     "version": "oclif-dev readme && git add README.md",
     "lint": "npm run prettier && npm run eslint",
-    "eslint": "eslint --max-warnings 0 --ignore-pattern /.nyc_output ./",
+    "eslint": "eslint './{src, test}/**/*.js'",
     "prettier": "prettier --write src test"
   },
   "prettier": {

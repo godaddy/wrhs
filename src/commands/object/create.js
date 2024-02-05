@@ -85,7 +85,8 @@ CreateCommand.flags = {
   }),
   data: flags.string({
     char: 'd',
-    description: 'object data (e.g., \'{ "foo": "bar" }\')'
+    description: 'object data (e.g., \'{ "foo": "bar" }\')',
+    required: true
   })
 };
 

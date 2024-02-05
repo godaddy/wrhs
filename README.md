@@ -2,9 +2,8 @@
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/wrhs.svg)](https://npmjs.org/package/wrhs)
 [![Downloads/week](https://img.shields.io/npm/dw/wrhs.svg)](https://npmjs.org/package/wrhs)
-[![License](https://img.shields.io/npm/l/wrhs.svg)](https://github.com/https://github.com/warehouseai/wrhs/wrhs/blob/master/package.json)
+[![License](https://img.shields.io/npm/l/wrhs.svg)](https://github.com/godaddy/wrhs/wrhs/blob/main/package.json)
 [![npm Downloads](https://img.shields.io/npm/dm/wrhs.svg?style=flat-square)](https://npmcharts.com/compare/wrhs?minimal=true)
-[![Dependencies](https://img.shields.io/david/warehouseai/wrhs.svg?style=flat-square)](https://github.com/warehouseai/wrhs/blob/master/package.json)
 
 # Warehouse CLI
 
@@ -22,7 +21,7 @@ $ npm install -g wrhs
 $ wrhs COMMAND
 running command...
 $ wrhs (-v|--version|version)
-wrhs/1.3.1 darwin-arm64 node-v18.14.1
+wrhs/1.3.1 darwin-arm64 node-v20.11.0
 $ wrhs --help [COMMAND]
 USAGE
   $ wrhs COMMAND
@@ -31,24 +30,27 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`wrhs cdn`](#wrhs-cdn)
-* [`wrhs cdn:upload FILEPATH`](#wrhs-cdnupload-filepath)
-* [`wrhs env:create NAME`](#wrhs-envcreate-name)
-* [`wrhs env:get NAME`](#wrhs-envget-name)
-* [`wrhs env:list NAME`](#wrhs-envlist-name)
-* [`wrhs help [COMMAND]`](#wrhs-help-command)
-* [`wrhs hook:create NAME`](#wrhs-hookcreate-name)
-* [`wrhs hook:delete NAME`](#wrhs-hookdelete-name)
-* [`wrhs hook:get NAME`](#wrhs-hookget-name)
-* [`wrhs hook:list NAME`](#wrhs-hooklist-name)
-* [`wrhs object`](#wrhs-object)
-* [`wrhs object:create NAME`](#wrhs-objectcreate-name)
-* [`wrhs object:get NAME`](#wrhs-objectget-name)
-* [`wrhs object:get-head NAME`](#wrhs-objectget-head-name)
-* [`wrhs object:history NAME`](#wrhs-objecthistory-name)
-* [`wrhs object:list-versions NAME`](#wrhs-objectlist-versions-name)
-* [`wrhs object:set-head NAME`](#wrhs-objectset-head-name)
-* [`wrhs upload FILEPATH NAME`](#wrhs-upload-filepath-name)
+* [Warehouse CLI](#warehouse-cli)
+* [Usage](#usage)
+* [Commands](#commands)
+  * [`wrhs cdn`](#wrhs-cdn)
+  * [`wrhs cdn:upload FILEPATH`](#wrhs-cdnupload-filepath)
+  * [`wrhs env:create NAME`](#wrhs-envcreate-name)
+  * [`wrhs env:get NAME`](#wrhs-envget-name)
+  * [`wrhs env:list NAME`](#wrhs-envlist-name)
+  * [`wrhs help [COMMAND]`](#wrhs-help-command)
+  * [`wrhs hook:create NAME`](#wrhs-hookcreate-name)
+  * [`wrhs hook:delete NAME`](#wrhs-hookdelete-name)
+  * [`wrhs hook:get NAME`](#wrhs-hookget-name)
+  * [`wrhs hook:list NAME`](#wrhs-hooklist-name)
+  * [`wrhs object`](#wrhs-object)
+  * [`wrhs object:create NAME`](#wrhs-objectcreate-name)
+  * [`wrhs object:get NAME`](#wrhs-objectget-name)
+  * [`wrhs object:get-head NAME`](#wrhs-objectget-head-name)
+  * [`wrhs object:history NAME`](#wrhs-objecthistory-name)
+  * [`wrhs object:list-versions NAME`](#wrhs-objectlist-versions-name)
+  * [`wrhs object:set-head NAME`](#wrhs-objectset-head-name)
+  * [`wrhs upload FILEPATH NAME`](#wrhs-upload-filepath-name)
 
 ## `wrhs cdn`
 
@@ -67,7 +69,7 @@ OPTIONS
   --version
 ```
 
-_See code: [src/commands/cdn/index.js](https://github.com/warehouseai/wrhs/blob/v1.3.1/src/commands/cdn/index.js)_
+_See code: [src/commands/cdn/index.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/cdn/index.js)_
 
 ## `wrhs cdn:upload FILEPATH`
 
@@ -84,7 +86,7 @@ OPTIONS
                                    1607973280797)
 ```
 
-_See code: [src/commands/cdn/upload.js](https://github.com/warehouseai/wrhs/blob/v1.3.1/src/commands/cdn/upload.js)_
+_See code: [src/commands/cdn/upload.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/cdn/upload.js)_
 
 ## `wrhs env:create NAME`
 
@@ -98,7 +100,7 @@ OPTIONS
   -e, --env=env  (required) object environment (e.g., production, test)
 ```
 
-_See code: [src/commands/env/create.js](https://github.com/warehouseai/wrhs/blob/v1.3.1/src/commands/env/create.js)_
+_See code: [src/commands/env/create.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/env/create.js)_
 
 ## `wrhs env:get NAME`
 
@@ -212,7 +214,7 @@ OPTIONS
   --version
 ```
 
-_See code: [src/commands/object/index.js](https://github.com/warehouseai/wrhs/blob/v1.3.1/src/commands/object/index.js)_
+_See code: [src/commands/object/index.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/object/index.js)_
 
 ## `wrhs object:create NAME`
 
@@ -224,7 +226,7 @@ USAGE
 
 OPTIONS
   -a, --variant=variant        object variant (e.g., en_US)
-  -d, --data=data              object data (e.g., '{ "foo": "bar" }')
+  -d, --data=data              (required) object data (e.g., '{ "foo": "bar" }')
   -e, --env=env                object environment (e.g., production, test)
   -v, --version=version        (required) object version (e.g., v1.2.1)
 
@@ -232,7 +234,7 @@ OPTIONS
                                1607973280797)
 ```
 
-_See code: [src/commands/object/create.js](https://github.com/warehouseai/wrhs/blob/v1.3.1/src/commands/object/create.js)_
+_See code: [src/commands/object/create.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/object/create.js)_
 
 ## `wrhs object:get NAME`
 
@@ -248,7 +250,7 @@ OPTIONS
   -v, --version=version                      object version (e.g., v1.2.1)
 ```
 
-_See code: [src/commands/object/get.js](https://github.com/warehouseai/wrhs/blob/v1.3.1/src/commands/object/get.js)_
+_See code: [src/commands/object/get.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/object/get.js)_
 
 ## `wrhs object:get-head NAME`
 
@@ -262,7 +264,7 @@ OPTIONS
   -e, --env=env  object environment (e.g., production, test)
 ```
 
-_See code: [src/commands/object/get-head.js](https://github.com/warehouseai/wrhs/blob/v1.3.1/src/commands/object/get-head.js)_
+_See code: [src/commands/object/get-head.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/object/get-head.js)_
 
 ## `wrhs object:history NAME`
 
@@ -276,7 +278,7 @@ OPTIONS
   -e, --env=env  (required) object environment (e.g., production, test)
 ```
 
-_See code: [src/commands/object/history.js](https://github.com/warehouseai/wrhs/blob/v1.3.1/src/commands/object/history.js)_
+_See code: [src/commands/object/history.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/object/history.js)_
 
 ## `wrhs object:list-versions NAME`
 
@@ -287,7 +289,7 @@ USAGE
   $ wrhs object:list-versions NAME
 ```
 
-_See code: [src/commands/object/list-versions.js](https://github.com/warehouseai/wrhs/blob/v1.3.1/src/commands/object/list-versions.js)_
+_See code: [src/commands/object/list-versions.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/object/list-versions.js)_
 
 ## `wrhs object:set-head NAME`
 
@@ -303,7 +305,7 @@ OPTIONS
   -v, --version=version  object head version (e.g., v1.2.1)
 ```
 
-_See code: [src/commands/object/set-head.js](https://github.com/warehouseai/wrhs/blob/v1.3.1/src/commands/object/set-head.js)_
+_See code: [src/commands/object/set-head.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/object/set-head.js)_
 
 ## `wrhs upload FILEPATH NAME`
 
@@ -323,5 +325,5 @@ OPTIONS
                                    1607973280797)
 ```
 
-_See code: [src/commands/upload.js](https://github.com/warehouseai/wrhs/blob/v1.3.1/src/commands/upload.js)_
+_See code: [src/commands/upload.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/upload.js)_
 <!-- commandsstop -->
