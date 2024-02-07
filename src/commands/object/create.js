@@ -64,6 +64,11 @@ CreateCommand.args = [{ name: 'name', required: true }];
 
 CreateCommand.description = 'Create an object in the Warehouse ledger';
 
+CreateCommand.examples = [
+  '$ echo \'{"foo": "bar"}\' | wrhs object:create my-object --version v1.0.0',
+  'wrhs object:create my-object --version v1.0.0 --data \'{"foo": "bar"}\''
+]
+
 CreateCommand.flags = {
   env: flags.string({
     char: 'e',
