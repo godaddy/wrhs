@@ -26,7 +26,7 @@ class CreateCommand extends BaseCommand {
 
 CreateCommand.args = [{ name: 'name', required: true }];
 
-CreateCommand.description = 'Create an object enviroment';
+CreateCommand.description = 'Create an object environment';
 
 CreateCommand.flags = {
   env: flags.string({
