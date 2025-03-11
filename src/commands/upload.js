@@ -11,11 +11,23 @@ class UploadCommand extends CdnUploadCommand {
   async run() {
     const cmd = this.parse(UploadCommand);
     const {
-      flags: { cdn_base_url: cdnBaseUrl, env, expiration, variant, version },
+      flags: {
+        cdn_base_url: cdnBaseUrl,
+        env,
+        expiration,
+        variant,
+        version,
+        use_single_fingerprint: useSingleFingerprint = false
+      },
       args: { filepath, name }
     } = cmd;
 
-    const data = await this._handleUpload(filepath, expiration, cdnBaseUrl);
+    const data = await this._handleUpload(
+      filepath,
+      expiration,
+      cdnBaseUrl,
+      useSingleFingerprint
+    );
 
     await this._sdk.object().create({
       name,
@@ -67,6 +79,10 @@ UploadCommand.flags = {
     char: 'u',
     description:
       'cdn base url value that overrides default one configued in the server'
+  }),
+  use_single_fingerprint: flags.boolean({
+    char: 's',
+    description: 'use a single fingerprint for all the files in a package'
   })
 };
 

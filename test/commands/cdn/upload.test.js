@@ -48,7 +48,7 @@ describe('cdn:upload', () => {
   test
     .nock(TEST_URL, function (api) {
       return api
-        .post('/cdn?expiration=365d')
+        .post('/cdn?expiration=365d&use_single_fingerprint=true')
         .basicAuth({ user: TEST_USR, pass: TEST_PWD })
         .matchHeader('Content-Length', (val) => parseInt(val, 10) === 3072)
         .reply(201, resData);
@@ -58,7 +58,13 @@ describe('cdn:upload', () => {
       createTarballSpy = sinon.spy(fileUtil, 'createTarball');
     })
     .stdout()
-    .command(['cdn:upload', FILES_DIR, '--expiration', '365d'])
+    .command([
+      'cdn:upload',
+      FILES_DIR,
+      '--expiration',
+      '365d',
+      '--use_single_fingerprint'
+    ])
     .it(`runs cdn:upload ${FILES_DIR}`, (ctx) => {
       expect(getFilesAndDirSpy.calledWith(FILES_DIR)).to.true;
       expect(createTarballSpy.calledWith(FILES_DIR, ['a.js', 'b.css'])).to.true;
