@@ -54,12 +54,13 @@ Upload a file to the Warehouse CDN
 
 ```
 USAGE
-  $ wrhs cdn:upload FILEPATH [-x <value>] [-u <value>]
+  $ wrhs cdn:upload FILEPATH [-x <value>] [-u <value>] [-s]
 
 FLAGS
-  -u, --cdn_base_url=<value>  cdn base url value that overrides default one configued in the server
-  -x, --expiration=<value>    object expiration in human readable format or milliseconds (e.g., 365d, 48h,
-                              1607973280797)
+  -s, --use_single_fingerprint  use a single fingerprint for all the files in a package
+  -u, --cdn_base_url=<value>    cdn base url value that overrides default one configued in the server
+  -x, --expiration=<value>      object expiration in human readable format or milliseconds (e.g., 365d, 48h,
+                                1607973280797)
 
 DESCRIPTION
   Upload a file to the Warehouse CDN
@@ -337,15 +338,16 @@ Upload a file to the CDN and create an object in the Warehouse ledger
 
 ```
 USAGE
-  $ wrhs upload FILEPATH NAME -v <value> [-e <value>] [-a <value>] [-x <value>] [-u <value>]
+  $ wrhs upload FILEPATH NAME -v <value> [-e <value>] [-a <value>] [-x <value>] [-u <value>] [-s]
 
 FLAGS
-  -a, --variant=<value>       object variant (e.g., en_US)
-  -e, --env=<value>           object environment (e.g., production, test)
-  -u, --cdn_base_url=<value>  cdn base url value that overrides default one configued in the server
-  -v, --version=<value>       (required) object version (e.g., v1.2.1)
-  -x, --expiration=<value>    object expiration in human readable format or milliseconds (e.g., 365d, 48h,
-                              1607973280797)
+  -a, --variant=<value>         object variant (e.g., en_US)
+  -e, --env=<value>             object environment (e.g., production, test)
+  -s, --use_single_fingerprint  use a single fingerprint for all the files in a package
+  -u, --cdn_base_url=<value>    cdn base url value that overrides default one configued in the server
+  -v, --version=<value>         (required) object version (e.g., v1.2.1)
+  -x, --expiration=<value>      object expiration in human readable format or milliseconds (e.g., 365d, 48h,
+                                1607973280797)
 
 DESCRIPTION
   Upload a file to the CDN and create an object in the Warehouse ledger

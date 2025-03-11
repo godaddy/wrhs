@@ -40,7 +40,7 @@ describe('upload', () => {
   test
     .nock(TEST_URL, function (api) {
       return api
-        .post('/cdn?expiration=365d')
+        .post('/cdn?expiration=365d&use_single_fingerprint=true')
         .basicAuth({ user: TEST_USR, pass: TEST_PWD })
         .matchHeader('Content-Length', (val) => parseInt(val, 10) === 3072)
         .reply(201, cdnResData);
@@ -70,7 +70,8 @@ describe('upload', () => {
       '--expiration',
       '365d',
       '--variant',
-      'blue_theme'
+      'blue_theme',
+      '--use_single_fingerprint'
     ])
     .it(`runs upload ${FILES_DIR}`, (ctx) => {
       expect(ctx.stdout).equals(`${JSON.stringify(cdnResData, null, 2)}\n`);
