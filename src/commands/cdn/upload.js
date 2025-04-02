@@ -14,11 +14,12 @@ class UploadCommand extends BaseCommand {
    * @param {string} filepath Path to the file or folder
    * @param {string|number} expiration Files expiration in ms or human readable format
    * @param {string} cdnBaseUrl CDN Base Url that overrides default one configued at server level
+   * @param {boolean} gzip Compress the file using gzip
    * @returns {Promise<Object>} Promise representing upload response data
    */
-  async _handleUpload(filepath, expiration, cdnBaseUrl) {
+  async _handleUpload(filepath, expiration, cdnBaseUrl, gzip) {
     const { files, dir } = await getFilesAndDir(filepath);
-    const { tarPath, deleteTarball } = await createTarball(dir, files);
+    const { tarPath, deleteTarball } = await createTarball(dir, files, gzip);
 
     let result;
     let error;
@@ -48,11 +49,11 @@ class UploadCommand extends BaseCommand {
   async run() {
     const cmd = this.parse(UploadCommand);
     const {
-      flags: { expiration, cdn_base_url: cdnBaseUrl },
+      flags: { expiration, cdn_base_url: cdnBaseUrl, gzip  },
       args: { filepath }
     } = cmd;
 
-    const result = await this._handleUpload(filepath, expiration, cdnBaseUrl);
+    const result = await this._handleUpload(filepath, expiration, cdnBaseUrl, gzip);
 
     this.log(JSON.stringify(result, null, 2));
   }
@@ -77,6 +78,10 @@ UploadCommand.flags = {
     char: 'u',
     description:
       'cdn base url value that overrides default one configued in the server'
+  }),
+  gzip: flags.boolean({
+    char: 'g',
+    description: 'compress the file using gzip'
   })
 };
 
