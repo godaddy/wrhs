@@ -11,11 +11,11 @@ class UploadCommand extends CdnUploadCommand {
   async run() {
     const cmd = this.parse(UploadCommand);
     const {
-      flags: { cdn_base_url: cdnBaseUrl, env, expiration, variant, version },
+      flags: { cdn_base_url: cdnBaseUrl, env, expiration, variant, version, gzip },
       args: { filepath, name }
     } = cmd;
 
-    const data = await this._handleUpload(filepath, expiration, cdnBaseUrl);
+    const data = await this._handleUpload(filepath, expiration, cdnBaseUrl, gzip);
 
     await this._sdk.object().create({
       name,
@@ -67,6 +67,10 @@ UploadCommand.flags = {
     char: 'u',
     description:
       'cdn base url value that overrides default one configued in the server'
+  }),
+  gzip: flags.boolean({
+    char: 'g',
+    description: 'compress the file using gzip'
   })
 };
 
