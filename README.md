@@ -21,7 +21,7 @@ $ npm install -g wrhs
 $ wrhs COMMAND
 running command...
 $ wrhs (--version)
-wrhs/1.3.1 darwin-arm64 node-v20.11.0
+wrhs/1.4.0 darwin-arm64 node-v20.9.0
 $ wrhs --help [COMMAND]
 USAGE
   $ wrhs COMMAND
@@ -31,7 +31,6 @@ USAGE
 # Commands
 <!-- commands -->
 * [`wrhs cdn:upload FILEPATH`](#wrhs-cdnupload-filepath)
-* [`wrhs env`](#wrhs-env)
 * [`wrhs env:create NAME`](#wrhs-envcreate-name)
 * [`wrhs env:get NAME`](#wrhs-envget-name)
 * [`wrhs env:list NAME`](#wrhs-envlist-name)
@@ -40,6 +39,7 @@ USAGE
 * [`wrhs hook:delete NAME`](#wrhs-hookdelete-name)
 * [`wrhs hook:get NAME`](#wrhs-hookget-name)
 * [`wrhs hook:list NAME`](#wrhs-hooklist-name)
+* [`wrhs object`](#wrhs-object)
 * [`wrhs object:create NAME`](#wrhs-objectcreate-name)
 * [`wrhs object:get NAME`](#wrhs-objectget-name)
 * [`wrhs object:get-head NAME`](#wrhs-objectget-head-name)
@@ -54,9 +54,10 @@ Upload a file to the Warehouse CDN
 
 ```
 USAGE
-  $ wrhs cdn:upload FILEPATH [-x <value>] [-u <value>]
+  $ wrhs cdn:upload FILEPATH [-x <value>] [-u <value>] [-g]
 
 FLAGS
+  -g, --gzip                  compress the file using gzip
   -u, --cdn_base_url=<value>  cdn base url value that overrides default one configued in the server
   -x, --expiration=<value>    object expiration in human readable format or milliseconds (e.g., 365d, 48h,
                               1607973280797)
@@ -65,26 +66,7 @@ DESCRIPTION
   Upload a file to the Warehouse CDN
 ```
 
-_See code: [src/commands/cdn/upload.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/cdn/upload.js)_
-
-## `wrhs env`
-
-```
-USAGE
-  $ wrhs env [--build] [--option] [--enum] [--string] [--version] [--help] [--boolean] [--integer]
-
-FLAGS
-  --boolean
-  --build
-  --enum
-  --help
-  --integer
-  --option
-  --string
-  --version
-```
-
-_See code: [src/commands/env/index.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/env/index.js)_
+_See code: [src/commands/cdn/upload.js](https://github.com/godaddy/wrhs/blob/v1.4.0/src/commands/cdn/upload.js)_
 
 ## `wrhs env:create NAME`
 
@@ -101,7 +83,7 @@ DESCRIPTION
   Create an object environment
 ```
 
-_See code: [src/commands/env/create.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/env/create.js)_
+_See code: [src/commands/env/create.js](https://github.com/godaddy/wrhs/blob/v1.4.0/src/commands/env/create.js)_
 
 ## `wrhs env:get NAME`
 
@@ -118,7 +100,7 @@ DESCRIPTION
   Describe an object enviroment
 ```
 
-_See code: [src/commands/env/get.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/env/get.js)_
+_See code: [src/commands/env/get.js](https://github.com/godaddy/wrhs/blob/v1.4.0/src/commands/env/get.js)_
 
 ## `wrhs env:list NAME`
 
@@ -132,7 +114,7 @@ DESCRIPTION
   List all object enviroments
 ```
 
-_See code: [src/commands/env/list.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/env/list.js)_
+_See code: [src/commands/env/list.js](https://github.com/godaddy/wrhs/blob/v1.4.0/src/commands/env/list.js)_
 
 ## `wrhs help [COMMANDS]`
 
@@ -169,7 +151,7 @@ DESCRIPTION
   Create an object hook
 ```
 
-_See code: [src/commands/hook/create.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/hook/create.js)_
+_See code: [src/commands/hook/create.js](https://github.com/godaddy/wrhs/blob/v1.4.0/src/commands/hook/create.js)_
 
 ## `wrhs hook:delete NAME`
 
@@ -186,7 +168,7 @@ DESCRIPTION
   Delete an object hook
 ```
 
-_See code: [src/commands/hook/delete.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/hook/delete.js)_
+_See code: [src/commands/hook/delete.js](https://github.com/godaddy/wrhs/blob/v1.4.0/src/commands/hook/delete.js)_
 
 ## `wrhs hook:get NAME`
 
@@ -203,7 +185,7 @@ DESCRIPTION
   Get an object hook
 ```
 
-_See code: [src/commands/hook/get.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/hook/get.js)_
+_See code: [src/commands/hook/get.js](https://github.com/godaddy/wrhs/blob/v1.4.0/src/commands/hook/get.js)_
 
 ## `wrhs hook:list NAME`
 
@@ -217,7 +199,26 @@ DESCRIPTION
   List all object hooks
 ```
 
-_See code: [src/commands/hook/list.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/hook/list.js)_
+_See code: [src/commands/hook/list.js](https://github.com/godaddy/wrhs/blob/v1.4.0/src/commands/hook/list.js)_
+
+## `wrhs object`
+
+```
+USAGE
+  $ wrhs object [--build] [--option] [--enum] [--string] [--version] [--help] [--boolean] [--integer]
+
+FLAGS
+  --boolean
+  --build
+  --enum
+  --help
+  --integer
+  --option
+  --string
+  --version
+```
+
+_See code: [src/commands/object/index.js](https://github.com/godaddy/wrhs/blob/v1.4.0/src/commands/object/index.js)_
 
 ## `wrhs object:create NAME`
 
@@ -243,7 +244,7 @@ EXAMPLES
   $ wrhs object:create my-object --version v1.0.0 --data '{"foo": "bar"}'
 ```
 
-_See code: [src/commands/object/create.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/object/create.js)_
+_See code: [src/commands/object/create.js](https://github.com/godaddy/wrhs/blob/v1.4.0/src/commands/object/create.js)_
 
 ## `wrhs object:get NAME`
 
@@ -262,7 +263,7 @@ DESCRIPTION
   Get an object from the Warehouse ledger
 ```
 
-_See code: [src/commands/object/get.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/object/get.js)_
+_See code: [src/commands/object/get.js](https://github.com/godaddy/wrhs/blob/v1.4.0/src/commands/object/get.js)_
 
 ## `wrhs object:get-head NAME`
 
@@ -279,7 +280,7 @@ DESCRIPTION
   Get the head object from the Warehouse ledger by environment
 ```
 
-_See code: [src/commands/object/get-head.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/object/get-head.js)_
+_See code: [src/commands/object/get-head.js](https://github.com/godaddy/wrhs/blob/v1.4.0/src/commands/object/get-head.js)_
 
 ## `wrhs object:history NAME`
 
@@ -296,7 +297,7 @@ DESCRIPTION
   Get object history
 ```
 
-_See code: [src/commands/object/history.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/object/history.js)_
+_See code: [src/commands/object/history.js](https://github.com/godaddy/wrhs/blob/v1.4.0/src/commands/object/history.js)_
 
 ## `wrhs object:list-versions NAME`
 
@@ -310,7 +311,7 @@ DESCRIPTION
   List all the object versions
 ```
 
-_See code: [src/commands/object/list-versions.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/object/list-versions.js)_
+_See code: [src/commands/object/list-versions.js](https://github.com/godaddy/wrhs/blob/v1.4.0/src/commands/object/list-versions.js)_
 
 ## `wrhs object:set-head NAME`
 
@@ -329,7 +330,7 @@ DESCRIPTION
   Set the object head to a specific version
 ```
 
-_See code: [src/commands/object/set-head.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/object/set-head.js)_
+_See code: [src/commands/object/set-head.js](https://github.com/godaddy/wrhs/blob/v1.4.0/src/commands/object/set-head.js)_
 
 ## `wrhs upload FILEPATH NAME`
 
@@ -337,11 +338,12 @@ Upload a file to the CDN and create an object in the Warehouse ledger
 
 ```
 USAGE
-  $ wrhs upload FILEPATH NAME -v <value> [-e <value>] [-a <value>] [-x <value>] [-u <value>]
+  $ wrhs upload FILEPATH NAME -v <value> [-e <value>] [-a <value>] [-x <value>] [-u <value>] [-g]
 
 FLAGS
   -a, --variant=<value>       object variant (e.g., en_US)
   -e, --env=<value>           object environment (e.g., production, test)
+  -g, --gzip                  compress the file using gzip
   -u, --cdn_base_url=<value>  cdn base url value that overrides default one configued in the server
   -v, --version=<value>       (required) object version (e.g., v1.2.1)
   -x, --expiration=<value>    object expiration in human readable format or milliseconds (e.g., 365d, 48h,
@@ -351,5 +353,5 @@ DESCRIPTION
   Upload a file to the CDN and create an object in the Warehouse ledger
 ```
 
-_See code: [src/commands/upload.js](https://github.com/godaddy/wrhs/blob/v1.3.1/src/commands/upload.js)_
+_See code: [src/commands/upload.js](https://github.com/godaddy/wrhs/blob/v1.4.0/src/commands/upload.js)_
 <!-- commandsstop -->
