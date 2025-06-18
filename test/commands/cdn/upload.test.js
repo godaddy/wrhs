@@ -10,9 +10,10 @@ const TEST_USR = 'test';
 const TEST_PWD = 'test';
 const TEST_URL = 'https://wrhs.com';
 
-let createTarballSpy;
+let resDataWithDifferentFingerprints;
+let resDataWithSameFingerprint;
 let getFilesAndDirSpy;
-let resData;
+let createTarballSpy;
 
 describe('cdn:upload', () => {
   before(function () {
@@ -21,7 +22,7 @@ describe('cdn:upload', () => {
         return { username: TEST_USR, password: TEST_PWD, baseUrl: TEST_URL };
       }
     };
-    resData = {
+    resDataWithDifferentFingerprints = {
       fingerprints: [
         'a2b87ccfac6c4eb872aac4273dd68a80.gz',
         'b92c484ac96c7b420d12a4fbcd739eb9.gz'
@@ -39,11 +40,41 @@ describe('cdn:upload', () => {
         }
       ]
     };
+    resDataWithSameFingerprint = {
+      fingerprints: ['a2b87ccfac6c4eb872aac4273dd68a80.gz'],
+      recommended: ['a2b87ccfac6c4eb872aac4273dd68a80/a.js'],
+      files: [{ url: `${TEST_URL}/a2b87ccfac6c4eb872aac4273dd68a80/a.js` }]
+    };
+
+    getFilesAndDirSpy = sinon.spy(fileUtil, 'getFilesAndDir');
+    createTarballSpy = sinon.spy(fileUtil, 'createTarball');
   });
 
-  after(function () {
+  afterEach(function () {
     sinon.restore();
   });
+
+  test
+    .nock(TEST_URL, function (api) {
+      return api
+        .post('/cdn?expiration=365d')
+        .basicAuth({ user: TEST_USR, pass: TEST_PWD })
+        .matchHeader('Content-Length', (val) => parseInt(val, 10) === 3072)
+        .reply(201, resDataWithDifferentFingerprints);
+    })
+    .stdout()
+    .command(['cdn:upload', FILES_DIR, '--expiration', '365d'])
+    .it(
+      `runs cdn:upload ${FILES_DIR} without use_single_fingerprint flag`,
+      (ctx) => {
+        expect(getFilesAndDirSpy.calledWith(FILES_DIR)).to.true;
+        expect(createTarballSpy.calledWith(FILES_DIR, ['a.js', 'b.css'])).to
+          .true;
+        expect(ctx.stdout).equals(
+          `${JSON.stringify(resDataWithDifferentFingerprints, null, 2)}\n`
+        );
+      }
+    );
 
   test
     .nock(TEST_URL, function (api) {
@@ -51,11 +82,7 @@ describe('cdn:upload', () => {
         .post('/cdn?expiration=365d&use_single_fingerprint=true')
         .basicAuth({ user: TEST_USR, pass: TEST_PWD })
         .matchHeader('Content-Length', (val) => parseInt(val, 10) === 3072)
-        .reply(201, resData);
-    })
-    .do(() => {
-      getFilesAndDirSpy = sinon.spy(fileUtil, 'getFilesAndDir');
-      createTarballSpy = sinon.spy(fileUtil, 'createTarball');
+        .reply(201, resDataWithSameFingerprint);
     })
     .stdout()
     .command([
@@ -65,9 +92,15 @@ describe('cdn:upload', () => {
       '365d',
       '--use_single_fingerprint'
     ])
-    .it(`runs cdn:upload ${FILES_DIR}`, (ctx) => {
-      expect(getFilesAndDirSpy.calledWith(FILES_DIR)).to.true;
-      expect(createTarballSpy.calledWith(FILES_DIR, ['a.js', 'b.css'])).to.true;
-      expect(ctx.stdout).equals(`${JSON.stringify(resData, null, 2)}\n`);
-    });
+    .it(
+      `runs cdn:upload ${FILES_DIR} with use_single_fingerprint flag`,
+      (ctx) => {
+        expect(getFilesAndDirSpy.calledWith(FILES_DIR)).to.true;
+        expect(createTarballSpy.calledWith(FILES_DIR, ['a.js', 'b.css'])).to
+          .true;
+        expect(ctx.stdout).equals(
+          `${JSON.stringify(resDataWithSameFingerprint, null, 2)}\n`
+        );
+      }
+    );
 });

@@ -14,10 +14,11 @@ class UploadCommand extends BaseCommand {
    * @param {string} filepath Path to the file or folder
    * @param {string|number} expiration Files expiration in ms or human readable format
    * @param {string} cdnBaseUrl CDN Base Url that overrides default one configued at server level
-   * @param {boolean} gzip Compress the file using gzip
    * @param {boolean} useSingleFingerprint Use a single fingerprint for all the files in a package
+   * @param {boolean} gzip Compress the file using gzip
    * @returns {Promise<Object>} Promise representing upload response data
    */
+  // eslint-disable-next-line max-params
   async _handleUpload(
     filepath,
     expiration,
@@ -60,7 +61,7 @@ class UploadCommand extends BaseCommand {
   async run() {
     const cmd = this.parse(UploadCommand);
     const {
-      flags: { 
+      flags: {
         expiration,
         cdn_base_url: cdnBaseUrl,
         use_single_fingerprint: useSingleFingerprint,
