@@ -11,11 +11,25 @@ class UploadCommand extends CdnUploadCommand {
   async run() {
     const cmd = this.parse(UploadCommand);
     const {
-      flags: { cdn_base_url: cdnBaseUrl, env, expiration, variant, version, gzip },
+      flags: {
+        cdn_base_url: cdnBaseUrl,
+        env,
+        expiration,
+        variant,
+        version,
+        use_single_fingerprint: useSingleFingerprint = false,
+        gzip
+      },
       args: { filepath, name }
     } = cmd;
 
-    const data = await this._handleUpload(filepath, expiration, cdnBaseUrl, gzip);
+    const data = await this._handleUpload(
+      filepath,
+      expiration,
+      cdnBaseUrl,
+      useSingleFingerprint,
+      gzip
+    );
 
     await this._sdk.object().create({
       name,
@@ -71,6 +85,10 @@ UploadCommand.flags = {
   gzip: flags.boolean({
     char: 'g',
     description: 'compress the file using gzip'
+  }),
+  use_single_fingerprint: flags.boolean({
+    char: 's',
+    description: 'use a single fingerprint for all the files in a package'
   })
 };
 

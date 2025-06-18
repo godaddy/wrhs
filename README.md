@@ -58,9 +58,11 @@ USAGE
 
 FLAGS
   -g, --gzip                  compress the file using gzip
+  -s, --use_single_fingerprint  use a single fingerprint for all the files in a package
   -u, --cdn_base_url=<value>  cdn base url value that overrides default one configued in the server
   -x, --expiration=<value>    object expiration in human readable format or milliseconds (e.g., 365d, 48h,
                               1607973280797)
+  $ wrhs cdn:upload FILEPATH [-x <value>] [-u <value>] [-g] [-s]
 
 DESCRIPTION
   Upload a file to the Warehouse CDN
@@ -344,10 +346,12 @@ FLAGS
   -a, --variant=<value>       object variant (e.g., en_US)
   -e, --env=<value>           object environment (e.g., production, test)
   -g, --gzip                  compress the file using gzip
+  -s, --use_single_fingerprint  use a single fingerprint for all the files in a package
   -u, --cdn_base_url=<value>  cdn base url value that overrides default one configued in the server
   -v, --version=<value>       (required) object version (e.g., v1.2.1)
   -x, --expiration=<value>    object expiration in human readable format or milliseconds (e.g., 365d, 48h,
                               1607973280797)
+  $ wrhs upload FILEPATH NAME -v <value> [-e <value>] [-a <value>] [-x <value>] [-u <value>] [-g] [-s]
 
 DESCRIPTION
   Upload a file to the CDN and create an object in the Warehouse ledger

@@ -14,10 +14,18 @@ class UploadCommand extends BaseCommand {
    * @param {string} filepath Path to the file or folder
    * @param {string|number} expiration Files expiration in ms or human readable format
    * @param {string} cdnBaseUrl CDN Base Url that overrides default one configued at server level
+   * @param {boolean} useSingleFingerprint Use a single fingerprint for all the files in a package
    * @param {boolean} gzip Compress the file using gzip
    * @returns {Promise<Object>} Promise representing upload response data
    */
-  async _handleUpload(filepath, expiration, cdnBaseUrl, gzip) {
+  // eslint-disable-next-line max-params
+  async _handleUpload(
+    filepath,
+    expiration,
+    cdnBaseUrl,
+    useSingleFingerprint = false,
+    gzip
+  ) {
     const { files, dir } = await getFilesAndDir(filepath);
     const { tarPath, deleteTarball } = await createTarball(dir, files, gzip);
 
@@ -27,7 +35,11 @@ class UploadCommand extends BaseCommand {
       result = await this._request.uploadFile({
         endpoint: '/cdn',
         filepath: tarPath,
-        query: { expiration, cdn_base_url: cdnBaseUrl }
+        query: {
+          expiration,
+          cdn_base_url: cdnBaseUrl,
+          use_single_fingerprint: useSingleFingerprint
+        }
       });
     } catch (err) {
       error = err;
@@ -49,11 +61,22 @@ class UploadCommand extends BaseCommand {
   async run() {
     const cmd = this.parse(UploadCommand);
     const {
-      flags: { expiration, cdn_base_url: cdnBaseUrl, gzip  },
+      flags: {
+        expiration,
+        cdn_base_url: cdnBaseUrl,
+        use_single_fingerprint: useSingleFingerprint,
+        gzip
+      },
       args: { filepath }
     } = cmd;
 
-    const result = await this._handleUpload(filepath, expiration, cdnBaseUrl, gzip);
+    const result = await this._handleUpload(
+      filepath,
+      expiration,
+      cdnBaseUrl,
+      useSingleFingerprint,
+      gzip
+    );
 
     this.log(JSON.stringify(result, null, 2));
   }
@@ -82,6 +105,10 @@ UploadCommand.flags = {
   gzip: flags.boolean({
     char: 'g',
     description: 'compress the file using gzip'
+  }),
+  use_single_fingerprint: flags.boolean({
+    char: 's',
+    description: 'use a single fingerprint for all the files in a package'
   })
 };
 
