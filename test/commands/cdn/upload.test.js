@@ -54,6 +54,29 @@ describe('cdn:upload', () => {
     sinon.restore();
   });
 
+  describe('upload error', function () {
+    let origRequest;
+
+    before(function () {
+      origRequest = BaseCommand.Request;
+      BaseCommand.Request = class MockRequest {
+        uploadFile() {
+          return Promise.reject(new Error('upload failed'));
+        }
+      };
+    });
+
+    after(function () {
+      BaseCommand.Request = origRequest;
+    });
+
+    test
+      .stdout()
+      .command(['cdn:upload', FILES_DIR, '--expiration', '365d'])
+      .catch(/upload failed/)
+      .it('re-throws upload error after cleaning up tarball', function () {});
+  });
+
   test
     .nock(TEST_URL, function (api) {
       return api

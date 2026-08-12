@@ -13,6 +13,7 @@ Robust CLI for the next generation of Object ledger and CDN.
 * [Warehouse CLI](#warehouse-cli)
 * [Usage](#usage)
 * [Commands](#commands)
+* [Releasing](#releasing)
 <!-- tocstop -->
 # Usage
 <!-- usage -->
@@ -397,3 +398,10 @@ DESCRIPTION
 
 _See code: [src/commands/upload.js](https://github.com/godaddy/wrhs/blob/v1.5.0/src/commands/upload.js)_
 <!-- commandsstop -->
+# Releasing
+
+1. Merge your PR into `main`
+2. On `main`, run `npm version <patch|minor|major>` — this bumps `package.json`, regenerates `README.md` and `CHANGELOG.md`, and creates a local commit and tag
+3. Push the commit and tag: `git push origin main && git push origin <tag>` (e.g. `git push origin 1.6.0`)
+
+The tag push triggers the deploy GitHub Actions workflow, which runs the test suite and publishes to npm automatically using OIDC provenance — no manual `npm publish` needed.

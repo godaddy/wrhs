@@ -1,13 +1,15 @@
-name: CI
+name: Deploy
 
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: ['*']
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+
+permissions:
+  id-token: write
 
 jobs:
-  test:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,3 +26,6 @@ jobs:
 
     - name: Run tests
       run: npm test
+
+    - name: Publish to npm
+      run: npm publish --provenance
