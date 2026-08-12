@@ -15,7 +15,7 @@ class DeleteCommand extends BaseCommand {
       args: { name }
     } = cmd;
 
-    const result = await this._sdk.env().delete({
+    const result = await this._sdk.hook().delete({
       name,
       id
     });
